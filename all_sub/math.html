@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTH 101 CBT - Top Submit Mode</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <div style="font-weight: bold;">MTH 101 | Algebra</div>
+        <div class="header-tools">
+            <div id="timer">60:00</div>
+            <button class="btn-submit-top" onclick="handleManualSubmit()">SUBMIT EXAM</button>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div id="exam-view">
+            <div class="card">
+                <span id="topic-display" class="topic-badge"></span>
+                <div id="question-display" class="question-text"></div>
+                <div id="options-display"></div>
+
+                <div class="nav-footer">
+                    <button class="btn-nav" id="prevBtn" onclick="navigate(-1)">← Previous</button>
+                    <span id="counter-display" style="padding-top:10px; color:#888;"></span>
+                    <button class="btn-nav" id="nextBtn" onclick="navigate(1)" style="background:var(--secondary)">Next
+                        →</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="result-screen">
+            <div class="score-box">
+                <h1 id="score-text" style="font-size: 3rem; margin:0; color:var(--secondary)">0%</h1>
+                <p id="stats-text" style="color:#666;"></p>
+                <button onclick="location.reload()"
+                    style="background:var(--dark); color:white; padding:10px 30px;">Restart Practice</button>
+            </div>
+            <h3>Detailed Review</h3>
+            <div id="review-list"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // Data containing all the specific questions from your MTH 101 notes
+        const questions = [
+            
+            { topic: "Set Theory", q: "A set with only one element is called a:", options: ["Null set", "Singleton", "Universal set", "Power set"], correct: 1 },
+            { topic: "Set Theory", q: "If A = {1, 2, 3}, what is the cardinality n(A)?", options: ["1", "2", "3", "8"], correct: 2 },
+            { topic: "Set Theory", q: "What is the number of elements in the power set of A if n(A) = 3?", options: ["3", "6", "8", "9"], correct: 2 },
+            { topic: "Set Theory", q: "Which symbol denotes an empty set?", options: ["∈", "⊂", "∅", "∪"], correct: 2 },
+            { topic: "Set Theory", q: "If A ⊆ B and B ⊆ A, then:", options: ["A is a proper subset of B", "A = B", "A and B are disjoint", "A is empty"], correct: 1 },
+            { topic: "Complex Numbers", q: "What is the value of i²?", options: ["1", "-1", "√-1", "0"], correct: 1 },
+            { topic: "Complex Numbers", q: "A complex number is written in the form:", options: ["a + b", "a + bi", "ai + b", "a/b"], correct: 1 },
+            { topic: "Complex Numbers", q: "The real part of 2 + 3i is:", options: ["3", "3i", "2", "5"], correct: 2 },
+            { topic: "Complex Numbers", q: "The imaginary part of -2 + 3i is:", options: ["3i", "-2", "3", "2"], correct: 2 },
+            { topic: "Complex Numbers", q: "The complex conjugate of a + bi is:", options: ["-a - bi", "a - bi", "-a + bi", "b + ai"], correct: 1 },
+            { topic: "Quadratic", q: "The general form of a quadratic equation is:", options: ["ax + b = 0", "ax² + bx + c = 0", "ax³ + bx² + c = 0", "a/x + b = 0"], correct: 1 },
+            { topic: "Quadratic", q: "The discriminant D is calculated as:", options: ["b - 4ac", "b² + 4ac", "b² - 4ac", "√b² - 4ac"], correct: 2 },
+            { topic: "Quadratic", q: "If D > 0, the roots are:", options: ["Equal and real", "Real and different", "Complex", "Imaginary"], correct: 1 },
+            { topic: "Quadratic", q: "If D = 0, the roots are:", options: ["Real and different", "Two equal real roots", "Complex", "No roots"], correct: 1 },
+            { topic: "Quadratic", q: "If D < 0, the roots are:", options: ["Real", "Equal", "Complex/Imaginary", "Rational"], correct: 2 },
+            { topic: "Sequences", q: "The general term (Un) of an AP is:", options: ["a + nd", "a + (n-1)d", "ar^(n-1)", "a + d"], correct: 1 },
+            { topic: "Sequences", q: "In an AP, 'd' stands for:", options: ["Difference", "Common difference", "Distance", "Dividend"], correct: 1 },
+            { topic: "Sequences", q: "The sum of the first n terms of an AP (Sn) is:", options: ["n/2[a+l]", "n[a+l]", "n/2[2a+nd]", "a+nd"], correct: 0 },
+            { topic: "Sequences", q: "The general term (Un) of a GP is:", options: ["a + (n-1)d", "ar^n", "ar^(n-1)", "a/r"], correct: 2 },
+            { topic: "Sequences", q: "In a GP, 'r' stands for:", options: ["Ratio", "Common ratio", "Radius", "Root"], correct: 1 },
+            { topic: "Trigonometry", q: "The identity sin²θ + cos²θ is equal to:", options: ["0", "1", "tanθ", "secθ"], correct: 1 },
+            { topic: "Trigonometry", q: "sin(A + B) is equal to:", options: ["sinAcosB + cosAsinB", "sinAcosB - cosAsinB", "cosAcosB - sinAsinB", "sinAsinB"], correct: 0 },
+            { topic: "Trigonometry", q: "cos(A + B) is equal to:", options: ["cosAcosB + sinAsinB", "cosAcosB - sinAsinB", "sinAcosB + cosAsinB", "tanA"], correct: 1 },
+            { topic: "Trigonometry", q: "The reciprocal of sinθ is:", options: ["cosθ", "secθ", "cosecθ", "cotθ"], correct: 2 },
+            { topic: "Trigonometry", q: "The reciprocal of cosθ is:", options: ["sinθ", "secθ", "cosecθ", "tanθ"], correct: 1 },
+            { topic: "Set Theory", q: "The set of elements in A but NOT in B is denoted as:", options: ["A ∩ B", "A ∪ B", "A \\ B", "A'"], correct: 2 },
+            { topic: "Set Theory", q: "If U = {1, 2, 3, 4, 5} and A = {2, 4}, find A'.", options: ["{1, 3, 5}", "{2, 4}", "{1, 2, 3, 4, 5}", "∅"], correct: 0 },
+            { topic: "Set Theory", q: "What is A ∩ A'?", options: ["A", "U", "∅", "{0}"], correct: 2 },
+            { topic: "Set Theory", q: "De Morgan's Law states that (A ∪ B)' is equal to:", options: ["A' ∪ B'", "A' ∩ B'", "A ∩ B", "(A ∩ B)'"], correct: 1 },
+            { topic: "Set Theory", q: "If A = {1, 2} and B = {3, 4}, these sets are:", options: ["Equal", "Equivalent", "Disjoint", "Subsets"], correct: 2 },
+            { topic: "Quadratic", q: "The sum of roots (α + β) of ax² + bx + c = 0 is:", options: ["c/a", "b/a", "-b/a", "-c/a"], correct: 2 },
+            { topic: "Quadratic", q: "The product of roots (αβ) of ax² + bx + c = 0 is:", options: ["c/a", "-c/a", "b/a", "-b/a"], correct: 0 },
+            { topic: "Quadratic", q: "Find the sum of roots for 3x² + 6x - 2 = 0.", options: ["2", "-2", "2/3", "-2/3"], correct: 1 },
+            { topic: "Quadratic", q: "Find the product of roots for 3x² + 6x - 2 = 0.", options: ["-2/3", "2/3", "2", "-2"], correct: 0 },
+            { topic: "Quadratic", q: "What is the nature of roots for x² + 8x + 6 = 0? (D=40)", options: ["Equal", "Complex", "Real and different", "No roots"], correct: 2 },
+            { topic: "Quadratic", q: "Form a quadratic equation with roots 2 and 3.", options: ["x² - 5x + 6 = 0", "x² + 5x + 6 = 0", "x² - 6x + 5 = 0", "x² + 6x + 5 = 0"], correct: 0 },
+            { topic: "Sequences", q: "The general term (Un) of an AP is:", options: ["a + nd", "a + (n-1)d", "ar^(n-1)", "a + d"], correct: 1 },
+            { topic: "Sequences", q: "In an AP, 'd' stands for:", options: ["Difference", "Common difference", "Distance", "Dividend"], correct: 1 },
+            { topic: "Sequences", q: "The sum of the first n terms of an AP (Sn) is:", options: ["n/2[a+l]", "n[a+l]", "n/2[2a+nd]", "a+nd"], correct: 0 },
+            { topic: "Sequences", q: "The general term (Un) of a GP is:", options: ["a + (n-1)d", "ar^n", "ar^(n-1)", "a/r"], correct: 2 },
+            { topic: "Sequences", q: "In a GP, 'r' stands for:", options: ["Ratio", "Common ratio", "Radius", "Root"], correct: 1 },
+            { topic: "Sequences", q: "If Sn = 3n² + n, find the first term a₁.", options: ["3", "4", "6", "1"], correct: 1 },
+            { topic: "Trigonometry", q: "Convert π/3 radians to degrees.", options: ["30°", "45°", "60°", "90°"], correct: 2 },
+            { topic: "Trigonometry", q: "1 + tan²θ is equal to:", options: ["sin²θ", "sec²θ", "cosec²θ", "cos²θ"], correct: 1 },
+            { topic: "Trigonometry", q: "1 + cot²θ is equal to:", options: ["sec²θ", "cosec²θ", "sin²θ", "1"], correct: 1 },
+            { topic: "Trigonometry", q: "Find the principal value of sin⁻¹(1/2).", options: ["π/6", "π/3", "π/4", "π/2"], correct: 0 },
+            { topic: "Set Theory", q: "The set of all possible subsets of A is called:", options: ["Universal set", "Power set", "Union set", "Infinite set"], correct: 1 },
+            { topic: "Set Theory", q: "If n(A) = 10, n(B) = 15, and n(A ∩ B) = 5, find n(A ∪ B).", options: ["25", "20", "30", "15"], correct: 1 },
+            { topic: "Set Theory", q: "A set that goes on forever is called:", options: ["Finite", "Infinite", "Singleton", "Universal"], correct: 1 },
+            { topic: "Set Theory", q: "The notation {x : x² - 1 = 0} is an example of:", options: ["Tabular form", "Listing method", "Set builder form", "Venn diagram"], correct: 2 },
+            { topic: "Set Theory", q: "What is A ∪ ∅?", options: ["∅", "U", "A", "{∅}"], correct: 2 },
+            { topic: "Set Theory", q: "In a Venn diagram, the Universal set is usually represented by a:", options: ["Circle", "Triangle", "Rectangle", "Square"], correct: 2 },
+            { topic: "Set Theory", q: "If B is a proper subset of A, then:", options: ["B = A", "B ⊂ A and B ≠ A", "A ⊂ B", "B ∩ A = ∅"], correct: 1 },
+            { topic: "Set Theory", q: "The Commutative Law for intersection is:", options: ["A ∩ B = B ∩ A", "(A ∩ B) ∩ C = A ∩ (B ∩ C)", "A ∪ B = B ∪ A", "A ∩ (B ∪ C)"], correct: 0 },
+            { topic: "Set Theory", q: "What is (A')'?", options: ["A'", "∅", "A", "U"], correct: 2 },
+            { topic: "Set Theory", q: "If A = {a, b, c} and B = {a, b, c, b}, are they equal?", options: ["Yes", "No", "Only if a=b", "Cannot be determined"], correct: 0 },
+            { topic: "Quadratic", q: "If roots are α and β, the equation is x² - (...)x + αβ = 0. Fill the blank.", options: ["α - β", "αβ", "α + β", "a"], correct: 2 },
+            { topic: "Quadratic", q: "In ax² + bx + c = 0, the equation is not quadratic if:", options: ["c = 0", "b = 0", "a = 0", "a = 1"], correct: 2 },
+            { topic: "Quadratic", q: "Find D for 2x² - 8x + 8 = 0.", options: ["0", "64", "128", "-64"], correct: 0 },
+            { topic: "Quadratic", q: "What are the roots of x² - 5x + 6 = 0?", options: ["1, 6", "-2, -3", "2, 3", "5, 6"], correct: 2 },
+            { topic: "Quadratic", q: "If α² + β² is needed, it can be written as:", options: ["(α+β)²", "(α+β)² - 2αβ", "(α+β)² + 2αβ", "α+β"], correct: 1 },
+            { topic: "Quadratic", q: "Completing the squares is a method to solve:", options: ["Linear eq", "Quadratic eq", "Sets", "Series"], correct: 1 },
+            { topic: "Quadratic", q: "If a=1, b=2, c=5, what is the nature of roots?", options: ["Real", "Equal", "Complex", "Rational"], correct: 2 },
+            { topic: "Quadratic", q: "The 'formula method' uses which expression for x?", options: ["-b ± D / 2a", "(-b ± √D) / 2a", "b ± √D / 2a", "-c/a"], correct: 1 },
+            { topic: "Quadratic", q: "If kx² + 4x + 1 = 0 has equal roots, find k.", options: ["2", "4", "1", "0"], correct: 1 },
+            { topic: "Sequences", q: "The sum to infinity (S∞) of a GP where |r| < 1 is:", options: ["a/(1-r)", "a/(r-1)", "ar/(1-r)", "1/(1-r)"], correct: 0 },
+            { topic: "Sequences", q: "Find the 10th term of the AP: 2, 4, 6, ...", options: ["18", "20", "22", "24"], correct: 1 },
+            { topic: "Sequences", q: "Find the common ratio of the GP: 3, 9, 27, ...", options: ["2", "3", "6", "9"], correct: 1 },
+            { topic: "Sequences", q: "Arithmetic Mean (AM) between a and b is:", options: ["(a+b)/2", "√(ab)", "ab/2", "a-b"], correct: 0 },
+            { topic: "Sequences", q: "Geometric Mean (GM) between 4 and 64 is:", options: ["34", "16", "32", "8"], correct: 1 },
+            { topic: "Sequences", q: "Sum the first 3 terms of the GP: 8, 4, 2, ...", options: ["14", "12", "15", "7"], correct: 0 },
+            { topic: "Sequences", q: "A sequence where each term is found by multiplying the previous by a constant is:", options: ["AP", "GP", "Harmonic", "Linear"], correct: 1 },
+            { topic: "Sequences", q: "Find the sum to infinity of 20, 4, 0.8, ...", options: ["24", "25", "30", "20"], correct: 1 },
+            { topic: "Sequences", q: "If a, b, c are in AP, then:", options: ["b² = ac", "2b = a + c", "b = a + c", "b = ac"], correct: 1 },
+            { topic: "Sequences", q: "If a, b, c are in GP, then:", options: ["2b = a + c", "b² = ac", "b = (a+c)/2", "b = a - c"], correct: 1 },
+            { topic: "Sequences", q: "The sum of an arithmetic series is also called:", options: ["Nth term", "Partial sum", "Common difference", "Limit"], correct: 1 },
+            { topic: "Sequences", q: "Find the 5th term of the GP where a=3 and r=2.", options: ["24", "48", "30", "96"], correct: 1 },
+            { topic: "Sequences", q: "In the formula Sn = n/2[2a + (n-1)d], what is 'l'?", options: ["Length", "First term", "Last term", "Limit"], correct: 2 },
+            { topic: "Sequences", q: "Convert 0.333... to a fraction using GP.", options: ["1/2", "1/3", "3/10", "1/4"], correct: 1 },
+            { topic: "Trigonometry", q: "tanθ is equal to:", options: ["cos/sin", "sin/cos", "1/sin", "sin+cos"], correct: 1 },
+            { topic: "Trigonometry", q: "Find θ if cosθ = 1/2 in the first quadrant.", options: ["30°", "45°", "60°", "90°"], correct: 2 },
+            { topic: "Trigonometry", q: "sin(90 - θ) is equal to:", options: ["sinθ", "cosθ", "-sinθ", "tanθ"], correct: 1 },
+            { topic: "Trigonometry", q: "The Factor Formula for sinU + sinV is:", options: ["2sin((U+V)/2)cos((U-V)/2)", "2cos((U+V)/2)sin((U-V)/2)", "cosUcosV", "sinU-sinV"], correct: 0 },
+            { topic: "Trigonometry", q: "What is the value of sin 180°?", options: ["1", "-1", "0", "0.5"], correct: 2 },
+            { topic: "Trigonometry", q: "What is the value of cos 180°?", options: ["1", "0", "-1", "undefined"], correct: 2 },
+            { topic: "Trigonometry", q: "Which quadrant is sin positive but cos negative?", options: ["1st", "2nd", "3rd", "4th"], correct: 1 },
+            { topic: "Trigonometry", q: "Double angle formula: sin2θ is:", options: ["2sinθ", "sin²θ", "2sinθcosθ", "cos²θ - sin²θ"], correct: 2 },
+            { topic: "Trigonometry", q: "Double angle formula: cos2θ is:", options: ["2cosθ", "cos²θ - sin²θ", "2sinθcosθ", "1 + cosθ"], correct: 1 },
+            { topic: "Trigonometry", q: "The period of sinθ and cosθ is:", options: ["90°", "180°", "360°", "270°"], correct: 2 },
+            { topic: "Trigonometry", q: "cotθ is equal to:", options: ["1/tanθ", "1/sinθ", "sin/cos", "tanθ"], correct: 0 },
+            { topic: "Complex Numbers", q: "What is (2 + 3i) + (1 - 5i)?", options: ["3 + 2i", "3 - 2i", "1 + 8i", "3 - 8i"], correct: 1 },
+            { topic: "Complex Numbers", q: "What is (2 + 3i) - (1 - 5i)?", options: ["1 - 2i", "1 + 8i", "3 - 2i", "3 + 8i"], correct: 1 },
+            { topic: "Complex Numbers", q: "The absolute value (modulus) |z| of a + bi is:", options: ["a² + b²", "√(a² + b²)", "a + b", "√(a² - b²)"], correct: 1 },
+            { topic: "Complex Numbers", q: "The diagram used to visualize complex numbers is:", options: ["Venn diagram", "Argand diagram", "Pie chart", "Cartesian plot"], correct: 1 },
+            { topic: "Complex Numbers", q: "The polar form of a complex number is:", options: ["r(cosθ + isinθ)", "r(sinθ + icosθ)", "a + bi", "re^θ"], correct: 0 },
+            { topic: "Complex Numbers", q: "The exponential form (Euler's) is:", options: ["reiθ", "rcisθ", "a + bi", "r sinθ"], correct: 0 },
+            { topic: "Complex Numbers", q: "In polar form, r represents the:", options: ["Argument", "Modulus", "Real part", "Imaginary part"], correct: 1 },
+            { topic: "Complex Numbers", q: "In polar form, θ represents the:", options: ["Modulus", "Argument", "Conjugate", "Root"], correct: 1 },
+            { topic: "Complex Numbers", q: "Find |z| for z = 3 + 4i.", options: ["7", "25", "5", "1"], correct: 2 },
+            { topic: "Complex Numbers", q: "De Moivre's Theorem relates to:", options: ["Addition", "Powers of complex numbers", "Subtraction", "Division"], correct: 1 },
+            { topic: "Complex Numbers", q: "Two complex numbers are equal if:", options: ["Moduli are equal", "Real = Real and Im = Im", "Real = Im", "Conjugates are equal"], correct: 1 },
+            { topic: "Complex Numbers", q: "To divide complex numbers, you multiply the denominator by its:", options: ["Reciprocal", "Conjugate", "Square", "Modulus"], correct: 1 },
+            { topic: "Complex Numbers", q: "The principal value of the argument is usually restricted to:", options: ["0 to 2π", "-π < θ ≤ π", "0 to π", "-90 to 90"], correct: 1 },
+            { topic: "Complex Numbers", q: "What is i³?", options: ["i", "-i", "1", "-1"], correct: 1 },
+            { topic: "Complex Numbers", q: "What is i⁴?", options: ["i", "-i", "1", "-1"], correct: 2 }
+        ];
+
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHM 101 CBT - Top Submit Mode</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <div style="font-weight: bold;">CHM 101 </div>
+        <div class="header-tools">
+            <div id="timer">60:00</div>
+            <button class="btn-submit-top" onclick="handleManualSubmit()">SUBMIT EXAM</button>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div id="exam-view">
+            <div class="card">
+                <span id="topic-display" class="topic-badge"></span>
+                <div id="question-display" class="question-text"></div>
+                <div id="options-display"></div>
+
+                <div class="nav-footer">
+                    <button class="btn-nav" id="prevBtn" onclick="navigate(-1)">← Previous</button>
+                    <span id="counter-display" style="padding-top:10px; color:#888;"></span>
+                    <button class="btn-nav" id="nextBtn" onclick="navigate(1)" style="background:var(--secondary)">Next
+                        →</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="result-screen">
+            <div class="score-box">
+                <h1 id="score-text" style="font-size: 3rem; margin:0; color:var(--secondary)">0%</h1>
+                <p id="stats-text" style="color:#666;"></p>
+                <button onclick="location.reload()"
+                    style="background:var(--dark); color:white; padding:10px 30px;">Restart Practice</button>
+            </div>
+            <h3>Detailed Review</h3>
+            <div id="review-list"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // Data containing all the specific questions from your MTH 101 notes
+        const questions = [{ 
+        topic: "Botany", 
+        q: "The reproductive part of an angiosperm is the:", 
+        options: ["Leaf", "Root", "Flower", "Stem"], 
+        correct: 2, 
+        review: "Flowers contain the reproductive organs (stamens and carpels) for seed production."
+    },
+    { 
+        topic: "Physiology", 
+        q: "Which component of blood is responsible for carrying oxygen?", 
+        options: ["White blood cells", "Platelets", "Red blood cells", "Plasma"], 
+        correct: 2, 
+        review: "Red blood cells contain hemoglobin, which binds to oxygen molecules."
+    },
+    { 
+        topic: "Reproduction", 
+        q: "In humans, where does fertilization usually occur?", 
+        options: ["Ovary", "Uterus", "Fallopian tube", "Vagina"], 
+        correct: 2, 
+        review: "The egg is usually fertilized in the oviduct (fallopian tube) before traveling to the uterus."
+    }]
+
+        
+
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

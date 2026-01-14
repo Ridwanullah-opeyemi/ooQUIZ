@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIO 101 CBT - Top Submit Mode</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <div style="font-weight: bold;">BIO 101 </div>
+        <div class="header-tools">
+            <div id="timer">60:00</div>
+            <button class="btn-submit-top" onclick="handleManualSubmit()">SUBMIT EXAM</button>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div id="exam-view">
+            <div class="card">
+                <span id="topic-display" class="topic-badge"></span>
+                <div id="question-display" class="question-text"></div>
+                <div id="options-display"></div>
+
+                <div class="nav-footer">
+                    <button class="btn-nav" id="prevBtn" onclick="navigate(-1)">← Previous</button>
+                    <span id="counter-display" style="padding-top:10px; color:#888;"></span>
+                    <button class="btn-nav" id="nextBtn" onclick="navigate(1)" style="background:var(--secondary)">Next
+                        →</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="result-screen">
+            <div class="score-box">
+                <h1 id="score-text" style="font-size: 3rem; margin:0; color:var(--secondary)">0%</h1>
+                <p id="stats-text" style="color:#666;"></p>
+                <button onclick="location.reload()"
+                    style="background:var(--dark); color:white; padding:10px 30px;">Restart Practice</button>
+            </div>
+            <h3>Detailed Review</h3>
+            <div id="review-list"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // Data containing all the specific questions from your MTH 101 notes
+        const questions = [
+            {
+                topic: "Cell Biology",
+                q: "Which of the following is considered an acellular organism?",
+                options: ["Bacteria", "Virus", "Protozoa", "Algae"],
+                correct: 1,
+                review: "Viruses, viroids, and prions are acellular, meaning they are not made of cells."
+            },
+            {
+                topic: "Classification",
+                q: "Who developed the binomial system of nomenclature?",
+                options: ["Charles Darwin", "Carolus Linnaeus", "Robert Hooke", "Louis Pasteur"],
+                correct: 1,
+                review: "Linnaeus is credited with the two-part naming system (Genus species)."
+            },
+            {
+                topic: "Cell Biology",
+                q: "A cell that lacks membrane-bound organelles and a defined nucleus is called:",
+                options: ["Eukaryotic", "Multicellular", "Prokaryotic", "Plant cell"],
+                correct: 2,
+                review: "Prokaryotic cells (like bacteria) lack a nuclear membrane and other organelles like mitochondria."
+            },
+            {
+                topic: "Evolution",
+                q: "Which theory suggests that acquired characteristics can be inherited?",
+                options: ["Darwinism", "Lamarckism", "Mutation Theory", "Modern Synthesis"],
+                correct: 1,
+                review: "Lamarckism wrongly proposed that changes acquired during an organism's life (like stretched necks) could be passed to offspring."
+            },
+            {
+                topic: "Evolution",
+                q: "Evidence for evolution based on the study of fossils is known as:",
+                options: ["Anatomy", "Embryology", "Paleontology", "Biogeography"],
+                correct: 2,
+                review: "Paleontology is the study of ancient life through fossil remains."
+            },
+            {
+                topic: "Classification",
+                q: "Which kingdom consists of prokaryotic organisms like bacteria?",
+                options: ["Protista", "Fungi", "Monera", "Plantae"],
+                correct: 2,
+                review: "Kingdom Monera includes all prokaryotes."
+            },
+            {
+                topic: "Cell Biology",
+                q: "Which organelle is known as the 'powerhouse' of the cell where ATP is produced?",
+                options: ["Nucleus", "Ribosome", "Mitochondria", "Golgi apparatus"],
+                correct: 2,
+                review: "Mitochondria are responsible for cellular respiration and energy production."
+            },
+            {
+                topic: "Physiology",
+                q: "What is the functional unit of the human kidney?",
+                options: ["Neuron", "Nephron", "Alveolus", "Villus"],
+                correct: 1,
+                review: "Nephrons filter blood to form urine."
+            },
+            {
+                topic: "Physiology",
+                q: "Digestion of proteins begins in the:",
+                options: ["Mouth", "Stomach", "Small Intestine", "Large Intestine"],
+                correct: 1,
+                review: "The stomach secretes pepsin, which starts the breakdown of proteins."
+            },
+            {
+                topic: "Genetics",
+                q: "In a cross between two heterozygous (Tt) tall pea plants, what is the expected phenotypic ratio?",
+                options: ["1:1", "2:1", "3:1", "4:0"],
+                correct: 2,
+                review: "A Monohybrid cross of Tt x Tt results in 3 tall plants and 1 short plant."
+            },
+            {
+                topic: "Ecology",
+                q: "Organisms that live exclusively or mostly in trees are in what habitat?",
+                options: ["Terrestrial", "Aquatic", "Arboreal", "Marine"],
+                correct: 2,
+                review: "Arboreal comes from the Latin 'Arbor' meaning tree."
+            },
+            {
+                topic: "Reproduction",
+                q: "The fusion of male and female gametes to form a zygote is called:",
+                options: ["Pollination", "Fertilization", "Ovulation", "Menstruation"],
+                correct: 1,
+                review: "Fertilization restores the diploid number of chromosomes."
+            },
+
+            {
+                topic: "Reproduction",
+                q: "Which type of cell division results in gametes (sperm and egg cells)?",
+                options: ["Mitosis", "Meiosis", "Amitosis", "Binary fission"],
+                correct: 1,
+                review: "Meiosis reduces the chromosome number by half."
+            },
+            {
+                topic: "Ecology",
+                q: "A series of organisms through which energy is transferred starting from a producer is a:",
+                options: ["Food web", "Food chain", "Trophic level", "Energy pyramid"],
+                correct: 1,
+                review: "A food chain shows a single path of energy flow."
+            },
+            {
+                topic: "Cell Biology",
+                q: "In plant cells, which structure provides rigidity and prevents bursting in hypotonic solutions?",
+                options: ["Cell membrane", "Cytoplasm", "Cell wall", "Vacuoles"],
+                correct: 2,
+                review: "The cell wall, made of cellulose, provides structural support and protection for plant cells."
+            },
+
+            {
+                topic: "Genetics",
+                q: "The physical appearance of an organism as determined by its genes is called its:",
+                options: ["Genotype", "Phenotype", "Allele", "Locus"],
+                correct: 1,
+                review: "Phenotype refers to observable traits, while genotype refers to the genetic makeup."
+            },
+            {
+                topic: "Plant Biology",
+                q: "The transport of manufactured food (sugar) from leaves to other parts is:",
+                options: ["Transpiration", "Translocation", "Osmosis", "Diffusion"],
+                correct: 1,
+                review: "Translocation occurs through the phloem tissue."
+            },
+            {
+                topic: "Plant Biology",
+                q: "Auxins are usually concentrated in which part of the plant?",
+                options: ["Old leaves", "Root and shoot tips", "Flowers", "Bark"],
+                correct: 1,
+                review: "Auxins promote growth at the apical meristems (tips)."
+            },
+            {
+                topic: "Ecology",
+                q: "The non-living components of an ecosystem are termed:",
+                options: ["Biotic factors", "Abiotic factors", "Edaphic factors", "Climatic factors"],
+                correct: 1,
+                review: "Abiotic factors include sunlight, water, temperature, and soil minerals."
+            },
+            {
+                topic: "Genetics",
+                q: "Which nitrogenous base is found in RNA but NOT in DNA?",
+                options: ["Adenine", "Thymine", "Uracil", "Guanine"],
+                correct: 2,
+                review: "RNA uses Uracil (U) instead of the Thymine (T) used in DNA."
+            },
+            {
+                topic: "Cell Biology",
+                q: "The movement of water molecules from a region of high concentration to low concentration through a semi-permeable membrane is:",
+                options: ["Diffusion", "Osmosis", "Active transport", "Phagocytosis"],
+                correct: 1,
+                review: "Osmosis is a specific type of diffusion involving water and a semi-permeable membrane."
+            },
+            {
+                topic: "Evolution",
+                q: "Variation that shows a clear-cut difference with no intermediates (e.g., blood groups) is:",
+                options: ["Continuous", "Discontinuous", "Environmental", "Acquired"],
+                correct: 1,
+                review: "Discontinuous variation categorizes individuals into distinct groups."
+            },
+
+            {
+                topic: "Cell Biology",
+                q: "Which organelle contains chlorophyll and is the site of photosynthesis?",
+                options: ["Leucoplast", "Chromoplast", "Chloroplast", "Lysosome"],
+                correct: 2,
+                review: "Chloroplasts capture light energy to synthesize food in green plants."
+            },
+            {
+                topic: "Genetics",
+                q: "The process by which DNA makes a copy of itself is:",
+                options: ["Transcription", "Translation", "Replication", "Mutation"],
+                correct: 2,
+                review: "DNA replication occurs during the S-phase of the cell cycle to ensure genetic continuity."
+            },
+            {
+                topic: "Evolution",
+                q: "The theory of Natural Selection was proposed by:",
+                options: ["Jean-Baptiste Lamarck", "Charles Darwin", "Alfred Wallace", "Both B and C"],
+                correct: 3,
+                review: "Darwin and Wallace independently reached the conclusion of evolution by natural selection."
+            },
+            {
+                topic: "Ecology",
+                q: "An association where both organisms benefit is called:",
+                options: ["Commensalism", "Mutualism", "Parasitism", "Competition"],
+                correct: 1,
+                review: "Mutualism is a 'win-win' relationship (e.g., lichen)."
+            },
+            {
+                topic: "Ecology",
+                q: "What is the primary role of decomposers in an ecosystem?",
+                options: ["Hunting prey", "Recycling nutrients", "Producing oxygen", "Pollinating flowers"],
+                correct: 1,
+                review: "Decomposers break down dead matter, returning nutrients like Nitrogen back to the soil."
+            },
+            {
+                topic: "Classification",
+                q: "In the scientific name 'Homo sapiens', 'Homo' represents the:",
+                options: ["Species", "Family", "Order", "Genus"],
+                correct: 3,
+                review: "The first part of a binomial name is the Genus, and it is always capitalized."
+            },
+            {
+                topic: "Classification",
+                q: "Which group of plants lacks vascular tissues (Xylem and Phloem)?",
+                options: ["Pteridophytes", "Bryophytes", "Gymnosperms", "Angiosperms"],
+                correct: 1,
+                review: "Bryophytes, like mosses, are non-vascular plants."
+            },
+
+            {
+                topic: "Evolution",
+                q: "The 'survival of the fittest' describes which process?",
+                options: ["Artificial selection", "Genetic drift", "Natural selection", "Gene flow"],
+                correct: 2,
+                review: "Natural selection ensures that organisms best adapted to their environment survive and reproduce."
+            },
+            {
+                topic: "Evolution",
+                q: "Organs that have the same basic structure but perform different functions (e.g., bird wing and human arm) are:",
+                options: ["Analogous", "Homologous", "Vestigial", "Rudimentary"],
+                correct: 1,
+                review: "Homologous organs indicate a common evolutionary origin."
+            },
+            {
+                topic: "Ecology",
+                q: "The study of the relationship between living organisms and their environment is:",
+                options: ["Biology", "Ecology", "Ecosystem", "Community"],
+                correct: 1,
+                review: "Ecology focuses on interactions within the biosphere."
+            },
+            {
+                topic: "Genetics",
+                q: "Who is known as the father of modern genetics?",
+                options: ["Charles Darwin", "Gregor Mendel", "Lamarck", "Watson and Crick"],
+                correct: 1,
+                review: "Gregor Mendel discovered the basic principles of heredity through experiments with pea plants."
+            },
+            {
+                topic: "Genetics",
+                q: "If a person has blood group O, their genotype must be:",
+                options: ["AA", "AO", "AB", "OO"],
+                correct: 3,
+                review: "O is a recessive trait, so it only expresses in the homozygous state."
+            },
+            {
+                topic: "Physiology",
+                q: "The hormone insulin, which regulates blood sugar, is produced by the:",
+                options: ["Liver", "Pancreas", "Adrenal gland", "Thyroid"],
+                correct: 1,
+                review: "The Pancreas secretes insulin and glucagon."
+            },
+
+            {
+                topic: "Ecology",
+                q: "The place where an organism lives is its:",
+                options: ["Niche", "Habitat", "Ecosystem", "Biome"],
+                correct: 1,
+                review: "A habitat is the physical address of an organism."
+            },
+            {
+                topic: "Ecology",
+                q: "A group of organisms of the same species living in a particular area is a:",
+                options: ["Community", "Population", "Ecosystem", "Biosphere"],
+                correct: 1,
+                review: "Population refers to one species; community refers to multiple species."
+            },
+            {
+                topic: "Plant Biology",
+                q: "The process by which plants lose water vapor through the stomata is:",
+                options: ["Photosynthesis", "Respiration", "Transpiration", "Translocation"],
+                correct: 2,
+                review: "Transpiration helps in cooling the plant and pulling water up from the roots."
+            },
+            {
+                topic: "Plant Biology",
+                q: "Which plant hormone is primarily responsible for fruit ripening?",
+                options: ["Auxin", "Gibberellin", "Ethylene", "Cytokinin"],
+                correct: 2,
+                review: "Ethylene is a gaseous hormone that triggers ripening."
+            },
+            {
+                topic: "Classification",
+                q: "The science of naming, describing, and classifying organisms is:",
+                options: ["Ecology", "Taxonomy", "Genetics", "Physiology"],
+                correct: 1,
+                review: "Taxonomy is the branch of biology concerned with classification."
+            },
+            {
+                topic: "Plant Biology",
+                q: "Which tissue is responsible for the transport of water and minerals?",
+                options: ["Phloem", "Xylem", "Cortex", "Epidermis"],
+                correct: 1,
+                review: "Xylem conducts water upwards from roots to leaves."
+            },
+
+
+            {
+                topic: "Plant Biology",
+                q: "Photosynthesis takes place primarily in which leaf tissue?",
+                options: ["Spongy mesophyll", "Palisade mesophyll", "Epidermis", "Vascular bundle"],
+                correct: 1,
+                review: "The palisade mesophyll contains the highest concentration of chloroplasts."
+            },
+            {
+                topic: "Physiology",
+                q: "Which organ is responsible for the detoxification of harmful substances in the body?",
+                options: ["Kidney", "Heart", "Liver", "Lungs"],
+                correct: 2,
+                review: "The liver processes toxins and produces bile for digestion."
+            },
+            {
+                topic: "Physiology",
+                q: "The exchange of gases (Oxygen and Carbon dioxide) occurs in the:",
+                options: ["Trachea", "Bronchi", "Alveoli", "Pharynx"],
+                correct: 2,
+                review: "Alveoli are tiny air sacs in the lungs where gas exchange happens."
+            },
+            {
+                topic: "Ecology",
+                q: "What is the ultimate source of energy for almost all ecosystems?",
+                options: ["Water", "Soil", "Sunlight", "Carbon dioxide"],
+                correct: 2,
+                review: "Sunlight is captured by producers via photosynthesis."
+            },
+            {
+                topic: "Ecology",
+                q: "In an energy pyramid, which level contains the most energy?",
+                options: ["Producers", "Primary consumers", "Secondary consumers", "Tertiary consumers"],
+                correct: 0,
+                review: "Energy is lost at each trophic level; producers at the base have the most."
+            },
+            {
+                topic: "Physiology",
+                q: "Which blood vessel carries oxygenated blood away from the heart to the body?",
+                options: ["Vena Cava", "Pulmonary Artery", "Aorta", "Pulmonary Vein"],
+                correct: 2,
+                review: "The Aorta is the largest artery in the body."
+            },
+            {
+                topic: "Genetics",
+                q: "A condition where both alleles in a pair are identical is:",
+                options: ["Heterozygous", "Homozygous", "Dominant", "Recessive"],
+                correct: 1,
+                review: "Homozygous means having two identical alleles for a particular gene (e.g., TT or tt)."
+            },
+
+            {
+                topic: "Classification",
+                q: "Organisms that belong to Kingdom Fungi are primarily:",
+                options: ["Autotrophic", "Photosynthetic", "Saprophytic", "Prokaryotic"],
+                correct: 2,
+                review: "Fungi obtain nutrients by absorbing organic matter from dead organisms."
+            },
+
+            {
+                topic: "Physiology",
+                q: "Which part of the brain controls balance and posture?",
+                options: ["Cerebrum", "Cerebellum", "Medulla Oblongata", "Hypothalamus"],
+                correct: 1,
+                review: "The cerebellum coordinates voluntary movements and balance."
+            },
+            {
+                topic: "Reproduction",
+                q: "Asexual reproduction involving the division of a single cell into two identical daughter cells is:",
+                options: ["Budding", "Fragmentation", "Binary Fission", "Spore formation"],
+                correct: 2,
+                review: "Binary fission is common in bacteria and amoeba."
+            },
+            {
+                topic: "Reproduction",
+                q: "In flowering plants, the male reproductive organ is the:",
+                options: ["Pistil", "Stamen", "Petal", "Sepal"],
+                correct: 1,
+                review: "The stamen consists of the anther and filament."
+            },
+            {
+                topic: "Ecology",
+                q: "Which of the following is a primary producer in a food chain?",
+                options: ["Grasshopper", "Green plant", "Lion", "Fungi"],
+                correct: 1,
+                review: "Plants are autotrophs (producers) because they make their own food through photosynthesis."
+            },
+            {
+                topic: "Ecology",
+                q: "Bacteria that convert atmospheric nitrogen into nitrates in the soil are:",
+                options: ["Denitrifying bacteria", "Nitrogen-fixing bacteria", "Putrefying bacteria", "Nitrifying bacteria"],
+                correct: 1,
+                review: "Rhizobium is a common nitrogen-fixing bacterium found in root nodules."
+            },
+            {
+                topic: "Reproduction",
+                q: "The process of releasing a mature egg from the ovary is:",
+                options: ["Fertilization", "Ovulation", "Implantation", "Gestation"],
+                correct: 1,
+                review: "Ovulation typically occurs mid-cycle in humans."
+            },
+            {
+                topic: "Ecology",
+                q: "The relationship between a shark and a remora fish (where the fish gets food and the shark is unaffected) is:",
+                options: ["Mutualism", "Parasitism", "Commensalism", "Predation"],
+                correct: 2,
+                review: "Commensalism benefits one species while the other is neither helped nor harmed."
+            },
+            {
+                topic: "Cell Biology",
+                q: "Which scientist first observed cells in cork using a simple microscope?",
+                options: ["Antonie van Leeuwenhoek", "Robert Hooke", "Theodor Schwann", "Rudolf Virchow"],
+                correct: 1,
+                review: "Robert Hooke coined the term 'cell' in 1665."
+            },
+            {
+                topic: "Ecology",
+                q: "In a parasitic relationship, the organism that benefits is the parasite, while the one harmed is the:",
+                options: ["Prey", "Host", "Commensal", "Symbiont"],
+                correct: 1,
+                review: "The host provides nutrients to the parasite, often suffering physiological harm in the process."
+            },
+            {
+                topic: "Ecology",
+                q: "The process by which certain bacteria convert nitrates in the soil back into atmospheric nitrogen gas is:",
+                options: ["Nitrification", "Nitrogen fixation", "Denitrification", "Ammonification"],
+                correct: 2,
+                review: "Denitrification completes the nitrogen cycle by releasing nitrogen back into the air."
+            },
+            {
+                topic: "Ecology",
+                q: "Which of the following describes a 'Food Web'?",
+                options: ["A single pathway of energy flow", "A network of interconnected food chains", "The study of spiders", "A pyramid of biomass"],
+                correct: 1,
+                review: "A food web is more realistic than a food chain because most organisms eat more than one type of food."
+            },
+            {
+                topic: "Environmental Biology",
+                q: "The contamination of the environment by substances harmful to living organisms is:",
+                options: ["Conservation", "Erosion", "Pollution", "Eutrophication"],
+                correct: 2,
+                review: "Pollution can affect air, water, and soil, disrupting the balance of ecosystems."
+            },
+            {
+                topic: "Environmental Biology",
+                q: "Which gas is primarily responsible for the 'Greenhouse Effect' and global warming?",
+                options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Argon"],
+                correct: 2,
+                review: "Carbon dioxide traps heat in the atmosphere, leading to a rise in global temperatures."
+            },
+            {
+                topic: "Environmental Biology",
+                q: "The protection and management of natural resources to prevent their exhaustion is:",
+                options: ["Exploitation", "Conservation", "Deforestation", "Urbanization"],
+                correct: 1,
+                review: "Conservation ensures that biodiversity and resources are available for future generations."
+            },
+            {
+                topic: "Environmental Biology",
+                q: "Which of the following is a non-renewable resource?",
+                options: ["Solar energy", "Wind", "Petroleum", "Water"],
+                correct: 2,
+                review: "Non-renewable resources like fossil fuels take millions of years to form and cannot be easily replaced."
+            },
+            {
+                topic: "Environmental Biology",
+                q: "Excessive richness of nutrients in a lake (often due to fertilizer runoff) which causes dense plant growth is:",
+                options: ["Photosynthesis", "Eutrophication", "Transpiration", "Nitrification"],
+                correct: 1,
+                review: "Eutrophication often leads to oxygen depletion and the death of aquatic animals."
+            },
+            {
+                topic: "Ecology",
+                q: "Organisms that can manufacture their own food from simple inorganic substances are called:",
+                options: ["Heterotrophs", "Autotrophs", "Saprophytes", "Consumers"],
+                correct: 1,
+                review: "Autotrophs (like green plants) use energy from sunlight or chemicals to produce food."
+            },
+            {
+                topic: "Ecology",
+                q: "The progressive change in the species composition of a community over time is called:",
+                options: ["Evolution", "Ecological Succession", "Natural Selection", "Adaptation"],
+                correct: 1,
+                review: "Succession starts from a pioneer community and moves toward a stable climax community."
+            },
+            {
+                topic: "Cell Biology",
+                q: "Which organelle is responsible for synthesizing proteins?",
+                options: ["Lysosome", "Ribosome", "Vacuole", "Centriole"],
+                correct: 1,
+                review: "Ribosomes can be found free in the cytoplasm or attached to the Rough Endoplasmic Reticulum."
+            },
+            {
+                topic: "Genetics",
+                q: "A gene that always expresses itself when present is described as:",
+                options: ["Recessive", "Codominant", "Dominant", "Incomplete"],
+                correct: 2,
+                review: "Dominant alleles mask the expression of recessive alleles in a heterozygote."
+            },
+            {
+                topic: "Classification",
+                q: "To which kingdom do Amoeba and Paramecium belong?",
+                options: ["Monera", "Protista", "Fungi", "Animalia"],
+                correct: 1,
+                review: "Kingdom Protista includes mostly unicellular eukaryotic organisms."
+            },
+            {
+                topic: "Physiology",
+                q: "The process of maintaining a constant internal environment is:",
+                options: ["Metabolism", "Homeostasis", "Osmoregulation", "Excretion"],
+                correct: 1,
+                review: "Homeostasis regulates variables like temperature, pH, and glucose levels."
+            }, {
+                topic: "Botany",
+                q: "The reproductive part of an angiosperm is the:",
+                options: ["Leaf", "Root", "Flower", "Stem"],
+                correct: 2,
+                review: "Flowers contain the reproductive organs (stamens and carpels) for seed production."
+            },
+            {
+                topic: "Physiology",
+                q: "Which component of blood is responsible for carrying oxygen?",
+                options: ["White blood cells", "Platelets", "Red blood cells", "Plasma"],
+                correct: 2,
+                review: "Red blood cells contain hemoglobin, which binds to oxygen molecules."
+            },
+            {
+                topic: "Reproduction",
+                q: "In humans, where does fertilization usually occur?",
+                options: ["Ovary", "Uterus", "Fallopian tube", "Vagina"],
+                correct: 2,
+                review: "The egg is usually fertilized in the oviduct (fallopian tube) before traveling to the uterus."
+            },
+
+            {
+                topic: "Plant Biology",
+                q: "The 'Master' tissue that produces all other tissues in plants is:",
+                options: ["Permanent tissue", "Meristematic tissue", "Dermal tissue", "Vascular tissue"],
+                correct: 1,
+                review: "Meristems are areas of active cell division."
+            }
+
+        ];
+
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

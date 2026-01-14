@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STA 101 CBT - Top Submit Mode</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <div style="font-weight: bold;">STA 101 </div>
+        <div class="header-tools">
+            <div id="timer">60:00</div>
+            <button class="btn-submit-top" onclick="handleManualSubmit()">SUBMIT EXAM</button>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div id="exam-view">
+            <div class="card">
+                <span id="topic-display" class="topic-badge"></span>
+                <div id="question-display" class="question-text"></div>
+                <div id="options-display"></div>
+
+                <div class="nav-footer">
+                    <button class="btn-nav" id="prevBtn" onclick="navigate(-1)">← Previous</button>
+                    <span id="counter-display" style="padding-top:10px; color:#888;"></span>
+                    <button class="btn-nav" id="nextBtn" onclick="navigate(1)" style="background:var(--secondary)">Next
+                        →</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="result-screen">
+            <div class="score-box">
+                <h1 id="score-text" style="font-size: 3rem; margin:0; color:var(--secondary)">0%</h1>
+                <p id="stats-text" style="color:#666;"></p>
+                <button onclick="location.reload()"
+                    style="background:var(--dark); color:white; padding:10px 30px;">Restart Practice</button>
+            </div>
+            <h3>Detailed Review</h3>
+            <div id="review-list"></div>
+        </div>
+
+    </div>
+
+    <a href="../index.html"><div class="back">🏡</div></a>
+
+    <script>
+        // Data containing all the specific questions from your MTH 101 notes
+        const questions = [
+            {
+                topic: "Introduction to Statistics",
+                q: "Which branch of statistics involves collecting, organizing, and summarizing data without drawing conclusions about a larger group?",
+                options: ["Inferential Statistics", "Descriptive Statistics", "Applied Statistics", "Theoretical Statistics"],
+                correct: 1,
+                review: "Descriptive Statistics consists of methods for organizing and summarizing information, often through tables and graphs."
+            },
+            {
+                topic: "Data Types",
+                q: "Data that can be expressed as names or labels rather than numbers is called:",
+                options: ["Quantitative data", "Qualitative data", "Discrete data", "Continuous data"],
+                correct: 1,
+                review: "Qualitative data (or categorical data) yields non-numerical information like gender or religious affiliation."
+            },
+            {
+                topic: "Data Types",
+                q: "The number of children in a family is an example of:",
+                options: ["Qualitative data", "Continuous quantitative data", "Discrete quantitative data", "Nominal data"],
+                correct: 2,
+                review: "Discrete data are values that can be counted and take on specific points, such as 0, 1, 2, etc."
+            },
+            {
+                topic: "Data Collection",
+                q: "Information gathered by the researcher specifically for the current study is known as:",
+                options: ["Secondary data", "Primary data", "Internal data", "Published data"],
+                correct: 1,
+                review: "Primary data is information collected for the first time by the investigator for a specific purpose."
+            },
+            {
+                topic: "Data Presentation",
+                q: "A circular chart divided into sectors to illustrate numerical proportion is called a:",
+                options: ["Histogram", "Bar Chart", "Pie Chart", "Ogive"],
+                correct: 2,
+                review: "A pie chart uses the size of each slice to represent the proportion of the total for each category."
+            },
+            {
+                topic: "Data Presentation",
+                q: "In a Histogram, the bars are usually drawn:",
+                options: ["With spaces between them", "Touching each other", "Horizontally", "In order of frequency"],
+                correct: 1,
+                review: "Histograms display continuous data, so the bars are adjacent to show the continuity of the class intervals."
+            },
+            {
+                topic: "Measures of Location",
+                q: "The sum of all values divided by the total number of values is the:",
+                options: ["Median", "Mode", "Arithmetic Mean", "Geometric Mean"],
+                correct: 2,
+                review: "The arithmetic mean is the most common measure of central tendency, calculated as Σx / n."
+            },
+            {
+                topic: "Measures of Location",
+                q: "Which measure of central tendency is the most frequent value in a data set?",
+                options: ["Mean", "Median", "Mode", "Range"],
+                correct: 2,
+                review: "The mode is the value that occurs with the highest frequency in a distribution."
+            },
+            {
+                topic: "Measures of Location",
+                q: "The middle value of a data set when arranged in ascending order is the:",
+                options: ["Mean", "Median", "Mode", "Variance"],
+                correct: 1,
+                review: "The median divides an ordered data set into two equal parts."
+            },
+            {
+                topic: "Measures of Partition",
+                q: "Quartiles divide a distribution into how many equal parts?",
+                options: ["Two", "Four", "Ten", "One Hundred"],
+                correct: 1,
+                review: "Quartiles (Q1, Q2, Q3) divide the data into four equal portions."
+            },
+            {
+                topic: "Measures of Partition",
+                q: "The 50th Percentile (P50) is equivalent to the:",
+                options: ["Mean", "Mode", "Median", "Standard Deviation"],
+                correct: 2,
+                review: "P50, D5 (Decile 5), and Q2 (Quartile 2) are all identical to the Median."
+            },
+            {
+                topic: "Measures of Dispersion",
+                q: "The difference between the largest and smallest values in a set is the:",
+                options: ["Variance", "Standard Deviation", "Range", "Interquartile Range"],
+                correct: 2,
+                review: "Range = Highest value - Lowest value. It is the simplest measure of dispersion."
+            },
+            {
+                topic: "Measures of Dispersion",
+                q: "What is the square root of the variance called?",
+                options: ["Mean Deviation", "Standard Deviation", "Coefficient of Variation", "Range"],
+                correct: 1,
+                review: "Standard deviation is the positive square root of the variance and is measured in the same units as the data."
+            },
+            {
+                topic: "Measures of Dispersion",
+                q: "Which measure is used to compare the relative variability of two data sets with different units?",
+                options: ["Variance", "Standard Deviation", "Coefficient of Variation", "Mean"],
+                correct: 2,
+                review: "C.V. = (S / Mean) * 100. It is a dimensionless measure used for comparison."
+            },
+            {
+                topic: "Skewness",
+                q: "If Mean > Median > Mode, the distribution is said to be:",
+                options: ["Symmetric", "Negatively skewed", "Positively skewed", "Normally distributed"],
+                correct: 2,
+                review: "A distribution skewed to the right (positive) has a long tail on the right side and the mean is pulled toward the larger values."
+            },
+            {
+                topic: "Kurtosis",
+                q: "A distribution that is 'peaked' relative to a normal distribution is called:",
+                options: ["Mesokurtic", "Platykurtic", "Leptokurtic", "Normal"],
+                correct: 2,
+                review: "Leptokurtic distributions have high peaks and heavy tails."
+            },
+            {
+                topic: "Index Numbers",
+                q: "Which index number uses base year quantities (q0) as weights?",
+                options: ["Paasche Index", "Fisher Index", "Laspeyre Index", "Marshall-Edgeworth Index"],
+                correct: 2,
+                review: "The Laspeyre index keeps the quantities fixed at the base year level."
+            },
+            {
+                topic: "Index Numbers",
+                q: "The 'Ideal' index that is the geometric mean of Laspeyre and Paasche indices is the:",
+                options: ["Simple Index", "Fisher Index", "Composite Index", "Weighted Index"],
+                correct: 1,
+                review: "Fisher’s Ideal Index = √(Laspeyre × Paasche)."
+            },
+            {
+                topic: "Data Presentation",
+                q: "A cumulative frequency graph is also known as a/an:",
+                options: ["Histogram", "Frequency Polygon", "Ogive", "Bar Chart"],
+                correct: 2,
+                review: "An Ogive is used to determine the number or proportion of cases falling below a certain value."
+            },
+            {
+                topic: "Scales of Measurement",
+                q: "The highest level of measurement which has a true zero point is the:",
+                options: ["Nominal Scale", "Ordinal Scale", "Interval Scale", "Ratio Scale"],
+                correct: 3,
+                review: "Ratio scale possesses all properties of interval scales plus a meaningful absolute zero (e.g., weight, height)."
+            },
+            {
+                topic: "Errors",
+                q: "Errors arising from the difference between a sample and the population are:",
+                options: ["Non-sampling errors", "Sampling errors", "Biased errors", "Measurement errors"],
+                correct: 1,
+                review: "Sampling error is the discrepancy between the sample statistic and the actual population parameter."
+            },
+            {
+                topic: "Frequency Distribution",
+                q: "The class mark is calculated as:",
+                options: ["Upper boundary - Lower boundary", "(Lower limit + Upper limit) / 2", "Frequency / Total", "Highest - Lowest"],
+                correct: 1,
+                review: "The class mark (or mid-point) is the average of the lower and upper limits of a class."
+            },
+            {
+                topic: "Measures of Location",
+                q: "Which mean is most suitable for calculating average rates of growth or interest?",
+                options: ["Arithmetic Mean", "Geometric Mean", "Harmonic Mean", "Weighted Mean"],
+                correct: 1,
+                review: "The Geometric Mean is used for finding the average of ratios, percentages, and rates of change."
+            },
+            {
+                topic: "Measures of Location",
+                q: "The Harmonic Mean is the reciprocal of the arithmetic mean of the:",
+                options: ["Squares", "Frequencies", "Reciprocals", "Ranks"],
+                correct: 2,
+                review: "H.M. = n / Σ(1/x). It is often used for average speeds or prices."
+            },
+            {
+                topic: "Measures of Dispersion",
+                q: "The Variance is the average of the squared:",
+                options: ["Frequencies", "Deviations from the mean", "Class marks", "Ranks"],
+                correct: 1,
+                review: "Variance measures the average squared distance of each score from the mean."
+            },
+            {
+                topic: "Frequency Distribution",
+                q: "Relative frequency is calculated by dividing the class frequency by:",
+                options: ["Class width", "Class mark", "Total frequency", "Cumulative frequency"],
+                correct: 2,
+                review: "Relative Frequency = f / Σf. It represents the proportion of the total in that class."
+            },
+            {
+                topic: "Data Presentation",
+                q: "In a pie chart, the angle of a sector for a category with frequency 'f' and total 'N' is:",
+                options: ["(f/N) * 100", "(f/N) * 360°", "(N/f) * 360°", "f * 180°"],
+                correct: 1,
+                review: "To find the angle, you multiply the relative frequency by the 360 degrees of the circle."
+            },
+            {
+                topic: "Measures of Location",
+                q: "A data set with two modes is called:",
+                options: ["Unimodal", "Bimodal", "Multimodal", "Amodal"],
+                correct: 1,
+                review: "Bimodal distributions occur when two different values have the same maximum frequency."
+            },
+            {
+                topic: "Measures of Partition",
+                q: "The third Quartile (Q3) represents which percentile?",
+                options: ["25th", "50th", "75th", "100th"],
+                correct: 2,
+                review: "Q3 is the upper quartile, below which 75% of the data lies."
+            },
+            {
+                topic: "Measures of Dispersion",
+                q: "If all values in a data set are identical, the standard deviation is:",
+                options: ["One", "Zero", "The mean", "Undefined"],
+                correct: 1,
+                review: "If there is no variation, the deviation from the mean is zero for every point."
+            },
+            {
+                topic: "Measures of Dispersion",
+                q: "The Quartile Deviation is also known as:",
+                options: ["Range", "Semi-Interquartile Range", "Mean Absolute Deviation", "Variance"],
+                correct: 1,
+                review: "Q.D. = (Q3 - Q1) / 2."
+            },
+            {
+                topic: "Moments",
+                q: "The first moment about the mean (m1) is always:",
+                options: ["1", "0", "Mean", "Variance"],
+                correct: 1,
+                review: "The sum of deviations of values from their arithmetic mean is always zero."
+            },
+            {
+                topic: "Skewness",
+                q: "Karl Pearson’s coefficient of skewness uses the difference between:",
+                options: ["Mean and Mode", "Mean and Median", "Both A and B (with multipliers)", "Q3 and Q1"],
+                correct: 2,
+                review: "Sk = (Mean - Mode) / S or 3(Mean - Median) / S."
+            },
+            {
+                topic: "Kurtosis",
+                q: "For a mesokurtic (Normal) distribution, the value of β2 (beta two) is:",
+                options: ["0", "Less than 3", "Exactly 3", "Greater than 3"],
+                correct: 2,
+                review: "A value of 3 indicates normal peakedness."
+            },
+            {
+                topic: "Index Numbers",
+                q: "The base year for an index number is always assigned a value of:",
+                options: ["0", "1", "100", "Total sum"],
+                correct: 2,
+                review: "Indices are expressed relative to 100 for the base period."
+            },
+            {
+                topic: "Index Numbers",
+                q: "Price index measures the change in:",
+                options: ["Quantities sold", "Prices over time", "Total value", "Weight of goods"],
+                correct: 1,
+                review: "Price index numbers summarize how prices have changed between a base year and a current year."
+            },
+            {
+                topic: "Scales of Measurement",
+                q: "Ranking students as 1st, 2nd, and 3rd place uses which scale?",
+                options: ["Nominal", "Ordinal", "Interval", "Ratio"],
+                correct: 1,
+                review: "The ordinal scale indicates rank or order without specifying the exact difference between ranks."
+            },
+            {
+                topic: "Data Collection",
+                q: "Which method involves watching and recording behavior as it occurs?",
+                options: ["Interview", "Questionnaire", "Observation", "Focus Group"],
+                correct: 2,
+                review: "Observation is a primary data collection method where the researcher records what they see."
+            },
+            {
+                topic: "Introduction to Statistics",
+                q: "The entire group of objects or individuals under study is called the:",
+                options: ["Sample", "Population", "Frequency", "Variable"],
+                correct: 1,
+                review: "A population is the complete set of items being studied."
+            },
+            {
+                topic: "Introduction to Statistics",
+                q: "A numerical characteristic of a sample is called a:",
+                options: ["Parameter", "Statistic", "Constant", "Data"],
+                correct: 1,
+                review: "Statistics describe samples; parameters describe populations."
+            },
+            {
+                topic: "Data Presentation",
+                q: "A bar chart where the bars are arranged from highest frequency to lowest is a:",
+                options: ["Simple Bar Chart", "Pareto Chart", "Component Bar Chart", "Multiple Bar Chart"],
+                correct: 1,
+                review: "Pareto charts help identify the 'vital few' categories."
+            },
+            {
+                topic: "Measures of Location",
+                q: "Which measure is most affected by extreme values (outliers)?",
+                options: ["Median", "Mode", "Arithmetic Mean", "Interquartile Range"],
+                correct: 2,
+                review: "Because the mean uses every value in the calculation, a single very large or small number can skew it."
+            },
+            {
+                topic: "Measures of Dispersion",
+                q: "If the Variance is 25, the Standard Deviation is:",
+                options: ["625", "50", "5", "12.5"],
+                correct: 2,
+                review: "√25 = 5."
+            },
+            {
+                topic: "Measures of Location",
+                q: "The weighted mean is used when:",
+                options: ["All values are equal", "Some values are more important than others", "Data is qualitative", "Sample size is small"],
+                correct: 1,
+                review: "Weights allow certain values to contribute more to the final average based on their importance."
+            },
+            {
+                topic: "Moments",
+                q: "The second moment about the mean (m2) is equal to the:",
+                options: ["Mean", "Standard Deviation", "Variance", "Skewness"],
+                correct: 2,
+                review: "The second central moment is the definition of variance."
+            }
+        ];
+
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
