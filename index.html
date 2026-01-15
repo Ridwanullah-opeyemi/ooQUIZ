@@ -37,12 +37,12 @@
 <header>
     <h1>StudyHub</h1>
     <div class="nav-right" id="authSection">
-        <button class="btn-auth" onclick="toggleModal(true)">Sign In</button>
+        <button class="btn-auth" onclick="toggleModal(true)">Sign up</button>
     </div>
 </header>
 
 <div class="hero">
-    <h2 id="heroGreet">Please sign in to access your notes</h2>
+    <h2 id="heroGreet">Please sign up to access your Quiz</h2>
     <input type="text" id="courseSearch" placeholder="Search courses..." onkeyup="filterCourses()" style="width: 80%; max-width: 400px; padding: 10px; border-radius: 20px; border: 1px solid #ccc;">
 </div>
 
@@ -89,7 +89,7 @@
         <h3>Student Login</h3>
         <input type="text" id="usernameInput" placeholder="Enter Name (e.g. Ola)">
         <input type="password" id="passwordInput" placeholder="Password">
-        <button class="btn-auth" style="width: 100%;" onclick="handleSignIn()">Sign In</button>
+        <button class="btn-auth" style="width: 100%;" onclick="handleSignIn()">Sign up</button>
         <p onclick="toggleModal(false)" style="color: grey; cursor: pointer; margin-top: 15px;">Close</p>
     </div>
 </div>
@@ -106,7 +106,7 @@
         
         if (!user) {
             // If not signed in, show error and pop up the login box
-            alert("Access Denied! Please sign in to access the Quiz.");
+            alert("Access Denied! Please sign up to access the Quiz.");
             document.getElementById('loginModal').style.display = 'block';
         } else {
             // If signed in (e.g., Ola), proceed to the sub-page
@@ -114,7 +114,7 @@
         }
     }
 
-    // 2. SIGN IN LOGIC
+    // 2. SIGN up LOGIC
     function handleSignIn() {
         const nameInput = document.getElementById('usernameInput').value;
         const passInput = document.getElementById('passwordInput').value;
@@ -146,9 +146,9 @@
             // Remove 'locked' style from links
             document.querySelectorAll('.pdf-link').forEach(link => link.classList.remove('locked'));
         } else {
-            // Show default Sign In button
-            authSection.innerHTML = `<button class="btn-auth" onclick="document.getElementById('loginModal').style.display='block'">Sign In</button>`;
-            heroGreet.innerText = "Please sign in to access your notes";
+            // Show default Sign up button
+            authSection.innerHTML = `<button class="btn-auth" onclick="document.getElementById('loginModal').style.display='block'">Sign up</button>`;
+            heroGreet.innerText = "Please sign up to access your Quiz";
             
             // Add 'locked' style
             document.querySelectorAll('.pdf-link').forEach(link => link.classList.add('locked'));
