@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GNT 101 CBT - Top Submit Mode</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <div style="font-weight: bold;">GNT 101 </div>
+        <div class="header-tools">
+            <div id="timer">60:00</div>
+            <button class="btn-submit-top" onclick="handleManualSubmit()">SUBMIT EXAM</button>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div id="exam-view">
+            <div class="card">
+                <span id="topic-display" class="topic-badge"></span>
+                <div id="question-display" class="question-text"></div>
+                <div id="options-display"></div>
+
+                <div class="nav-footer">
+                    <button class="btn-nav" id="prevBtn" onclick="navigate(-1)">← Previous</button>
+                    <span id="counter-display" style="padding-top:10px; color:#888;"></span>
+                    <button class="btn-nav" id="nextBtn" onclick="navigate(1)" style="background:var(--secondary)">Next
+                        →</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="result-screen">
+            <div class="score-box">
+                <h1 id="score-text" style="font-size: 3rem; margin:0; color:var(--secondary)">0%</h1>
+                <p id="stats-text" style="color:#666;"></p>
+                <button onclick="location.reload()"
+                    style="background:var(--dark); color:white; padding:10px 30px;">Restart Practice</button>
+            </div>
+            <h3>Detailed Review</h3>
+            <div id="review-list"></div>
+        </div>
+
+    </div>
+
+    <a href="../index.html">
+        <div class="back">🏡</div>
+    </a>
+
+    <script>
+        // Data containing all the specific questions from your MTH 101 notes
+        const questions = [
+            // --- GRAMMAR & SENTENCE STRUCTURE ---
+            {
+                topic: "Clause Types",
+                q: "What is the primary difference between an independent clause and a dependent clause?",
+                options: ["Independent clauses lack a verb", "Independent clauses can stand alone; dependent clauses cannot", "Dependent clauses are always longer", "Independent clauses always start with 'because'"],
+                correct: 1,
+                review: "An independent clause expresses a complete thought, whereas a dependent (subordinate) clause relies on a main clause for meaning."
+            },
+            {
+                topic: "Sentence Structure",
+                q: "Identify the structure: 'The sun rose, and the birds began to sing.'",
+                options: ["Simple", "Complex", "Compound", "Compound-Complex"],
+                correct: 2,
+                review: "This is a compound sentence because it joins two independent clauses using the coordinating conjunction 'and'."
+            },
+            {
+                topic: "Sentence Function",
+                q: "What is the function of the sentence: 'How wonderful this day is!'?",
+                options: ["Declarative", "Imperative", "Exclamatory", "Interrogative"],
+                correct: 2,
+                review: "Exclamatory sentences express strong emotion and typically end with an exclamation mark."
+            },
+            {
+                topic: "Noun Clauses",
+                q: "In the sentence 'I forgot that I had homework', the bolded part is a:",
+                options: ["Adjectival Clause", "Adverbial Clause", "Noun Clause", "Independent Clause"],
+                correct: 2,
+                review: "The clause 'that I had homework' acts as the direct object of the verb 'forgot', making it a noun clause."
+            },
+            {
+                topic: "Adverbial Clauses",
+                q: "In the sentence 'She sings because she likes music', the clause is an:",
+                options: ["Adverbial Clause of Reason", "Noun Clause", "Adjectival Clause", "Independent Clause"],
+                correct: 0,
+                review: "The clause explains 'why' she sings, which indicates reason."
+            },
+            {
+                topic: "Apposition",
+                q: "Identify the bolded part: 'Mr. Okafor, **the police officer**, is here.'",
+                options: ["Adverbial Clause", "Apposition", "Independent Clause", "Declarative Sentence"],
+                correct: 1,
+                review: "Apposition is when a noun phrase is placed next to another noun to rename or explain it."
+            },
+            {
+                topic: "Sentence Structure",
+                q: "Identify: 'Although he was tired, he finished his work.'",
+                options: ["Simple", "Compound", "Complex", "Compound-Complex"],
+                correct: 2,
+                review: "A complex sentence contains one independent clause and at least one dependent clause (starting with 'Although')."
+            },
+            {
+                topic: "Sentence Function",
+                q: "What kind of sentence is 'Please provide the research findings by noon'?",
+                options: ["Declarative", "Interrogative", "Imperative", "Exclamatory"],
+                correct: 2,
+                review: "Imperative sentences are used to give requests, directions, or commands."
+            },
+            {
+                topic: "Sentence Structure",
+                q: "Identify: 'If it rains, we will cancel the class and go home.'",
+                options: ["Complex", "Compound-Complex", "Compound", "Simple"],
+                correct: 1,
+                review: "It is compound-complex because it has a dependent clause ('If it rains') and two independent clauses joined by 'and'."
+            },
+            {
+                topic: "Adjectival Clauses",
+                q: "In 'The man who paid the bride price is happy', the clause is:",
+                options: ["Noun Clause", "Adjectival Clause", "Adverbial Clause", "Independent Clause"],
+                correct: 1,
+                review: "The clause 'who paid the bride price' describes the noun 'man', acting as an adjective."
+            },
+
+            // --- PHONETICS (VOWELS & CONSONANTS) ---
+            {
+                topic: "Phonetics Overview",
+                q: "How many total sounds exist in English phonetics?",
+                options: ["26", "44", "20", "24"],
+                correct: 1,
+                review: "There are 44 sounds: 24 consonants and 20 vowels."
+            },
+            {
+                topic: "Vowel Sounds",
+                q: "Which vowel symbol corresponds to the word 'Palm'?",
+                options: ["/æ/", "/a:/", "/ʌ/", "/ɒ/"],
+                correct: 1,
+                review: "The symbol /a:/ represents the long 'ah' sound in palm, calm, and father."
+            },
+            {
+                topic: "Diphthongs",
+                q: "Which of these is a diphthong (double sound)?",
+                options: ["/i:/", "/e/", "/aɪ/", "/u:/"],
+                correct: 2,
+                review: "The symbol /aɪ/ (as in 'price') is a diphthong because it moves from one vowel position to another."
+            },
+            {
+                topic: "Vowel Sounds",
+                q: "Identify the vowel sound in 'Bit'.",
+                options: ["/i:/", "/ɪ/", "/e/", "/æ/"],
+                correct: 1,
+                review: "The symbol /ɪ/ represents the short 'i' sound found in bit, sit, and hit."
+            },
+            {
+                topic: "Vowel Sounds",
+                q: "The symbol /ə/ represents the sound in which word?",
+                options: ["Meet", "Comma", "Palm", "Price"],
+                correct: 1,
+                review: "/ə/ is the schwa sound, a weak unstressed vowel found at the end of 'comma'."
+            },
+            {
+                topic: "Diphthongs",
+                q: "The sound /ɔɪ/ is found in which word?",
+                options: ["Boy", "Now", "Boat", "Near"],
+                correct: 0,
+                review: "/ɔɪ/ represents the 'oy' sound in boy, toy, and oil."
+            },
+            {
+                topic: "Consonant Sounds",
+                q: "How many consonant sounds are in the English language?",
+                options: ["20", "24", "44", "21"],
+                correct: 1,
+                review: "There are 24 distinct consonant sounds in the English phonetic system."
+            },
+            {
+                topic: "Vowel Sounds",
+                q: "The symbol /ɜ:/ is used for the sound in which word?",
+                options: ["About", "Nurse", "Hut", "Saw"],
+                correct: 1,
+                review: "/ɜ:/ is the long 'er' sound in nurse, bird, and heard."
+            },
+            {
+                topic: "Vowel Sounds",
+                q: "The vowel sound in 'Cat' or 'Mat' is:",
+                options: ["/a:/", "/æ/", "/e/", "/ʌ/"],
+                correct: 1,
+                review: "/æ/ is the short 'a' sound in trap, cat, and mat."
+            },
+            {
+                topic: "Vowel Sounds",
+                q: "Which symbol is for 'Foot' or 'Put'?",
+                options: ["/u:/", "/ʊ/", "/ɒ/", "/ɔ:/"],
+                correct: 1,
+                review: "/ʊ/ is the short rounded 'u' sound in foot, put, and push."
+            },
+            {
+                topic: "Diphthongs",
+                q: "The sound /eɪ/ is found in which word?",
+                options: ["Price", "Face", "Boy", "Hear"],
+                correct: 1,
+                review: "/eɪ/ is the 'ay' sound in face, take, and make."
+            },
+            {
+                topic: "Diphthongs",
+                q: "Which symbol represents the sound in 'Now'?",
+                options: ["/aɪ/", "/aʊ/", "/əʊ/", "/ɔɪ/"],
+                correct: 1,
+                review: "/aʊ/ is the 'ow' sound found in mouth, house, and now."
+            },
+            {
+                topic: "Diphthongs",
+                q: "The sound /ɪə/ is found in which word?",
+                options: ["Fair", "Fear", "Fire", "Fur"],
+                correct: 1,
+                review: "/ɪə/ is the sound found in near, hear, and fear."
+            },
+            {
+                topic: "Vowel Sounds",
+                q: "Which symbol is for 'Hut' or 'Cut'?",
+                options: ["/ʌ/", "/ʊ/", "/ɒ/", "/ɜ:/"],
+                correct: 0,
+                review: "/ʌ/ is the short 'u' sound in strut, hut, and cut."
+            },
+            {
+                topic: "Diphthongs",
+                q: "The sound /əʊ/ is found in which word?",
+                options: ["Boat", "Now", "Boy", "Near"],
+                correct: 0,
+                review: "/əʊ/ is the 'oh' sound in boat, show, and go."
+            },
+            {
+                topic: "Diphthongs",
+                q: "The sound /eə/ is found in which word?",
+                options: ["Square", "Near", "Nurse", "Now"],
+                correct: 0,
+                review: "/eə/ is the 'air' sound in square, fair, and care."
+            },
+            {
+                topic: "Vowel Sounds",
+                q: "The symbol /u:/ is found in which word?",
+                options: ["Foot", "Suit", "Hut", "Nurse"],
+                correct: 1,
+                review: "/u:/ is the long 'oo' sound in suit and new."
+            },
+            {
+                topic: "Vowel Sounds",
+                q: "The symbol /ɔ:/ is found in which word?",
+                options: ["Lot", "Thought", "Foot", "Hut"],
+                correct: 1,
+                review: "/ɔ:/ is the long 'aw' sound in thought, caught, and saw."
+            },
+            {
+                topic: "Vowel Sounds",
+                q: "The symbol /ɒ/ is found in which word?",
+                options: ["Lot", "Palm", "Foot", "Hut"],
+                correct: 0,
+                review: "/ɒ/ is the short 'o' sound in lot and stop."
+            },
+            {
+                topic: "Vowel Sounds",
+                q: "The symbol /e/ is found in which word?",
+                options: ["Trap", "Dress", "Palm", "Thought"],
+                correct: 1,
+                review: "/e/ is the short 'eh' sound in dress and let."
+            },
+
+            // --- THE WRITING PROCESS & FORMS ---
+            {
+                topic: "Writing Stages",
+                q: "Which stage involves gathering ideas and preparation?",
+                options: ["Drafting", "Pre-writing", "Editing", "Revising"],
+                correct: 1,
+                review: "Pre-writing is the 'thinking' stage where you brainstorm and gather info."
+            },
+            {
+                topic: "Writing Categories",
+                q: "What is the primary purpose of fictional writing?",
+                options: ["Provide facts", "Entertain/Imagination", "Document history", "Academic research"],
+                correct: 1,
+                review: "Fiction is based on imagination and is used to tell stories or entertain."
+            },
+            {
+                topic: "Formal Reports",
+                q: "Where is a summary of existing works found in a report?",
+                options: ["Introduction", "Abstract", "Literature Review", "References"],
+                correct: 2,
+                review: "The Literature Review summarizes previous research and writing on the topic."
+            },
+            {
+                topic: "Writing Stages",
+                q: "Which stage focuses on 'mechanical' checks like grammar?",
+                options: ["Drafting", "Revising", "Editing", "Pre-writing"],
+                correct: 2,
+                review: "Editing (cell editing) is for fixing grammar, spelling, and punctuation."
+            },
+            {
+                topic: "Writing Stages",
+                q: "Which is known as the 'first real writing stage'?",
+                options: ["Pre-writing", "Drafting", "Editing", "Publishing"],
+                correct: 1,
+                review: "Drafting is when you put thoughts into your first version of sentences."
+            },
+            {
+                topic: "Writing Stages",
+                q: "What is 'Revising' in the writing process?",
+                options: ["Fixing spelling", "Sharing work", "Improving organization/clarity", "Brainstorming"],
+                correct: 2,
+                review: "Revising is about reviewing and improving the flow and structure of ideas."
+            },
+            {
+                topic: "Formal Reports",
+                q: "In a formal report, what does the 'Abstract' provide?",
+                options: ["Source list", "Data analysis", "Concise summary", "Problem statement"],
+                correct: 2,
+                review: "The Abstract is a brief summary of the entire research paper."
+            },
+            {
+                topic: "Essay Types",
+                q: "Which essay type tells a story of events?",
+                options: ["Descriptive", "Argumentative", "Narrative", "Expository"],
+                correct: 2,
+                review: "Narrative essays focus on telling a story or recounting events."
+            },
+            {
+                topic: "Letter Writing",
+                q: "A letter to a distant relative or teacher is usually:",
+                options: ["Formal", "Informal", "Semi-formal", "Fictional"],
+                correct: 2,
+                review: "Semi-formal letters are for people you know but are not close to."
+            },
+            {
+                topic: "Writing Stages",
+                q: "What is the final stage of the writing process?",
+                options: ["Editing", "Drafting", "Publishing", "Revising"],
+                correct: 2,
+                review: "Publishing is the final stage where the work is shared with the audience."
+            },
+            {
+                topic: "Formal Reports",
+                q: "The 'References' section contains:",
+                options: ["Opinions", "Findings", "List of cited sources", "Questions"],
+                correct: 2,
+                review: "References list all books, articles, or websites cited in the text."
+            },
+            {
+                topic: "Writing Categories",
+                q: "Which is an example of Non-Fictional writing?",
+                options: ["Novel", "Textbook", "Short Story", "Fairy Tale"],
+                correct: 1,
+                review: "Textbooks are based on facts and real information."
+            },
+            {
+                topic: "Writing Stages",
+                q: "Which stage says 'focus on ideas, not grammar'?",
+                options: ["Editing", "Drafting", "Pre-writing", "Publishing"],
+                correct: 1,
+                review: "In Drafting, the goal is to get the flow of ideas out without stopping for errors."
+            },
+            {
+                topic: "Formal Reports",
+                q: "Research Questions are found in the:",
+                options: ["Abstract", "Introduction", "Analysis", "References"],
+                correct: 1,
+                review: "The Introduction section presents the problem and specific research questions."
+            },
+            {
+                topic: "Speech Writing",
+                q: "A speech is specifically prepared to be:",
+                options: ["Read silently", "Spoken to an audience", "A private diary", "A textbook"],
+                correct: 1,
+                review: "Speeches are intended for oral delivery to a group of listeners."
+            },
+            {
+                topic: "Writing Categories",
+                q: "Where would an argumentative essay likely fall?",
+                options: ["Fiction", "Non-fiction", "Fairy Tale", "Novel"],
+                correct: 1,
+                review: "Argumentative essays are non-fiction because they deal with real-world arguments."
+            },
+            {
+                topic: "Formal Reports",
+                q: "The 'Findings' section of a report presents:",
+                options: ["Author's bio", "Summary of other books", "Analysis of data", "Glossary"],
+                correct: 2,
+                review: "Analysis/Findings is where the actual data gathered is presented and explained."
+            },
+            {
+                topic: "Letter Writing",
+                q: "A letter to a government official is:",
+                options: ["Formal", "Informal", "Semi-formal", "Personal"],
+                correct: 0,
+                review: "Official correspondence with government or business entities is formal."
+            },
+            {
+                topic: "Writing Stages",
+                q: "Revising happens after which stage?",
+                options: ["Publishing", "Editing", "Drafting", "Pre-writing"],
+                correct: 2,
+                review: "You draft the text first, then revise it for structure and clarity."
+            },
+            {
+                topic: "Communication Skills",
+                q: "Which of these is NOT one of the 4 primary communication skills?",
+                options: ["Listening", "Writing", "Thinking", "Reading"],
+                correct: 2,
+                review: "The 4 primary skills are Listening, Speaking, Reading, and Writing."
+            }
+        ];
+
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
