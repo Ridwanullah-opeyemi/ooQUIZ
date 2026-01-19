@@ -18,7 +18,8 @@
         .hero { text-align: center; padding: 40px 20px; background: white; border-bottom: 2px solid #ddd; }
         .container { padding: 40px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
         
-        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
+        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
         .card h3 { margin: 10px 0; color: var(--primary); }
         
         /* PDF Link Styling */
@@ -43,13 +44,13 @@
 
 <div class="hero">
     <h2 id="heroGreet">Please sign up to access your Quiz</h2>
-    <input type="text" id="courseSearch" placeholder="Search courses..." onkeyup="filterCourses()" style="width: 80%; max-width: 400px; padding: 10px; border-radius: 20px; border: 1px solid #ccc;">
+    <input type="text" id="courseSearch" placeholder="Search courses (e.g. MTH or Biology)..." onkeyup="filterCourses()" style="width: 80%; max-width: 400px; padding: 10px; border-radius: 20px; border: 1px solid #ccc;">
 </div>
 
-<div class="container">
+<div class="container" id="courseContainer">
     <div class="card">
         <h3>MTH 101</h3>
-        <p>Algebra & Trigonometry $ ...</p><a href="./all_sub/"></a>
+        <p>Algebra & Trigonometry</p>
         <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/math.html')" class="pdf-link">Open QUIZ</a>
     </div>
 
@@ -96,37 +97,47 @@
         <input type="text" id="usernameInput" placeholder="Enter Name (e.g. Ola)">
         <input type="password" id="passwordInput" placeholder="Password">
         <button class="btn-auth" style="width: 100%;" onclick="handleSignIn()">Sign up</button>
-        <p onclick="toggleModal(false)" style="color: grey; cursor: pointer; margin-top: 15px;">Close</p>
+        <p onclick="document.getElementById('loginModal').style.display='none'" style="color: grey; cursor: pointer; margin-top: 15px;">Close</p>
     </div>
 </div>
 
 <script>
-    // Run this when page loads
     window.onload = function() {
         updateUI();
     };
 
-    // 1. NAVIGATION PROTECTION
+    // --- NEW SEARCH FUNCTION ---
+    function filterCourses() {
+        const searchText = document.getElementById('courseSearch').value.toLowerCase();
+        const cards = document.querySelectorAll('.card');
+
+        cards.forEach(card => {
+            const title = card.querySelector('h3').innerText.toLowerCase();
+            const desc = card.querySelector('p').innerText.toLowerCase();
+
+            if (title.includes(searchText) || desc.includes(searchText)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+
     function secureNavigate(destinationUrl) {
         const user = localStorage.getItem('loggedInUser');
-        
         if (!user) {
-            // If not signed in, show error and pop up the login box
             alert("Access Denied! Please sign up to access the Quiz.");
             document.getElementById('loginModal').style.display = 'block';
         } else {
-            // If signed in (e.g., Ola), proceed to the sub-page
             window.location.href = destinationUrl;
         }
     }
 
-    // 2. SIGN up LOGIC
     function handleSignIn() {
         const nameInput = document.getElementById('usernameInput').value;
         const passInput = document.getElementById('passwordInput').value;
 
         if (nameInput.trim() !== "" && passInput !== "") {
-            // Save the name to browser memory
             localStorage.setItem('loggedInUser', nameInput); 
             updateUI();
             document.getElementById('loginModal').style.display = 'none';
@@ -135,33 +146,25 @@
         }
     }
 
-    // 3. UI UPDATE (Changes button to "Welcome Ola")
     function updateUI() {
         const user = localStorage.getItem('loggedInUser');
-        const authSection = document.getElementById('authSection'); // The div in your header
+        const authSection = document.getElementById('authSection');
         const heroGreet = document.getElementById('heroGreet');
 
         if (user) {
-            // Change header to show the name
             authSection.innerHTML = `
                 <span class="user-greet">Welcome, ${user}</span>
                 <button class="btn-auth btn-logout" onclick="logout()">Logout</button>
             `;
             heroGreet.innerText = `Ready for your Quiz, ${user}?`;
-            
-            // Remove 'locked' style from links
             document.querySelectorAll('.pdf-link').forEach(link => link.classList.remove('locked'));
         } else {
-            // Show default Sign up button
             authSection.innerHTML = `<button class="btn-auth" onclick="document.getElementById('loginModal').style.display='block'">Sign up</button>`;
             heroGreet.innerText = "Please sign up to access your Quiz";
-            
-            // Add 'locked' style
             document.querySelectorAll('.pdf-link').forEach(link => link.classList.add('locked'));
         }
     }
 
-    // 4. LOGOUT
     function logout() {
         localStorage.removeItem('loggedInUser');
         location.reload();
