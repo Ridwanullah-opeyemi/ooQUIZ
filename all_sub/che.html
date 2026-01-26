@@ -48,32 +48,539 @@
 
     </div>
 
-    <a href="../index.html"><div class="back">🏡</div></a>
+    <a href="../index.html">
+        <div class="back">🏡</div>
+    </a>
     <script>
         // Data containing all the specific questions from your MTH 101 notes
-        const questions = [{ 
-        topic: "Botany", 
-        q: "The reproductive part of an angiosperm is the:", 
-        options: ["Leaf", "Root", "Flower", "Stem"], 
-        correct: 2, 
-        review: "Flowers contain the reproductive organs (stamens and carpels) for seed production."
+        const questions = [
+    {
+        "topic": "Atomic Structure",
+        "q": "Which subatomic particle was discovered using the Cathode Ray Tube experiment and led to the proposal of the Plum Pudding Model?",
+        "options": ["Proton", "Neutron", "Electron", "Positron"],
+        "correct": 2,
+        "review": "J.J. Thomson discovered the electron in 1897 using cathode ray tubes, concluding that atoms contain negatively charged particles."
     },
-    { 
-        topic: "Physiology", 
-        q: "Which component of blood is responsible for carrying oxygen?", 
-        options: ["White blood cells", "Platelets", "Red blood cells", "Plasma"], 
-        correct: 2, 
-        review: "Red blood cells contain hemoglobin, which binds to oxygen molecules."
+    {
+        "topic": "Atomic Structure",
+        "q": "Rutherford’s Alpha Particle Scattering Experiment led to which significant conclusion about atomic structure?",
+        "options": ["The atom is a solid indivisible sphere", "Most of the atom's mass and positive charge is concentrated in a tiny nucleus", "Electrons orbit the nucleus in fixed circular paths", "Atoms are composed of four elements: earth, water, air, and fire"],
+        "correct": 1,
+        "review": "Rutherford concluded that the atom is mostly empty space with a small, dense, positively charged nucleus."
     },
-    { 
-        topic: "Reproduction", 
-        q: "In humans, where does fertilization usually occur?", 
-        options: ["Ovary", "Uterus", "Fallopian tube", "Vagina"], 
-        correct: 2, 
-        review: "The egg is usually fertilized in the oviduct (fallopian tube) before traveling to the uterus."
-    }]
+    {
+        "topic": "Atomic Structure",
+        "q": "Which principle states that it is impossible to simultaneously determine the exact position and momentum of an electron?",
+        "options": ["Aufbau Principle", "Pauli Exclusion Principle", "Hund’s Rule", "Heisenberg Uncertainty Principle"],
+        "correct": 3,
+        "review": "The Heisenberg Uncertainty Principle is a fundamental concept in quantum mechanics regarding the limits of measurement for subatomic particles."
+    },
+    {
+        "topic": "Electronic Configuration",
+        "q": "What is the correct ground-state electronic configuration for Chromium (Z = 24)?",
+        "options": ["[Ar] 4s² 3d⁴", "[Ar] 4s¹ 3d⁵", "[Ar] 4s⁰ 3d⁶", "[Ar] 3d⁶"],
+        "correct": 1,
+        "review": "Chromium is an exception to the Aufbau principle, adopting a [Ar] 4s¹ 3d⁵ configuration to achieve a more stable half-filled d-subshell."
+    },
+    {
+        "topic": "Stoichiometry",
+        "q": "In the reaction 2Al + 3Cl₂ → 2AlCl₃, if 5.4g of Al reacts with excess Cl₂, what is the theoretical yield of AlCl₃? (Al=27, Cl=35.5)",
+        "options": ["13.35g", "26.7g", "10.8g", "20.1g"],
+        "correct": 1,
+        "review": "5.4g Al is 0.2 mol. From the stoichiometry, 0.2 mol Al produces 0.2 mol AlCl₃. Molar mass of AlCl₃ = 27 + (3*35.5) = 133.5 g/mol. 0.2 * 133.5 = 26.7g. (Note: Theoretical yield calculations require molar conversion) ."
+    },
+    {
+        "topic": "Stoichiometry",
+        "q": "What is the molarity of a solution prepared by dissolving 10g of NaOH in enough water to make 250mL of solution? (Na=23, O=16, H=1)",
+        "options": ["0.25 M", "0.50 M", "1.00 M", "2.00 M"],
+        "correct": 2,
+        "review": "Moles of NaOH = 10g / 40g/mol = 0.25 mol. Volume = 0.25 L. Molarity = 0.25 mol / 0.25 L = 1.00 M."
+    },
+    {
+        "topic": "Periodic Table",
+        "q": "Which of the following elements has the highest first ionization energy?",
+        "options": ["Sodium (Na)", "Aluminum (Al)", "Silicon (Si)", "Chlorine (Cl)"],
+        "correct": 3,
+        "review": "Ionization energy generally increases across a period from left to right due to increased nuclear charge."
+    },
+    {
+        "topic": "Periodic Table",
+        "q": "The 'd-block' elements are also known as:",
+        "options": ["Alkali metals", "Transition metals", "Halogens", "Noble gases"],
+        "correct": 1,
+        "review": "Elements in the d-block (Groups 3-12) are categorized as transition metals."
+    },
+    {
+        "topic": "Redox Reactions",
+        "q": "What is the oxidation state of Manganese in the permanganate ion (MnO₄⁻)?",
+        "options": ["+4", "+5", "+6", "+7"],
+        "correct": 3,
+        "review": "In MnO₄⁻, 4(-2) = -8. For a net charge of -1, Mn must be +7."
+    },
+    {
+        "topic": "Redox Reactions",
+        "q": "Which species acts as the reducing agent in the reaction: Zn(s) + Cu²⁺(aq) → Zn²⁺(aq) + Cu(s)?",
+        "options": ["Zn(s)", "Cu²⁺(aq)", "Zn²⁺(aq)", "Cu(s)"],
+        "correct": 0,
+        "review": "Zinc is oxidized (loses electrons), making it the reducing agent."
+    },
+    {
+        "topic": "Hybridization",
+        "q": "What is the hybridization and molecular geometry of Methane (CH₄)?",
+        "options": ["sp, Linear", "sp², Trigonal Planar", "sp³, Tetrahedral", "sp³d, Trigonal Bipyramidal"],
+        "correct": 2,
+        "review": "Carbon in methane uses four sp³ hybrid orbitals to form four sigma bonds, resulting in a tetrahedral shape with 109.5° angles."
+    },
+    {
+        "topic": "Hybridization",
+        "q": "Which molecule contains a carbon atom with sp hybridization?",
+        "options": ["C₂H₆", "C₂H₄", "C₂H₂", "CH₄"],
+        "correct": 2,
+        "review": "Ethyne (C₂H₂) has a triple bond, where each carbon is sp hybridized to form a linear geometry."
+    },
+    {
+        "topic": "Acids and Bases",
+        "q": "According to the Brønsted-Lowry theory, an acid is a:",
+        "options": ["Proton donor", "Proton acceptor", "Electron pair donor", "Electron pair acceptor"],
+        "correct": 0,
+        "review": "The Brønsted-Lowry definition identifies acids as proton (H⁺) donors."
+    },
+    {
+        "topic": "Acids and Bases",
+        "q": "Calculate the pH of a 0.001 M solution of HCl.",
+        "options": ["1", "2", "3", "4"],
+        "correct": 2,
+        "review": "HCl is a strong acid; [H⁺] = 0.001 M. pH = -log(10⁻³) = 3."
+    },
+    {
+        "topic": "Chemical Equilibrium",
+        "q": "For the exothermic reaction N₂(g) + 3H₂(g) ⇌ 2NH₃(g), how does increasing the temperature affect the equilibrium?",
+        "options": ["Shifts to the right", "Shifts to the left", "No change", "Increases the value of Kc"],
+        "correct": 1,
+        "review": "Per Le Châtelier's Principle, for an exothermic reaction, increasing temperature shifts equilibrium toward the reactants (left)."
+    },
+    {
+        "topic": "Chemical Equilibrium",
+        "q": "Which of the following is omitted from the equilibrium constant (Kc) expression?",
+        "options": ["Gases", "Aqueous solutions", "Pure solids", "Reactants"],
+        "correct": 2,
+        "review": "Solids and pure liquids are omitted because their concentrations remain constant."
+    },
+    {
+        "topic": "Thermodynamics",
+        "q": "Which law of thermodynamics states that the entropy of a system approaches a constant value as temperature approaches absolute zero?",
+        "options": ["Zeroth Law", "First Law", "Second Law", "Third Law"],
+        "correct": 3,
+        "review": "The Third Law of Thermodynamics concerns the behavior of systems at absolute zero."
+    },
+    {
+        "topic": "Thermodynamics",
+        "q": "A reaction is spontaneous at all temperatures if:",
+        "options": ["ΔH is positive and ΔS is negative", "ΔH is negative and ΔS is positive", "Both ΔH and ΔS are positive", "Both ΔH and ΔS are negative"],
+        "correct": 1,
+        "review": "ΔG = ΔH - TΔS. For spontaneous reactions, ΔG must be negative. If ΔH is (-) and ΔS is (+), ΔG is always negative."
+    },
+    {
+        "topic": "Chemical Kinetics",
+        "q": "If doubling the concentration of a reactant quadruples the rate of reaction, the reaction order with respect to that reactant is:",
+        "options": ["Zero", "First", "Second", "Third"],
+        "correct": 2,
+        "review": "Rate ∝ [A]ⁿ. If 2ⁿ = 4, then n = 2."
+    },
+    {
+        "topic": "Chemical Kinetics",
+        "q": "According to collision theory, what two conditions must be met for a collision to result in a reaction?",
+        "options": ["High pressure and high volume", "Correct orientation and sufficient energy", "Presence of a catalyst and low temperature", "Liquid state and stirring"],
+        "correct": 1,
+        "review": "Reactants must collide with enough energy (activation energy) and the proper spatial orientation."
+    },
+    {
+        "topic": "Atomic Structure",
+        "q": "The primary limitation of Dalton's Atomic Theory was its inability to explain:",
+        "options": ["The law of conservation of mass", "The law of constant proportions", "The existence of isotopes", "Chemical combinations"],
+        "correct": 2,
+        "review": "Dalton assumed all atoms of an element are identical, which isotopes prove false."
+    },
+    {
+        "topic": "Electronic Configuration",
+        "q": "According to Hund's Rule, electrons will occupy degenerate orbitals:",
+        "options": ["In pairs with opposite spins first", "Singly before pairing up", "Only in the s-block", "Randomly"],
+        "correct": 1,
+        "review": "Hund's Rule states electrons occupy degenerate orbitals singly with parallel spins before pairing occurs."
+    },
+    {
+        "topic": "Stoichiometry",
+        "q": "Balance the equation: C₃H₈ + O₂ → CO₂ + H₂O. What is the coefficient for O₂?",
+        "options": ["3", "4", "5", "6"],
+        "correct": 2,
+        "review": "Balanced: C₃H₈ + 5O₂ → 3CO₂ + 4H₂O."
+    },
+    {
+        "topic": "Periodic Table",
+        "q": "Which periodic trend decreases from left to right across a period?",
+        "options": ["Electronegativity", "Ionization Energy", "Atomic Radius", "Electron Affinity"],
+        "correct": 2,
+        "review": "Atomic radius decreases across a period due to increased effective nuclear charge pulling electrons closer."
+    },
+    {
+        "topic": "Redox Reactions",
+        "q": "In the titration of H₂O₂ with KMnO₄ in acidic medium, what is the n-factor (change in oxidation state) for Mn?",
+        "options": ["2", "3", "5", "7"],
+        "correct": 2,
+        "review": "In acidic medium, MnO₄⁻ (+7) is reduced to Mn²⁺ (+2), a change of 5."
+    },
+    {
+        "topic": "Hybridization",
+        "q": "The shape of a molecule with sp³d hybridization and no lone pairs is:",
+        "options": ["Octahedral", "Trigonal Bipyramidal", "Square Planar", "Tetrahedral"],
+        "correct": 1,
+        "review": "Mixing one s, three p, and one d orbital creates a trigonal bipyramidal geometry."
+    },
+    {
+        "topic": "Acids and Bases",
+        "q": "Which of the following is a Lewis base?",
+        "options": ["BF₃", "AlCl₃", "NH₃", "H⁺"],
+        "correct": 2,
+        "review": "Ammonia (NH₃) has a lone pair of electrons that it can donate, making it a Lewis base."
+    },
+    {
+        "topic": "Chemical Equilibrium",
+        "q": "What happens to the equilibrium constant Kc if a catalyst is added to the system?",
+        "options": ["Increases", "Decreases", "Remains unchanged", "Doubles"],
+        "correct": 2,
+        "review": "Catalysts speed up the rate at which equilibrium is reached but do not change the position or the constant."
+    },
+    {
+        "topic": "Thermodynamics",
+        "q": "The mathematical expression for the First Law of Thermodynamics is:",
+        "options": ["ΔG = ΔH - TΔS", "ΔU = q + w", "PV = nRT", "S = k ln W"],
+        "correct": 1,
+        "review": "The first law relates internal energy (ΔU) to heat (q) and work (w)."
+    },
+    {
+        "topic": "Chemical Kinetics",
+        "q": "The 'activation energy' of a reaction can be lowered by:",
+        "options": ["Increasing temperature", "Increasing concentration", "Adding a catalyst", "Removing products"],
+        "correct": 2,
+        "review": "A catalyst provides an alternative pathway with a lower activation energy."
+    },
+    {
+        "topic": "Atomic Structure",
+        "q": "Who proposed that matter is continuous and composed of four elements, effectively delaying atomic theory for 2000 years?",
+        "options": ["Democritus", "Aristotle", "Dalton", "Bohr"],
+        "correct": 1,
+        "review": "Aristotle rejected the idea of atoms, a view that dominated until the revival of atomic theory."
+    },
+    {
+        "topic": "Periodic Table",
+        "q": "Elements in Group 17 of the periodic table are known as:",
+        "options": ["Noble gases", "Chalcogens", "Halogens", "Alkaline earth metals"],
+        "correct": 2,
+        "review": "Group 17 contains highly reactive non-metals called halogens."
+    },
+    {
+        "topic": "Redox Reactions",
+        "q": "What is the oxidation number of oxygen in peroxides like H₂O₂?",
+        "options": ["-2", "-1", "0", "+1"],
+        "correct": 1,
+        "review": "In peroxides, oxygen has an exceptional oxidation state of -1."
+    },
+    {
+        "topic": "Hybridization",
+        "q": "The bond angle in a molecule with sp² hybridization is typically:",
+        "options": ["180°", "120°", "109.5°", "90°"],
+        "correct": 1,
+        "review": "sp² hybridization results in a trigonal planar geometry with 120° bond angles."
+    },
+    {
+        "topic": "Acids and Bases",
+        "q": "What is the conjugate base of HSO₄⁻?",
+        "options": ["H₂SO₄", "SO₄²⁻", "OH⁻", "H₃O⁺"],
+        "correct": 1,
+        "review": "A conjugate base is formed when an acid loses a proton; HSO₄⁻ - H⁺ = SO₄²⁻."
+    },
+    {
+        "topic": "Chemical Equilibrium",
+        "q": "In a heterogeneous equilibrium like CaCO₃(s) ⇌ CaO(s) + CO₂(g), the Kp is equal to:",
+        "options": ["P(CO₂)", "P(CaO) / P(CaCO₃)", "P(CO₂) * P(CaO)", "1 / P(CO₂)"],
+        "correct": 0,
+        "review": "Only gaseous species are included in pressure-based equilibrium expressions."
+    },
+    {
+        "topic": "Thermodynamics",
+        "q": "Enthalpy (ΔH) is defined as:",
+        "options": ["The total randomness of a system", "The heat content of a system at constant pressure", "The energy available to do work", "The temperature of a system"],
+        "correct": 1,
+        "review": "Enthalpy represents the total heat content of a system under constant pressure."
+    },
+    {
+        "topic": "Chemical Kinetics",
+        "q": "A zero-order reaction means the rate is:",
+        "options": ["Proportional to reactant concentration", "Proportional to the square of concentration", "Independent of reactant concentration", "Determined by the product concentration"],
+        "correct": 2,
+        "review": "In zero-order reactions, changing the concentration of the reactant does not change the rate."
+    },
+    {
+        "topic": "Atomic Structure",
+        "q": "The 'Principal Quantum Number' (n) describes what aspect of an electron?",
+        "options": ["The shape of the orbital", "The orientation in space", "The energy level or shell", "The spin of the electron"],
+        "correct": 2,
+        "review": "The principal quantum number 'n' indicates the main energy level or shell occupied by the electron."
+    },
+    {
+        "topic": "Stoichiometry",
+        "q": "How many atoms are in 0.5 moles of Carbon? (Avogadro's number = 6.02 x 10²³)",
+        "options": ["3.01 x 10²²", "6.02 x 10²³", "3.01 x 10²³", "1.20 x 10²⁴"],
+        "correct": 2,
+        "review": "0.5 * (6.02 x 10²³) = 3.01 x 10²³."
+    },
+    {
+        "topic": "Periodic Table",
+        "q": "Which block of the periodic table contains the Lanthanides and Actinides?",
+        "options": ["s-block", "p-block", "d-block", "f-block"],
+        "correct": 3,
+        "review": "The inner transition elements (Lanthanides and Actinides) make up the f-block."
+    },
+    {
+        "topic": "Redox Reactions",
+        "q": "Balance MnO₄⁻ + Fe²⁺ → Mn²⁺ + Fe³⁺ in acidic medium. What is the ratio of MnO₄⁻ to Fe²⁺?",
+        "options": ["1:1", "1:2", "1:5", "5:1"],
+        "correct": 2,
+        "review": "Mn changes by 5 electrons, Fe changes by 1. To equalize, 5 Fe²⁺ are needed for every 1 MnO₄⁻."
+    },
+    {
+        "topic": "Hybridization",
+        "q": "Which hybridization is associated with an octahedral molecular geometry?",
+        "options": ["sp³d", "sp³d²", "sp³", "dsp²"],
+        "correct": 1,
+        "review": "sp³d² hybridization involves 6 orbitals, forming an octahedral shape."
+    },
+    {
+        "topic": "Acids and Bases",
+        "q": "A solution with a pH of 12 is:",
+        "options": ["Strongly acidic", "Weakly acidic", "Strongly basic", "Neutral"],
+        "correct": 2,
+        "review": "pH > 7 is basic; 12 is near the high end of the scale."
+    },
+    {
+        "topic": "Chemical Equilibrium",
+        "q": "Le Châtelier's Principle predicts that increasing pressure on the reaction N₂(g) + 3H₂(g) ⇌ 2NH₃(g) will:",
+        "options": ["Shift it to the left", "Shift it to the right", "Have no effect", "Increase Kc"],
+        "correct": 1,
+        "review": "Increasing pressure shifts equilibrium to the side with fewer gas molecules (2 moles vs 4 moles)."
+    },
+    {
+        "topic": "Thermodynamics",
+        "q": "If ΔG is zero, the system is:",
+        "options": ["Spontaneous", "Non-spontaneous", "At equilibrium", "At absolute zero"],
+        "correct": 2,
+        "review": "A Gibbs free energy change of zero indicates that the forward and reverse processes are at equilibrium."
+    },
+    {
+        "topic": "Chemical Kinetics",
+        "q": "The units of the rate constant (k) for a first-order reaction are:",
+        "options": ["mol L⁻¹ s⁻¹", "L mol⁻¹ s⁻¹", "s⁻¹", "L² mol⁻² s⁻¹"],
+        "correct": 2,
+        "review": "For first order, Rate = k[A]. k = Rate/[A] = (mol/L/s) / (mol/L) = 1/s."
+    },
+    {
+        "topic": "Atomic Structure",
+        "q": "Which subatomic particle has a mass of approximately 1 amu but no charge?",
+        "options": ["Proton", "Neutron", "Electron", "Alpha particle"],
+        "correct": 1,
+        "review": "Neutrons are neutral particles found in the nucleus with mass similar to protons."
+    },
+    {
+        "topic": "Periodic Table",
+        "q": "Modern periodic law states that properties of elements are periodic functions of their:",
+        "options": ["Atomic mass", "Atomic number", "Neutron number", "Mass number"],
+        "correct": 1,
+        "review": "Moseley showed that atomic number, not mass, is the correct basis for periodic classification."
+    },
+    {
+        "topic": "Stoichiometry",
+        "q": "What is the mass of 2 moles of H₂SO₄? (H=1, S=32, O=16)",
+        "options": ["98g", "196g", "49g", "100g"],
+        "correct": 1,
+        "review": "Molar mass = (2*1)+32+(4*16) = 98. 2 moles * 98 g/mol = 196g."
+    },
+    {
+        "topic": "Hybridization",
+        "q": "The geometry of the water molecule (H₂O) is 'Bent' because of:",
+        "options": ["sp hybridization", "Two lone pairs on oxygen", "One lone pair on oxygen", "Triple bonding"],
+        "correct": 1,
+        "review": "Oxygen in water is sp³ hybridized, but the two lone pairs compress the angle and create a bent shape."
+    },
+    {
+        "topic": "Acids and Bases",
+        "q": "An Arrhenius base is a substance that increases the concentration of _____ in water.",
+        "options": ["H⁺", "OH⁻", "Cl⁻", "Na⁺"],
+        "correct": 1,
+        "review": "Arrhenius bases dissociate in water to produce hydroxide ions."
+    },
+    {
+        "topic": "Chemical Equilibrium",
+        "q": "The value of Kc for a reaction is 1.5 x 10⁻¹⁰. This means at equilibrium:",
+        "options": ["Products are favored", "Reactants are favored", "Concentrations are equal", "Reaction is complete"],
+        "correct": 1,
+        "review": "A very small Kc indicates that the equilibrium mixture consists mostly of reactants."
+    },
+    {
+        "topic": "Thermodynamics",
+        "q": "Entropy (S) is a measure of:",
+        "options": ["Heat capacity", "Bond strength", "Disorder or randomness", "Internal energy"],
+        "correct": 2,
+        "review": "Entropy quantifies the degree of disorder in a thermodynamic system."
+    },
+    {
+        "topic": "Chemical Kinetics",
+        "q": "The Arrhenius equation k = Ae^(-Ea/RT) relates the rate constant to:",
+        "options": ["Pressure", "Volume", "Temperature and activation energy", "Concentration"],
+        "correct": 2,
+        "review": "This equation shows how rate constants vary with temperature and the energy barrier."
+    },
+    {
+        "topic": "Atomic Structure",
+        "q": "The azimuthal quantum number (l = 1) corresponds to which subshell?",
+        "options": ["s", "p", "d", "f"],
+        "correct": 1,
+        "review": "l values: 0=s, 1=p, 2=d, 3=f."
+    },
+    {
+        "topic": "Periodic Table",
+        "q": "Which element has the electron configuration [Ne] 3s² 3p⁵?",
+        "options": ["Fluorine", "Chlorine", "Sulfur", "Argon"],
+        "correct": 1,
+        "review": "Chlorine (Z=17) follows neon (10) with 7 valence electrons in the third shell."
+    },
+    {
+        "topic": "Stoichiometry",
+        "q": "The empirical formula of a compound is CH₂. If its molar mass is 42 g/mol, what is its molecular formula?",
+        "options": ["CH₂", "C₂H₄", "C₃H₆", "C₄H₈"],
+        "correct": 2,
+        "review": "Empirical mass (CH₂) = 14. 42/14 = 3. So (CH₂)₃ = C₃H₆."
+    },
+    {
+        "topic": "Redox Reactions",
+        "q": "Oxidation involves the:",
+        "options": ["Loss of electrons", "Gain of electrons", "Gain of protons", "Loss of mass"],
+        "correct": 0,
+        "review": "Oxidation is defined as the loss of electrons by a species."
+    },
+    {
+        "topic": "Hybridization",
+        "q": "In Benzene (C₆H₆), each carbon atom is ______ hybridized.",
+        "options": ["sp", "sp²", "sp³", "sp³d"],
+        "correct": 1,
+        "review": "Carbons in benzene form a planar ring with delocalized electrons using sp² hybrid orbitals."
+    },
+    {
+        "topic": "Acids and Bases",
+        "q": "A buffer solution consists of a mixture of:",
+        "options": ["Strong acid and strong base", "Weak acid and its conjugate base", "Strong acid and its salt", "Pure water and salt"],
+        "correct": 1,
+        "review": "Buffers resist pH change and are usually made of a weak acid/base and its corresponding salt."
+    },
+    {
+        "topic": "Chemical Equilibrium",
+        "q": "What is the relationship between Kp and Kc?",
+        "options": ["Kp = Kc", "Kp = Kc(RT)^Δn", "Kp = Kc / RT", "Kp = Kc + RT"],
+        "correct": 1,
+        "review": "The two constants are related by temperature, gas constant, and the change in moles of gas."
+    },
+    {
+        "topic": "Thermodynamics",
+        "q": "Which of these is a state function?",
+        "options": ["Heat", "Work", "Enthalpy", "Distance"],
+        "correct": 2,
+        "review": "State functions like enthalpy depend only on the current state, not the path taken."
+    },
+    {
+        "topic": "Chemical Kinetics",
+        "q": "The molecularity of a reaction refers to:",
+        "options": ["The total number of product molecules", "The number of molecules colliding in an elementary step", "The overall order of the reaction", "The speed of the molecules"],
+        "correct": 1,
+        "review": "Molecularity is the number of reactant species involved in a single elementary reaction step."
+    },
+    {
+        "topic": "Atomic Structure",
+        "q": "Who proposed the 'Plum Pudding Model' of the atom?",
+        "options": ["Ernest Rutherford", "Niels Bohr", "J.J. Thomson", "John Dalton"],
+        "correct": 2,
+        "review": "Thomson envisioned the atom as electrons embedded in a positive 'pudding'."
+    },
+    {
+        "topic": "Periodic Table",
+        "q": "Electronegativity is defined as the ability of an atom to:",
+        "options": ["Lose electrons", "Attract shared electrons in a bond", "Absorb light", "Conduct electricity"],
+        "correct": 1,
+        "review": "It is a measure of an atom's tendency to attract a bonding pair of electrons."
+    },
+    {
+        "topic": "Stoichiometry",
+        "q": "In the reaction N₂ + 3H₂ → 2NH₃, how many liters of H₂ are needed to produce 10L of NH₃ at STP?",
+        "options": ["10L", "15L", "20L", "30L"],
+        "correct": 1,
+        "review": "Mole/Volume ratio is 3:2. (3/2) * 10 = 15L."
+    },
+    {
+        "topic": "Redox Reactions",
+        "q": "Which of the following rules is true for oxidation numbers?",
+        "options": ["The sum in a neutral compound is zero", "Oxygen is always +2", "Hydrogen is always -1", "Alkali metals are +2"],
+        "correct": 0,
+        "review": "The sum of oxidation numbers in any neutral molecule must equal zero."
+    },
+    {
+        "topic": "Hybridization",
+        "q": "A triple bond consists of:",
+        "options": ["Three sigma bonds", "Two sigma and one pi bond", "One sigma and two pi bonds", "Three pi bonds"],
+        "correct": 2,
+        "review": "Triple bonds contain one direct head-on overlap (sigma) and two lateral overlaps (pi)."
+    },
+    {
+        "topic": "Acids and Bases",
+        "q": "The pKa of an acid is 4.75. This acid is considered:",
+        "options": ["A strong acid", "A weak acid", "A strong base", "Neutral"],
+        "correct": 1,
+        "review": "Strong acids have very low or negative pKa values; 4.75 indicates a weak acid like acetic acid."
+    },
+    {
+        "topic": "Chemical Equilibrium",
+        "q": "If the reaction quotient Q is greater than Kc, the reaction will:",
+        "options": ["Proceed to the right", "Proceed to the left", "Remain at equilibrium", "Stop"],
+        "correct": 1,
+        "review": "If Q > Kc, there are too many products, so the reaction shifts left toward reactants."
+    },
+    {
+        "topic": "Thermodynamics",
+        "q": "An endothermic reaction is one where:",
+        "options": ["Heat is released", "Heat is absorbed", "Temperature remains constant", "ΔH is negative"],
+        "correct": 1,
+        "review": "Endothermic processes require an input of heat from the surroundings."
+    },
+    {
+        "topic": "Chemical Kinetics",
+        "q": "The 'slowest step' in a multi-step reaction mechanism is called the:",
+        "options": ["Intermediate step", "Activation step", "Rate-determining step", "Catalytic step"],
+        "correct": 2,
+        "review": "The overall rate of a reaction is limited by its slowest elementary step."
+    },
+    {
+        "topic": "Atomic Structure",
+        "q": "Bohr’s model of the atom was successful in explaining the spectrum of:",
+        "options": ["Iron", "Helium", "Hydrogen", "Uranium"],
+        "correct": 2,
+        "review": "Bohr's model accurately predicted the discrete line spectrum of the hydrogen atom."
+    },
+    {
+        "topic": "Periodic Table",
+        "q": "Which element is a member of the alkaline earth metals?",
+        "options": ["Potassium", "Magnesium", "Iron", "Copper"],
+        "correct": 1,
+        "review": "Group 2 elements, like Magnesium, are known as alkaline earth metals."
+    }
+]
 
-        
 
     </script>
     <script src="script.js"></script>
