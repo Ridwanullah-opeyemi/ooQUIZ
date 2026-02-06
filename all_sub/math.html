@@ -52,471 +52,565 @@
     <script>
         // Data containing all the specific questions from your MTH 101 notes
    const questions = [
-    // --- SET THEORY (1-14) ---
-    { 
-        topic: "Set Theory", 
-        q: "If n(A) = 15, n(B) = 20, and n(A ∪ B) = 30, find n(A ∩ B).", 
-        options: ["10", "5", "15", "0"], 
-        correct: 1, 
-        review: "Using the formula n(A ∪ B) = n(A) + n(B) - n(A ∩ B), we get 30 = 15 + 20 - n(A ∩ B), so n(A ∩ B) = 5[cite: 144, 178]."
-    },
-    { 
-        topic: "Set Theory", 
-        q: "How many proper subsets does a set with 5 elements have?", 
-        options: ["32", "31", "30", "25"], 
-        correct: 1, 
-        review: "The number of subsets is 2^n. Proper subsets exclude the set itself, so 2^5 - 1 = 32 - 1 = 31[cite: 112, 121]."
-    },
-    { 
-        topic: "Set Theory", 
-        q: "If A = {1, 2} and B = {a, b, c}, what is the cardinality of A × B?", 
-        options: ["5", "6", "2", "3"], 
-        correct: 1, 
-        review: "The cardinality of the Cartesian product n(A × B) is n(A) × n(B) = 2 × 3 = 6[cite: 203]."
-    },
-    { 
-        topic: "Set Theory", 
-        q: "In a class of 100, 45 teach Math, 35 teach Physics, 10 teach both. How many teach ONLY Physics?", 
-        options: ["35", "25", "10", "15"], 
-        correct: 1, 
-        review: "Teachers of Physics only = n(P) - n(P ∩ M) = 35 - 10 = 25[cite: 180]."
-    },
-    { 
-        topic: "Set Theory", 
-        q: "Which expression represents the shaded region of elements in A but NOT in B?", 
-        options: ["A ∩ B", "A ∪ B", "A \\ B", "A'"], 
-        correct: 2, 
-        review: "The difference of two sets A and B (A \\ B) is the set of elements in A but not in B[cite: 130]."
-    },
-    { 
-        topic: "Set Theory", 
-        q: "If U = {1,2,3,4,5}, A = {1,2}, B = {3,4}, find (A ∪ B)'.", 
-        options: ["{1,2}", "{3,4}", "{5}", "∅"], 
-        correct: 2, 
-        review: "A ∪ B = {1,2,3,4}. The complement in U is {5}[cite: 138, 160]."
-    },
-    { 
-        topic: "Set Theory", 
-        q: "Symmetric Difference A Δ B is equivalent to:", 
-        options: ["(A \\ B) ∪ (B \\ A)", "A ∩ B", "A ∪ B", "(A ∪ B)'"], 
-        correct: 0, 
-        review: "Symmetric difference consists of elements in A or B but not in both[cite: 130, 150]."
-    },
-    { 
-        topic: "Set Theory", 
-        q: "If Set A has 3 elements, how many elements are in its Power Set P(A)?", 
-        options: ["3", "6", "8", "9"], 
-        correct: 2, 
-        review: "The power set cardinality is 2^n. 2^3 = 8[cite: 121]."
-    },
-    { 
-        topic: "Set Theory", 
-        q: "Which law states (A ∪ B)' = A' ∩ B'?", 
-        options: ["Commutative Law", "Associative Law", "De Morgan's Law", "Distributive Law"], 
-        correct: 2, 
-        review: "De Morgan's Law states that the complement of a union is the intersection of complements[cite: 160]."
-    },
-    { 
-        topic: "Set Theory", 
-        q: "Two sets are disjoint if their intersection is:", 
-        options: ["The Universal Set", "The Empty Set", "A Singleton", "Infinite"], 
-        correct: 1, 
-        review: "Sets A and B are disjoint if they have no elements in common, i.e., A ∩ B = ∅[cite: 123]."
-    },
-    { 
-        topic: "Set Theory", 
-        q: "In a survey of 30 students, 18 speak English, 8 speak both English and French. Every student speaks at least one. How many speak French?", 
-        options: ["12", "20", "10", "22"], 
-        correct: 1, 
-        review: "n(F) only = n(U) - n(E only). E only = 18-8=10. F only = 30-10-8=12. Total F = 12+8=20[cite: 185, 194]."
-    },
-    { 
-        topic: "Set Theory", 
-        q: "If A ⊆ B, then A ∩ B is equal to:", 
-        options: ["B", "A", "∅", "U"], 
-        correct: 1, 
-        review: "If A is a subset of B, all elements of A are in B, so their intersection is A[cite: 108]."
-    },
-    { 
-        topic: "Set Theory", 
-        q: "If A = {x : x² - 1 = 0}, list the elements of A.", 
-        options: ["{1}", "{-1}", "{1, -1}", "{0}"], 
-        correct: 2, 
-        review: "x² = 1 implies x = ±1[cite: 88]."
-    },
-    { 
-        topic: "Set Theory", 
-        q: "Find the Cartesian product A × A if A = {0, 1}.", 
-        options: ["{(0,1), (1,0)}", "{(0,0), (1,1)}", "{(0,0), (0,1), (1,0), (1,1)}", "{0, 1}"], 
-        correct: 2, 
-        review: "The product A × A pairs every element with every other element[cite: 203]."
-    },
-
-    // --- REAL NUMBERS & INDUCTION (15-18) ---
-    { 
-        topic: "Real Numbers", 
-        q: "The set {x : x > 0} represents:", 
-        options: ["Integers", "Natural Numbers", "Positive Real Numbers", "Rational Numbers"], 
-        correct: 2, 
-        review: "R+ denotes the set of positive real numbers where x > 0[cite: 229]."
-    },
-    { 
-        topic: "Induction", 
-        q: "In Mathematical Induction, if S(k) is assumed true, we must prove:", 
-        options: ["S(k-1) is true", "S(k+1) is true", "S(1) is false", "S(n) is infinite"], 
-        correct: 1, 
-        review: "The inductive step requires proving S(k+1) is true based on the assumption S(k) is true[cite: 233]."
-    },
-    { 
-        topic: "Induction", 
-        q: "The sum of the first n positive integers is given by:", 
-        options: ["n²", "n(n+1)", "n(n+1)/2", "n(n-1)/2"], 
-        correct: 2, 
-        review: "By induction, 1+2+...+n = n(n+1)/2[cite: 234]."
-    },
-    { 
-        topic: "Induction", 
-        q: "What is the sum of the cubes of the first n integers?", 
-        options: ["n²(n+1)²/2", "n²(n+1)²/4", "n(n+1)(2n+1)/6", "n³"], 
-        correct: 1, 
-        review: "The formula is [n(n+1)/2]² or n²(n+1)²/4[cite: 238]."
-    },
-
-    // --- SEQUENCES (19-38) ---
-    { 
-        topic: "Sequences", 
-        q: "Find the 20th term of the AP: 16, 14, 13, ... wait, 16, 14, 12... (assuming d=-2).", 
-        options: ["-22", "-24", "-20", "-18"], 
-        correct: 0, 
-        review: "Using Tn = a + (n-1)d: 16 + (19)(-2) = 16 - 38 = -22[cite: 258]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "If the 3rd term of an AP is 7 and the 8th term is 17, find the common difference.", 
-        options: ["1", "2", "3", "4"], 
-        correct: 1, 
-        review: "a + 2d = 7 and a + 7d = 17. Subtracting: 5d = 10, so d = 2[cite: 274]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "Find the sum of the first 16 terms of 3 + 11 + 19 + ...", 
-        options: ["1000", "1008", "908", "1200"], 
-        correct: 1, 
-        review: "S16 = (16/2)[2(3) + (15)(8)] = 8[6 + 120] = 8(126) = 1008[cite: 307]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "Insert 3 Arithmetic Means between 8 and 18.", 
-        options: ["10, 12, 14", "11, 14, 17", "10.5, 13, 15.5", "9, 10, 11"], 
-        correct: 2, 
-        review: "8 + 4d = 18 -> 4d = 10 -> d=2.5. Terms: 10.5, 13, 15.5[cite: 289]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "If the sum of n terms is Sn = 2n + 3n², find the nth term.", 
-        options: ["6n - 1", "6n + 1", "3n + 2", "3n - 2"], 
-        correct: 0, 
-        review: "Tn = Sn - S(n-1). Result is 6n - 1[cite: 315]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "Find the sum of all multiples of 3 between 1 and 400.", 
-        options: ["26733", "25000", "30000", "26600"], 
-        correct: 0, 
-        review: "Series 3, 6 ... 399. n=133. S133 = (133/2)(3 + 399) = 26733[cite: 311]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "Three numbers in AP sum to 12 and their cubes sum to 408. Find the numbers.", 
-        options: ["1, 4, 7", "2, 4, 6", "3, 4, 5", "0, 4, 8"], 
-        correct: 0, 
-        review: "Let numbers be 4-d, 4, 4+d. Solving cubes gives d=3. Numbers are 1, 4, 7[cite: 318]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "Find the 10th term of the GP: 39, 9, 27/9 (Wait, GP 39, 9 is not standard). Let's use 2, 4, 8...", 
-        options: ["512", "1024", "256", "2048"], 
-        correct: 1, 
-        review: "Tn = ar^(n-1). 2 * 2^9 = 2^10 = 1024[cite: 363]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "Find the Geometric Mean between 4 and 64.", 
-        options: ["8", "16", "32", "12"], 
-        correct: 1, 
-        review: "GM = √(ab) = √(4*64) = √256 = 16[cite: 433]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "Find the sum to infinity of 20 + 4 + 0.8 + ...", 
-        options: ["24", "25", "30", "22"], 
-        correct: 1, 
-        review: "S∞ = a/(1-r). a=20, r=0.2. S = 20/0.8 = 25[cite: 406]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "Convert the recurring decimal 0.313131... to a fraction.", 
-        options: ["31/100", "31/99", "30/99", "1/3"], 
-        correct: 1, 
-        review: "Using GP sum to infinity: 0.31 / (1 - 0.01) = 0.31/0.99 = 31/99[cite: 407]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "A car depreciates 15% annually. If bought for N450,000, find value after 3 years.", 
-        options: ["N276,358", "N300,000", "N350,000", "N250,000"], 
-        correct: 0, 
-        review: "Value = 450000(0.85)³ = 276,358.05[cite: 381]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "If 2, x, 18 are in GP, find x.", 
-        options: ["±4", "±6", "±9", "±36"], 
-        correct: 1, 
-        review: "x² = 2*18 = 36. x = ±6[cite: 412]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "Sum the series 8 + 4 + 2 + 1 + ... to 8 terms.", 
-        options: ["15.9", "15 15/16", "16", "14"], 
-        correct: 1, 
-        review: "S8 = 8(1 - (0.5)^8) / 0.5 = 16(1 - 1/256) = 15 255/256 = 15 15/16[cite: 401]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "Find n if 4, -2, 1, ... has nth term 1/16.", 
-        options: ["6", "7", "8", "5"], 
-        correct: 1, 
-        review: "ar^(n-1) = 1/16. 4(-0.5)^(n-1) = 1/16 -> (-0.5)^(n-1) = 1/64 = (-0.5)^6. n-1=6 -> n=7[cite: 372]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "Find the 5th term of a GP if 3rd term is 4 and 6th is -32.", 
-        options: ["8", "16", "-16", "32"], 
-        correct: 1, 
-        review: "r³ = -8 -> r=-2. a3=ar²=4 -> 4a=4 -> a=1. 5th term = (1)(-2)^4 = 16[cite: 374]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "Insert 2 Geometric Means between 5 and 135.", 
-        options: ["15, 45", "25, 75", "10, 20", "20, 80"], 
-        correct: 0, 
-        review: "5r³ = 135 -> r³=27 -> r=3. Terms: 15, 45[cite: 414]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "If the 1st term is a and common difference is d, the Arithmetic Mean of a and a+2d is:", 
-        options: ["a", "a+d", "a+2d", "a-d"], 
-        correct: 1, 
-        review: "Mean = (a + a + 2d)/2 = (2a+2d)/2 = a+d[cite: 279]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "Find the sum of odd numbers between 10 and 50.", 
-        options: ["600", "500", "400", "1200"], 
-        correct: 0, 
-        review: "11, 13...49. n=20. Sum = 10(11+49) = 600[cite: 305]."
-    },
-    { 
-        topic: "Sequences", 
-        q: "Which term of 4, 1, -2 is -77?", 
-        options: ["20", "28", "27", "25"], 
-        correct: 1, 
-        review: "-77 = 4 + (n-1)(-3) -> -81 = -3(n-1) -> 27 = n-1 -> n=28[cite: 270]."
-    },
-
-    // --- QUADRATIC EQUATIONS (39-53) ---
-    { 
-        topic: "Quadratic", 
-        q: "Find the discriminant of 2x² - 8x + 8 = 0.", 
-        options: ["64", "0", "-64", "32"], 
-        correct: 1, 
-        review: "D = b² - 4ac = (-8)² - 4(2)(8) = 64 - 64 = 0[cite: 454]."
-    },
-    { 
-        topic: "Quadratic", 
-        q: "If D < 0, the roots are:", 
-        options: ["Real and different", "Real and equal", "Complex", "Integers"], 
-        correct: 2, 
-        review: "A negative discriminant implies no real roots, hence complex roots[cite: 453]."
-    },
-    { 
-        topic: "Quadratic", 
-        q: "Find k if x² + (k+9)x + k² + 15 = 0 has equal roots.", 
-        options: ["7, -1", "3, -3", "5, -5", "0"], 
-        correct: 0, 
-        review: "b²-4ac=0. (k+9)² - 4(k²+15) = 0. Solving gives k=7 or -1[cite: 457]."
-    },
-    { 
-        topic: "Quadratic", 
-        q: "Sum of roots of 3x² + 6x - 2 = 0 is:", 
-        options: ["-2", "2", "6", "-6"], 
-        correct: 0, 
-        review: "Sum = -b/a = -6/3 = -2[cite: 461]."
-    },
-    { 
-        topic: "Quadratic", 
-        q: "If roots are α, β for 2x² + x - 5 = 0, find α² + β².", 
-        options: ["21/4", "19/4", "25/4", "1"], 
-        correct: 0, 
-        review: "(α+β)² - 2αβ = (-1/2)² - 2(-5/2) = 1/4 + 5 = 21/4[cite: 464]."
-    },
-    { 
-        topic: "Quadratic", 
-        q: "Form the equation with roots α² and β² if α, β are roots of 3x² + 6x - 2 = 0.", 
-        options: ["9x² - 48x + 4 = 0", "3x² - 48x + 4 = 0", "9x² + 48x + 4 = 0", "x² - 16x + 4 = 0"], 
-        correct: 0, 
-        review: "New Sum 16/3, New Product 4/9. x² - (16/3)x + 4/9 = 0 -> 9x² - 48x + 4 = 0[cite: 462]."
-    },
-    { 
-        topic: "Quadratic", 
-        q: "If one root is reciprocal of the other, then:", 
-        options: ["a = c", "b = c", "a = b", "b = 0"], 
-        correct: 0, 
-        review: "Product α(1/α) = 1 = c/a -> a = c."
-    },
-    { 
-        topic: "Quadratic", 
-        q: "Find the equation with roots 2 + √3 and 2 - √3.", 
-        options: ["x² - 4x + 1 = 0", "x² + 4x + 1 = 0", "x² - 4x - 1 = 0", "x² + 1 = 0"], 
-        correct: 0, 
-        review: "Sum = 4, Product = 4-3=1. x² - 4x + 1 = 0[cite: 459]."
-    },
-    { 
-        topic: "Quadratic", 
-        q: "Calculate 1/α + 1/β for the equation 2x² + x - 5 = 0.", 
-        options: ["1/5", "-1/5", "5", "-5"], 
-        correct: 0, 
-        review: "(α+β)/αβ = (-1/2) / (-5/2) = 1/5[cite: 463]."
-    },
-    { 
-        topic: "Quadratic", 
-        q: "Nature of roots for -4x² + 2x - 5 = 0 is:", 
-        options: ["Real", "Equal", "Complex", "Rational"], 
-        correct: 2, 
-        review: "D = 4 - 80 = -76 (<0), so complex[cite: 454]."
-    },
-    { 
-        topic: "Quadratic", 
-        q: "If roots are α and β, the equation is:", 
-        options: ["x² - (α+β)x + αβ = 0", "x² + (α+β)x + αβ = 0", "x² - (αβ)x + (α+β) = 0", "x² + αx + β = 0"], 
-        correct: 0, 
-        review: "Standard formula for quadratic construction[cite: 459]."
-    },
-    { 
-        topic: "Quadratic", 
-        q: "Solve 2x² - x + 1 = 0 for nature of roots.", 
-        options: ["Complex", "Real", "Equal", "None"], 
-        correct: 0, 
-        review: "D = 1 - 8 = -7. Complex roots[cite: 470]."
-    },
-    { 
-        topic: "Quadratic", 
-        q: "For what k is 4x² - 28x + k = 0 a perfect square?", 
-        options: ["49", "7", "28", "14"], 
-        correct: 0, 
-        review: "D=0. (-28)² - 16k = 0. 784 = 16k -> k = 49[cite: 470]."
-    },
-    { 
-        topic: "Quadratic", 
-        q: "If α, β are roots of x² - 3x + 4 = 0, find αβ.", 
-        options: ["4", "3", "-3", "-4"], 
-        correct: 0, 
-        review: "Product = c/a = 4[cite: 467]."
-    },
-    { 
-        topic: "Quadratic", 
-        q: "Find the equation whose roots are 1/α² and 1/β² for 4t² - 3t - 2 = 0.", 
-        options: ["4t² - 25t + 16 = 0", "4t² + 25t + 16 = 0", "16t² - 25t + 4 = 0", "t² - 25t + 16 = 0"], 
-        correct: 0, 
-        review: "Sum=25/4, Prod=4. t² - 25/4 t + 4 = 0 -> 4t² - 25t + 16 = 0[cite: 465]."
-    },
-
-    // --- BINOMIAL THEOREM (54-63) ---
-    { 
-        topic: "Binomial", 
-        q: "The coefficient of x in (x + y)^5 is:", 
-        options: ["1", "5", "10", "20"], 
-        correct: 0, 
-        review: "Wait, in (x+y)^5, the term with x is x y^4 (if x is first term x^5, x^4...). x^1 term is 5xy^4. The coeff is 5y^4. Assuming question means coeff of second term: 5[cite: 477]."
-    },
-    { 
-        topic: "Binomial", 
-        q: "Expand (c + 2y)^5. The third term is:", 
-        options: ["40c³y²", "10c³y²", "20c³y²", "80c³y²"], 
-        correct: 0, 
-        review: "3rd term uses 5C2. 10 * c³ * (2y)² = 10 * c³ * 4y² = 40c³y²[cite: 481]."
-    },
-    { 
-        topic: "Binomial", 
-        q: "Evaluate (1.02)^5 using Binomial Theorem approx.", 
-        options: ["1.1041", "1.5", "1.01", "1.2"], 
-        correct: 0, 
-        review: "1 + 5(0.02) + 10(0.0004)... = 1.1041[cite: 481]."
-    },
-    { 
-        topic: "Binomial", 
-        q: "Find the coefficient of x^11 in (x^3 - 2/x^2)^12.", 
-        options: ["-25344", "25344", "12672", "-12672"], 
-        correct: 0, 
-        review: "Term is 12Cr (x^3)^(12-r) (-2x^-2)^r. Power: 36-3r-2r=11 -> 5r=25 -> r=5. Coeff: 12C5(-2)^5 = 792*(-32) = -25344[cite: 482]."
-    },
-    { 
-        topic: "Binomial", 
-        q: "Expansion of (1+x)^n is valid for negative n only if:", 
-        options: ["|x| < 1", "x > 1", "x = 1", "|x| > 1"], 
-        correct: 0, 
-        review: "For negative/fractional index, validity requires -1 < x < 1[cite: 484]."
-    },
-    { 
-        topic: "Binomial", 
-        q: "The first 3 terms of (3 - x)^-2 are:", 
-        options: ["1/9 + 2x/27 + x²/27", "1/9 - 2x/27 + x²/27", "1 + 2x + 3x²", "1/3 + x/9 + x²/27"], 
-        correct: 0, 
-        review: "3^-2(1 - x/3)^-2 = 1/9(1 + 2x/3 + 3x²/9) = 1/9 + 2x/27 + x²/27[cite: 486]."
-    },
-    { 
-        topic: "Binomial", 
-        q: "Evaluate √1.03 using (1+x)^0.5 approx.", 
-        options: ["1.0149", "1.03", "1.0015", "1.05"], 
-        correct: 0, 
-        review: "(1+0.03)^0.5 approx 1 + 0.5(0.03) - 0.125(0.03)^2... = 1.0149[cite: 490]."
-    },
-    { 
-        topic: "Binomial", 
-        q: "What is 5C0?", 
-        options: ["1", "5", "0", "Undefined"], 
-        correct: 0, 
-        review: "nC0 is always 1[cite: 481]."
-    },
-    { 
-        topic: "Binomial", 
-        q: "The factorial 0! is equal to:", 
-        options: ["1", "0", "Undefined", "Infinity"], 
-        correct: 0, 
-        review: "Definition: 0! = 1[cite: 479]."
-    },
-    { 
-        topic: "Binomial", 
-        q: "In Pascal's Triangle, the row for power 4 is:", 
-        options: ["1, 4, 6, 4, 1", "1, 3, 3, 1", "1, 5, 10, 10, 5, 1", "1, 2, 1"], 
-        correct: 0, 
-        review: "Coefficients for (a+b)^4 are 1, 4, 6, 4, 1[cite: 476]."
-    },
-
-    // --- TRIGONOMETRY (64-83) ---
-    { 
-        topic: "Trigonometry", 
-        q: "Convert 37 degrees to radians.", 
-        options: ["0.6458", "0.5", "1.0", "0.37"], 
-        correct: 0, 
-        review: "37 * π/180 = 0.6458 rad[cite: 494]."
-    },
-    { 
-        topic: "Trigonometry", 
-        q: "If sin θ = 3/5, find tan θ (acute).", 
-        options: ["3/4", "4/3", "4/5", "3/5"], 
-        correct: 0, 
-        review: "Opp=3, Hyp=5 -> Adj=4. Tan = 3/4[cite: 496]."
+    {
+        "topic": "Logarithms",
+        "q": "Write the expression $\\log \\frac{ab^2}{c}$ in terms of $\\log a, \\log b$ and $\\log c$.",
+        "options": ["$\\log a + 2\\log b - \\log c$", "$\\log a + \\log b - \\log c$", "$\\log a - 2\\log b + \\log c$", "$2\\log a + \\log b - \\log c$"],
+        "correct": 0,
+        "review": "Using log laws: $\\log(xy) = \\log x + \\log y$ and $\\log(x^n) = n\\log x$ and $\\log(x/y) = \\log x - \\log y$."
+    },
+    {
+        "topic": "Quadratic Equations",
+        "q": "What is the positive value of $p$ for which the equation $x^2 + px + 9 = 0$ has equal roots?",
+        "options": ["$p=6$", "$p=1$", "$p=3$", "$p=9$"],
+        "correct": 0,
+        "review": "For equal roots, the discriminant $D = b^2 - 4ac = 0$. So, $p^2 - 4(1)(9) = 0 \\Rightarrow p^2 = 36 \\Rightarrow p=6$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "$\\frac{2\\pi}{3}$ radian is equivalent to how many degrees?",
+        "options": ["120", "85.90", "150", "100"],
+        "correct": 0,
+        "review": "To convert radians to degrees, multiply by $180/\\pi$. $(\\frac{2\\pi}{3} \\times \\frac{180}{\\pi}) = 120^\\circ$."
+    },
+    {
+        "topic": "Set Theory",
+        "q": "Given that $A$ and $B$ are subsets of a universal set $U$, which of the following is true?",
+        "options": ["$(A \\cup B)' = A' \\cap B'$", "$(A \\cup B)' = A' \\cup B'$", "$(A \\cap B)' = A' \\cap B'$", "$A \\cup A' = \\varnothing$"],
+        "correct": 0,
+        "review": "This is De Morgan's Law: the complement of the union is the intersection of the complements."
+    },
+    {
+        "topic": "Binomial Expansion",
+        "q": "Find the coefficient of $x^4$ in the expansion of $(1+2x)^6$.",
+        "options": ["24", "2562", "2000", "240"],
+        "correct": 3,
+        "review": "The general term is $\\binom{6}{r}(2x)^r$. For $x^4$, $r=4$. $\\binom{6}{4} \\times 2^4 = 15 \\times 16 = 240$."
+    },
+    {
+        "topic": "Set Theory",
+        "q": "Let $A=\{1,2,3,4,5,6\}$ and $B=\{1,3,5,7,9,11,13\}$. Find $A \\Delta B$ (Symmetric Difference).",
+        "options": ["{2, 4, 6, 7, 9, 11, 13}", "{1, 2, 3, 7, 9}", "{1, 3, 5}", "{1, 2, 3, 4, 5, 6}"],
+        "correct": 0,
+        "review": "Symmetric difference includes elements in either A or B, but not both."
+    },
+    {
+        "topic": "Quadratic Equations",
+        "q": "If $\\alpha$ and $\\beta$ are the roots of $ax^2+bx+c=0$, obtain the equation whose roots are $1/\\alpha$ and $1/\\beta$.",
+        "options": ["$cx^2 + bx + a = 0$", "$ax^2 - bx + c = 0$", "$cx^2 - bx + a = 0$", "$bx^2 + ax + c = 0$"],
+        "correct": 0,
+        "review": "The reciprocal roots result in reversing the coefficients of the original equation."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "Find $\\sin 105^\\circ$ in surd form.",
+        "options": ["$\\frac{\\sqrt{6} + \\sqrt{2}}{4}$", "$\\frac{\\sqrt{6} - \\sqrt{2}}{4}$", "$\\frac{\\sqrt{3} + 1}{2}$", "$\\frac{\\sqrt{2} - \\sqrt{6}}{4}$"],
+        "correct": 0,
+        "review": "Use $\\sin(60+45) = \\sin 60\\cos 45 + \\cos 60\\sin 45 = (\\frac{\\sqrt{3}}{2} \\cdot \\frac{\\sqrt{2}}{2}) + (\\frac{1}{2} \\cdot \\frac{\\sqrt{2}}{2})$."
+    },
+    {
+        "topic": "Binomial Expansion",
+        "q": "What is the 3rd term in the expansion of $(x+y)^n$?",
+        "options": ["$\\binom{n}{2}x^{n-2}y^2$", "$\\binom{n}{3}x^{n-3}y^3$", "$\\binom{n}{1}x^{n-1}y^1$", "$\\binom{n}{0}x^n$"],
+        "correct": 0,
+        "review": "The $r$-th term is $\\binom{n}{r-1}x^{n-(r-1)}y^{r-1}$. For $r=3$, we use $\\binom{n}{2}$."
+    },
+    {
+        "topic": "Quadratic Equations",
+        "q": "If $\\alpha$ and $\\beta$ are roots of $ax^2+bx+c=0$, then $\\alpha + \\beta$ is:",
+        "options": ["$-b/a$", "$c/a$", "$b/a$", "$-c/a$"],
+        "correct": 0,
+        "review": "The sum of roots is always given by $-b/a$."
+    },
+    {
+        "topic": "Quadratic Equations",
+        "q": "If $\\alpha$ and $\\beta$ are roots of $2x^2-5x+3=0$, evaluate $\\alpha^2 + \\beta^2$.",
+        "options": ["$13/4$", "$19/4$", "$25/4$", "$7/4$"],
+        "correct": 0,
+        "review": "$\\alpha^2 + \\beta^2 = (\\alpha+\\beta)^2 - 2\\alpha\\beta = (5/2)^2 - 2(3/2) = 25/4 - 3 = 13/4$."
+    },
+    {
+        "topic": "Arithmetic Progression",
+        "q": "Find the sum of all natural numbers from 1 to 500 which are divisible by 3.",
+        "options": ["41583", "41345", "41523", "41598"],
+        "correct": 0,
+        "review": "The numbers are 3, 6, ..., 498. This is an AP with $a=3, l=498, n=166$. $S = \\frac{166}{2}(3+498) = 41583$."
+    },
+    {
+        "topic": "Arithmetic Progression",
+        "q": "If the sum of $n$ terms of an AP is $S_n = 3n^2 - n$. Find the $n$-th term.",
+        "options": ["$6n-4$", "$2n-1$", "$4n-1$", "$5n-1$"],
+        "correct": 0,
+        "review": "$T_n = S_n - S_{n-1} = (3n^2-n) - (3(n-1)^2-(n-1)) = 6n-4$."
+    },
+    {
+        "topic": "Binomial Expansion",
+        "q": "Obtain the coefficient of $x^2$ in the expansion of $(1-x)^{10}$.",
+        "options": ["45", "30", "35", "50"],
+        "correct": 0,
+        "review": "Coefficient is $\\binom{10}{2}(-1)^2 = 45$."
+    },
+    {
+        "topic": "Arithmetic Progression",
+        "q": "The 4th and 6th terms of an AP are 8 and 14. Compute the first term ($a$) and common difference ($d$).",
+        "options": ["$a=-1, d=3$", "$a=1, d=2$", "$a=2, d=3$", "$a=0, d=3$"],
+        "correct": 0,
+        "review": "$a+5d=14$ and $a+3d=8$. Subtracting gives $2d=6 \\rightarrow d=3$. Then $a+9=8 \\rightarrow a=-1$."
+    },
+    {
+        "topic": "Set Theory",
+        "q": "Given $U=\{1,2,3,4,5\}$ and $A=\{1,2,3\}$. Find $A'$.",
+        "options": ["{4, 5}", "{1, 2}", "{3, 4}", "{5}"],
+        "correct": 0,
+        "review": "The complement $A'$ contains elements in $U$ not in $A$."
+    },
+    {
+        "topic": "Binomial Series",
+        "q": "The Binomial series for $(1+x)^n$ is valid only when:",
+        "options": ["$|x| < 1$", "$|x| > 1$", "$x = 1$", "$x = 0$"],
+        "correct": 0,
+        "review": "The series converges if and only if the absolute value of $x$ is less than 1."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "Express $\\cos(270^\\circ - \\theta)$ as a function of an acute angle.",
+        "options": ["$-\\sin \\theta$", "$\\sin \\theta$", "$\\cos \\theta$", "$-\\cos \\theta$"],
+        "correct": 0,
+        "review": "In the 3rd quadrant, cosine is negative and 270 changes the function to sine."
+    },
+    {
+        "topic": "Arithmetic Progression",
+        "q": "How many terms of the series 5, 9, 13... amount to 460?",
+        "options": ["15", "3", "5", "6"],
+        "correct": 0,
+        "review": "Use $S_n = \\frac{n}{2}[2a+(n-1)d]$. $460 = \\frac{n}{2}[10+(n-1)4]$. Solving the quadratic gives $n=15$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "If $A$ is acute and $\\tan A = 2/3$, then $\\cot A$ is:",
+        "options": ["$3/2$", "$2/3$", "$1/3$", "$3/5$"],
+        "correct": 0,
+        "review": "$\\cot A = 1/\\tan A = 3/2$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "The expression $\\cos^2 \\theta + \\sin^2 \\theta$ is equivalent to:",
+        "options": ["1", "$\\cos 2\\theta$", "$\\sin 2\\theta$", "0"],
+        "correct": 0,
+        "review": "This is the fundamental Pythagorean identity of trigonometry."
+    },
+    {
+        "topic": "Geometric Progression",
+        "q": "The sum of the first 10 terms of a GP is 244 times the sum of the first 5 terms. Find the common ratio ($r$).",
+        "options": ["3", "5", "6", "9"],
+        "correct": 0,
+        "review": "$\\frac{a(r^{10}-1)}{r-1} = 244 \\frac{a(r^5-1)}{r-1} \\Rightarrow r^5+1=244 \\Rightarrow r^5=243 \\Rightarrow r=3$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "Given $\\sin A = 3/5$ and $A$ is obtuse, find $\\cos A$.",
+        "options": ["$-4/5$", "$4/5$", "$3/4$", "$-3/4$"],
+        "correct": 0,
+        "review": "In the 2nd quadrant (obtuse), $\\cos A$ is negative. $\\cos A = -\\sqrt{1-(3/5)^2} = -4/5$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "Which of the following has the same value as $\\cos 260^\\circ$?",
+        "options": ["$-\\cos 80^\\circ$", "$-\\cos 60^\\circ$", "$\\cos 30^\\circ$", "$-\\sin 70^\\circ$"],
+        "correct": 0,
+        "review": "$\\cos 260^\\circ = \\cos(180+80) = -\\cos 80^\\circ$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "What is the value of $\\tan 15^\\circ$ in surd form?",
+        "options": ["$2-\\sqrt{3}$", "$2+\\sqrt{3}$", "$\\sqrt{3}-2$", "$\\sqrt{3}+1$"],
+        "correct": 0,
+        "review": "$\\tan(45-30) = \\frac{\\tan 45 - \\tan 30}{1 + \\tan 45 \\tan 30} = \\frac{1 - 1/\\sqrt{3}}{1 + 1/\\sqrt{3}} = 2-\\sqrt{3}$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "If $\\cos A = 1/2$, find $\\sin A$ in surd form.",
+        "options": ["$\\sqrt{3}/2$", "$1/2$", "$\\sqrt{2}/2$", "1"],
+        "correct": 0,
+        "review": "$\\sin^2 A = 1 - (1/2)^2 = 3/4 \\Rightarrow \\sin A = \\sqrt{3}/2$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "If $\\sin A = 3/5$, find $\\tan A$ for acute $A$.",
+        "options": ["$3/4$", "$4/3$", "$4/5$", "$5/3$"],
+        "correct": 0,
+        "review": "Opposite=3, Hypotenuse=5, so Adjacent=4. $\\tan A = 3/4$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "$\\cos(A+B)$ is equivalent to:",
+        "options": ["$\\cos A\\cos B - \\sin A\\sin B$", "$\\cos A\\cos B + \\sin A\\sin B$", "$\\sin A\\cos B + \\cos A\\sin B$", "$\\sin A\\cos B - \\cos A\\sin B$"],
+        "correct": 0,
+        "review": "This is the standard cosine addition formula."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "What is the number of degrees in 2 radians?",
+        "options": ["$114.6^\\circ$", "$360^\\circ$", "$90^\\circ$", "$180^\\circ$"],
+        "correct": 0,
+        "review": "$2 \\times \\frac{180}{\\pi} \\approx 114.6^\\circ$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "If $\\tan A = 2/3$, then $\\sec^2 A$ is:",
+        "options": ["$13/9$", "$9/13$", "$4/9$", "$1$"],
+        "correct": 0,
+        "review": "$\\sec^2 A = 1 + \\tan^2 A = 1 + (2/3)^2 = 1 + 4/9 = 13/9$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "Solve $\\tan \\theta - \\sqrt{3} = 0$ for $0 \\leq \\theta < 2\\pi$.",
+        "options": ["$\\pi/3, 4\\pi/3$", "$\\pi/6, 7\\pi/6$", "$\\pi/3, 2\\pi/3$", "$\\pi/2, 3\\pi/2$"],
+        "correct": 0,
+        "review": "$\\tan \\theta = \\sqrt{3} \\Rightarrow \\theta = 60^\\circ$ (Q1) and $240^\\circ$ (Q3)."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "Given acute $A$ ($\\sin A = 3/5$) and obtuse $B$ ($\\sin B = 5/13$), find $\\cos(A+B)$.",
+        "options": ["$-63/65$", "$63/65$", "$33/65$", "$-33/65$"],
+        "correct": 0,
+        "review": "$\\cos A = 4/5$, $\\cos B = -12/13$. $\\cos(A+B) = (4/5)(-12/13) - (3/5)(5/13) = -48/65 - 15/65 = -63/65$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "The expression $\\frac{\\tan A - \\tan B}{1 + \\tan A \\tan B}$ is:",
+        "options": ["$\\tan(A-B)$", "$\\tan(A+B)$", "$\\cot(A-B)$", "$\\cot(A+B)$"],
+        "correct": 0,
+        "review": "This is the tangent subtraction formula."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "If $\\tan \\theta = A$, then $\\cos^2 \\theta$ is:",
+        "options": ["$\\frac{1}{1+A^2}$", "$\\frac{A^2}{1+A^2}$", "$1+A^2$", "$\\frac{1}{A}$"],
+        "correct": 0,
+        "review": "$\\cos^2 \\theta = \\frac{1}{\\sec^2 \\theta} = \\frac{1}{1+\\tan^2 \\theta} = \\frac{1}{1+A^2}$."
+    },
+    {
+        "topic": "Quadratic Equations",
+        "q": "The roots of $2x^2-7x+4=0$ are $\\alpha, \\beta$. Find the equation with roots $\\alpha/\\beta$ and $\\beta/\\alpha$.",
+        "options": ["$8x^2 - 33x + 8 = 0$", "$4x^2 - 7x + 2 = 0$", "$8x^2 + 33x + 8 = 0$", "$x^2 - 7x + 4 = 0$"],
+        "correct": 0,
+        "review": "Sum: $(\\alpha^2+\\beta^2)/\\alpha\\beta = [(\\alpha+\\beta)^2-2\\alpha\\beta]/\\alpha\\beta = [(49/4)-4]/2 = 33/8$. Product: 1."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "What is the radian measure of $-420^\\circ$?",
+        "options": ["$-7\\pi/3$", "$-3\\pi/7$", "$7\\pi/6$", "$-4\\pi/3$"],
+        "correct": 0,
+        "review": "$-420 \\times \\frac{\\pi}{180} = -\\frac{42\\pi}{18} = -\\frac{7\\pi}{3}$."
+    },
+    {
+        "topic": "Arithmetic Progression",
+        "q": "Sum of the first 18 terms of 5, 8, 11, 14...",
+        "options": ["549", "960", "560", "1098$"],
+        "correct": 0,
+        "review": "$S_{18} = \\frac{18}{2}[2(5) + 17(3)] = 9[10+51] = 549$."
+    },
+    {
+        "topic": "Quadratic Equations",
+        "q": "Roots of $x^2-5x+6=0$ are $\\alpha, \\beta$. Find $\\alpha^2+\\beta^2$.",
+        "options": ["13", "25", "21", "11"],
+        "correct": 0,
+        "review": "Sum=5, Product=6. $5^2 - 2(6) = 25 - 12 = 13$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "$\\sin(180 - \\theta)$ is equivalent to:",
+        "options": ["$\\sin \\theta$", "$-\\sin \\theta$", "$\\cos \\theta$", "$-\\cos \\theta$"],
+        "correct": 0,
+        "review": "Sine is positive in the 2nd quadrant."
+    },
+    {
+        "topic": "Arithmetic Progression",
+        "q": "Insert six arithmetic means between 12 and -9.",
+        "options": ["9, 6, 3, 0, -3, -6", "7, 5, 3, -1, -5, -9", "9, 17, 16... -9", "None"],
+        "correct": 0,
+        "review": "$a=12, T_8 = -9 \\rightarrow 12+7d=-9 \\rightarrow d=-3$."
+    },
+    {
+        "topic": "Arithmetic Progression",
+        "q": "What is the 10th term of an AP where $a=3$ and $T_6=23$?",
+        "options": ["39", "23", "0", "43"],
+        "correct": 0,
+        "review": "$3+5d=23 \\rightarrow d=4$. $T_{10} = 3+9(4) = 39$."
+    },
+    {
+        "topic": "Set Theory",
+        "q": "List elements of $B = \\{x : x \\text{ is odd, } 3 \\leq x \\leq 15\\}$.",
+        "options": ["{3,5,7,9,11,13,15}", "{3,5,7,11,13,15}", "{1,3,5,7,9,11,13,15}", "{5,7,9,11,13}"],
+        "correct": 0,
+        "review": "Lists all odd integers from 3 to 15 inclusive."
+    },
+    {
+        "topic": "Real Numbers",
+        "q": "Which of the following is not a real number?",
+        "options": ["$\\sqrt{-4}$", "$\\pi$", "$0.5$", "$\\sqrt{2}$"],
+        "correct": 0,
+        "review": "Square roots of negative numbers are imaginary/complex, not real."
+    },
+    {
+        "topic": "Functions",
+        "q": "For what value of $x$ will $\\frac{1}{x-2}$ be undefined?",
+        "options": ["2", "0", "1", "-2"],
+        "correct": 0,
+        "review": "A fraction is undefined when the denominator is zero."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "Which identity is correct?",
+        "options": ["$\\sin^2 \\theta + \\cos^2 \\theta = 1$", "$\\tan^2 \\theta - 1 = \\sec^2 \\theta$", "$\\sin 2\\theta = \\cos^2 \\theta$", "None"],
+        "correct": 0,
+        "review": "The standard Pythagorean identity."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "$\\frac{3\\pi}{4}$ is equivalent to:",
+        "options": ["$135^\\circ$", "$120^\\circ$", "$150^\\circ$", "$270^\\circ$"],
+        "correct": 0,
+        "review": "$\\frac{3 \\times 180}{4} = 135^\\circ$."
+    },
+    {
+        "topic": "Binomial Expansion",
+        "q": "Coefficient of the 2nd term in $(x+2y)^5$.",
+        "options": ["10", "40", "32", "80"],
+        "correct": 0,
+        "review": "2nd term: $\\binom{5}{1}x^4(2y)^1 = 10x^4y$ (Note: Options might differ, usually $\\binom{5}{1} \\times 2 = 10$)."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "Which has the same value as $\\sin 120^\\circ$?",
+        "options": ["$\\sin 60^\\circ$", "$\\cos 60^\\circ$", "$-\\sin 60^\\circ$", "$\\sin 30^\\circ$"],
+        "correct": 0,
+        "review": "$\\sin 120 = \\sin(180-60) = \\sin 60$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "Express $\\tan 300^\\circ$ as a ratio of an acute angle.",
+        "options": ["$-\\tan 60^\\circ$", "$\\tan 60^\\circ$", "$-\\tan 30^\\circ$", "$\\tan 30^\\circ$"],
+        "correct": 0,
+        "review": "300 is in Q4 where tangent is negative. $360-300 = 60$."
+    },
+    {
+        "topic": "Quadratic Equations",
+        "q": "If $\\alpha, \\beta$ are roots of $3x^2-5x+2=0$, find $1/\\alpha + 1/\\beta$.",
+        "options": ["$5/2$", "$2/5$", "$3/5$", "$-5/2$"],
+        "correct": 0,
+        "review": "Sum/Product = $(5/3) / (2/3) = 5/2$."
+    },
+    {
+        "topic": "Quadratic Equations",
+        "q": "Nature of roots for $x^2-4x+4=0$.",
+        "options": ["Real and equal", "Real and distinct", "Complex", "None"],
+        "correct": 0,
+        "review": "$D = (-4)^2 - 4(1)(4) = 0$."
+    },
+    {
+        "topic": "Quadratic Equations",
+        "q": "Discriminant of $3x^2-4x+5=0$.",
+        "options": ["-44", "-36", "40", "-76"],
+        "correct": 0,
+        "review": "$(-4)^2 - 4(3)(5) = 16 - 60 = -44$ (Check source: Option A -36 or D -76? Calc is -44)."
+    },
+    {
+        "topic": "Decimals",
+        "q": "Fraction equivalent to recurring $0.444...$",
+        "options": ["$4/9$", "$2/5$", "$1/4$", "$4/10$"],
+        "correct": 0,
+        "review": "For a single repeating digit $d$, the fraction is $d/9$."
+    },
+    {
+        "topic": "Arithmetic Progression",
+        "q": "How many terms of 5, 9, 13... sum to 460?",
+        "options": ["15", "20", "24", "14"],
+        "correct": 0,
+        "review": "Calculated previously as $n=15$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "$\\sec^2 \\theta - 1$ is equivalent to:",
+        "options": ["$\\tan^2 \\theta$", "$\\cot^2 \\theta$", "$\\sin^2 \\theta$", "$1$"],
+        "correct": 0,
+        "review": "Identity: $1 + \\tan^2 \\theta = \\sec^2 \\theta$."
+    },
+    {
+        "topic": "Arithmetic Progression",
+        "q": "Find the 12th term of 1, 5, 9...",
+        "options": ["45", "24", "54", "-24"],
+        "correct": 0,
+        "review": "$1 + 11(4) = 45$."
+    },
+    {
+        "topic": "Geometric Progression",
+        "q": "Find the 8th partial sum of $1, 2, 4...$",
+        "options": ["255", "128", "256", "511"],
+        "correct": 0,
+        "review": "$1(2^8 - 1) / (2 - 1) = 255$."
+    },
+    {
+        "topic": "Geometric Progression",
+        "q": "Sum of infinite GP where $a=1, r=1/2$.",
+        "options": ["2", "1", "0.5", "4$"],
+        "correct": 0,
+        "review": "$S_\\infty = a / (1-r) = 1 / (0.5) = 2$."
+    },
+    {
+        "topic": "Series",
+        "q": "Which series is divergent?",
+        "options": ["$1+2+3...$", "$1+1/2+1/4...$", "$1-1+1...$", "None"],
+        "correct": 0,
+        "review": "A series where the sum grows without bound is divergent."
+    },
+    {
+        "topic": "Quadratic Equations",
+        "q": "Sum of roots for $2x^2+6x-5=0$.",
+        "options": ["-3", "3", "2.5", "-2.5"],
+        "correct": 0,
+        "review": "$-b/a = -6/2 = -3$."
+    },
+    {
+        "topic": "Geometric Progression",
+        "q": "GP: $T_3=10, T_8=2430$. Find position of 21870.",
+        "options": ["10", "7", "8", "9"],
+        "correct": 0,
+        "review": "$ar^2=10, ar^7=2430 \\rightarrow r^5=243 \\rightarrow r=3$. $a(3^2)=10 \\rightarrow a=10/9$. $10/9(3^{n-1})=21870 \\rightarrow n=10$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "$\\frac{1-\\cos 2\\theta}{2}$ is equivalent to:",
+        "options": ["$\\sin^2 \\theta$", "$\\cos^2 \\theta$", "$\\sin \\theta$", "$\\cos \\theta$"],
+        "correct": 0,
+        "review": "This is a power reduction identity derived from $\\cos 2\\theta = 1 - 2\\sin^2 \\theta$."
+    },
+    {
+        "topic": "Set Theory",
+        "q": "Write $\{0, 1, 2, ..., 10\}$ in set-builder notation.",
+        "options": ["$\\{x : x \\in \\mathbb{Z}, 0 \\leq x \\leq 10\\}$", "$\\{x : x < 10\\}$", "$\\{x : x > 0\\}$", "None"],
+        "correct": 0,
+        "review": "Describes integers from 0 to 10 inclusive."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "Number of radians in one complete revolution.",
+        "options": ["$2\\pi$", "$\\pi$", "$360$", "$180$"],
+        "correct": 0,
+        "review": "A full circle is $360^\\circ$ or $2\\pi$ radians."
+    },
+    {
+        "topic": "Set Theory",
+        "q": "How many subsets of $\{a, b, c, d, e, f, h, i\}$ are there?",
+        "options": ["256", "8", "15", "25"],
+        "correct": 0,
+        "review": "Number of subsets is $2^n$. $2^8 = 256$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "Positive value of $\\theta$ where $\\sin \\theta = 0.5$.",
+        "options": ["$30^\\circ, 150^\\circ$", "$30^\\circ, 270^\\circ$", "$60^\\circ$", "None"],
+        "correct": 0,
+        "review": "Sine is positive in Q1 and Q2."
+    },
+    {
+        "topic": "Complex Numbers",
+        "q": "Compute $i^{15}$.",
+        "options": ["-i", "i", "1", "-1"],
+        "correct": 0,
+        "review": "Powers of $i$ repeat every 4. $15 \\pmod 4 = 3$. $i^3 = -i$."
+    },
+    {
+        "topic": "Geometric Progression",
+        "q": "Sum to which $1 + 1/3 + 1/9...$ converges.",
+        "options": ["$1.5$", "$2$", "$3$", "$1.33$"],
+        "correct": 0,
+        "review": "$1 / (1 - 1/3) = 1 / (2/3) = 1.5$."
+    },
+    {
+        "topic": "Binomial Expansion",
+        "q": "First 3 terms of $(1-x)^{-1}$.",
+        "options": ["$1+x+x^2$", "$1-x+x^2$", "$1+x-x^2$", "$1-x-x^2$"],
+        "correct": 0,
+        "review": "This is the infinite geometric series expansion."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "Value of $\\cos 15^\\circ$ in surd form.",
+        "options": ["$\\frac{\\sqrt{6} + \\sqrt{2}}{4}$", "$\\frac{\\sqrt{6} - \\sqrt{2}}{4}$", "$\\frac{\\sqrt{3}+1}{2}$", "None"],
+        "correct": 0,
+        "review": "$\\cos(45-30) = \\cos 45\\cos 30 + \\sin 45\\sin 30$."
+    },
+    {
+        "topic": "Geometric Progression",
+        "q": "Sum to infinity is four times the first term. Find $r$.",
+        "options": ["$3/4$", "$1/4$", "$1/2$", "$1/3$"],
+        "correct": 0,
+        "review": "$a/(1-r) = 4a \\rightarrow 1/(1-r) = 4 \\rightarrow 1 = 4 - 4r \\rightarrow 4r = 3 \\rightarrow r = 3/4$."
+    },
+    {
+        "topic": "Arithmetic Progression",
+        "q": "AP: $a=4, d=3$. Sum of first 20 terms.",
+        "options": ["650", "610", "700", "590"],
+        "correct": 0,
+        "review": "$10[8 + 19(3)] = 10[8+57] = 650$."
+    },
+    {
+        "topic": "Trigonometry",
+        "q": "Express $2\\sin A\\cos B$ as a sum/difference.",
+        "options": ["$\\sin(A+B) + \\sin(A-B)$", "$\\sin(A+B) - \\sin(A-B)$", "$\\cos(A+B) + \\cos(A-B)$", "None"],
+        "correct": 0,
+        "review": "Standard product-to-sum identity."
+    },
+    {
+        "topic": "Complex Numbers",
+        "q": "Evaluate modulus of $3+4i$.",
+        "options": ["5", "7", "25", "1"],
+        "correct": 0,
+        "review": "$\\sqrt{3^2 + 4^2} = 5$."
+    },
+    {
+        "topic": "Complex Numbers",
+        "q": "Product of $4+i$ and $4-i$.",
+        "options": ["17", "15", "16", "20"],
+        "correct": 0,
+        "review": "$4^2 - i^2 = 16 - (-1) = 17$."
+    },
+    {
+        "topic": "Complex Numbers",
+        "q": "Simplify $(1+i)/(1-i)$.",
+        "options": ["i", "-i", "1", "-1"],
+        "correct": 0,
+        "review": "Multiply by conjugate: $\\frac{(1+i)^2}{1+1} = \\frac{2i}{2} = i$."
+    },
+    {
+        "topic": "Complex Numbers",
+        "q": "Evaluate $\\sqrt{-36}$.",
+        "options": ["6i", "-6i", "6", "-6"],
+        "correct": 0,
+        "review": "Square root of negative numbers uses the imaginary unit $i$."
+    },
+    {
+        "topic": "Complex Numbers",
+        "q": "Express $2+3i$ in polar form.",
+        "options": ["$\\sqrt{13}(\\cos 56.3 + i\\sin 56.3)$", "$\\sqrt{13}(\\cos 33.7 + i\\sin 33.7)$", "None", "None"],
+        "correct": 0,
+        "review": "$r = \\sqrt{2^2+3^2} = \\sqrt{13}$, $\\theta = \\tan^{-1}(3/2) \\approx 56.3^\\circ$."
+    },
+    {
+        "topic": "Set Theory",
+        "q": "If $A=\{1,2,3,4,5,6\}$ and $B=\{2,4,6,8\}$. Find $A-B$.",
+        "options": ["{1,3,5}", "{1,2,3,5}", "{8}", "{1,5}"],
+        "correct": 0,
+        "review": "Elements in A that are not in B."
+    },
+    {
+        "topic": "Venn Diagrams",
+        "q": "In a college of 100 students, 35 play football, 36 volleyball, 24 basketball... How many play football only?",
+        "options": ["17", "15", "20", "12"],
+        "correct": 0,
+        "review": "Requires filling out a 3-set Venn diagram starting from the center (4 students)."
     },
     { 
         topic: "Trigonometry", 
@@ -548,60 +642,12 @@
     },
     { 
         topic: "Trigonometry", 
-        q: "Evaluate Sin 165° without tables.", 
-        options: ["(√6 - √2)/4", "(√6 + √2)/4", "√3/2", "0.5"], 
-        correct: 0, 
-        review: "Sin(120+45) = Sin120Cos45 + Cos120Sin45 = (√3/2)(1/√2) + (-1/2)(1/√2) = (√3-1)/2√2 = (√6-√2)/4[cite: 520]."
-    },
-    { 
-        topic: "Trigonometry", 
-        q: "Express Cos 3θ Sin 2θ as a sum.", 
-        options: ["1/2 [Sin 5θ - Sin θ]", "1/2 [Sin 5θ + Sin θ]", "Sin 5θ - Sin θ", "Cos 5θ + Cos θ"], 
-        correct: 0, 
-        review: "Formula: 1/2 [Sin(A+B) - Sin(A-B)] = 1/2 [Sin 5θ - Sin θ][cite: 526]."
-    },
-    { 
-        topic: "Trigonometry", 
         q: "Sin 155° is equal to:", 
         options: ["Sin 25°", "Sin 35°", "-Sin 25°", "Cos 25°"], 
         correct: 0, 
         review: "Sin(180-25) = Sin 25[cite: 504]."
     },
-    { 
-        topic: "Trigonometry", 
-        q: "If Cos 2A = 4/5, find Tan A (acute).", 
-        options: ["1/3", "3", "1/2", "2"], 
-        correct: 0, 
-        review: "Cos 2A = (1-t²)/(1+t²) -> 4/5 = (1-t²)/(1+t²) -> 4+4t²=5-5t² -> 9t²=1 -> t=1/3[cite: 524]."
-    },
-    { 
-        topic: "Trigonometry", 
-        q: "Cos(180 + θ) equals:", 
-        options: ["-Cos θ", "Cos θ", "Sin θ", "-Sin θ"], 
-        correct: 0, 
-        review: "3rd quadrant cosine is negative[cite: 502]."
-    },
-    { 
-        topic: "Trigonometry", 
-        q: "Simplify (Sin 4θ + Sin 2θ) / (Cos 4θ - Cos 2θ).", 
-        options: ["-Cot θ", "Tan θ", "-Tan θ", "Cot θ"], 
-        correct: 0, 
-        review: "(2Sin3θCosθ) / (-2Sin3θSinθ) = -Cot θ[cite: 529]."
-    },
-    { 
-        topic: "Trigonometry", 
-        q: "If Tan θ = -1.106, find Tan 312°.", 
-        options: ["-1.106", "1.106", "0.106", "-0.106"], 
-        correct: 0, 
-        review: "Tan(360-48) = -Tan 48. If Tan 48 is 1.106, result is -1.106[cite: 504]."
-    },
-    { 
-        topic: "Trigonometry", 
-        q: "Which angle is complementary to 72°?", 
-        options: ["18°", "108°", "28°", "90°"], 
-        correct: 0, 
-        review: "90 - 72 = 18[cite: 505]."
-    },
+    
     { 
         topic: "Trigonometry", 
         q: "Cos 250° is equal to:", 
@@ -618,20 +664,6 @@
     },
     { 
         topic: "Trigonometry", 
-        q: "Evaluate Tan 75°.", 
-        options: ["2 + √3", "2 - √3", "1 + √3", "√3"], 
-        correct: 0, 
-        review: "Using quadratic derived from Cos 150 formula: 2 + √3[cite: 512]."
-    },
-    { 
-        topic: "Trigonometry", 
-        q: "Which value is undefined?", 
-        options: ["Tan 90°", "Sin 90°", "Cos 90°", "Cot 45°"], 
-        correct: 0, 
-        review: "Tan 90 = Sin 90/Cos 90 = 1/0 (undefined)[cite: 507]."
-    },
-    { 
-        topic: "Trigonometry", 
         q: "Find θ if Cos θ = -1.", 
         options: ["180°", "360°", "0°", "90°"], 
         correct: 0, 
@@ -644,29 +676,6 @@
         correct: 0, 
         review: "Sine repeats every 360 degrees[cite: 514]."
     },
-
-    // --- COMPLEX NUMBERS (84-100) ---
-    { 
-        topic: "Complex Numbers", 
-        q: "Calculate (2 + 3i)(1 - 5i).", 
-        options: ["17 - 7i", "2 - 15i", "17 + 7i", "-13 - 7i"], 
-        correct: 0, 
-        review: "2 - 10i + 3i - 15i² = 2 - 7i + 15 = 17 - 7i[cite: 536]."
-    },
-    { 
-        topic: "Complex Numbers", 
-        q: "Find the modulus of z = -4 + 4i.", 
-        options: ["4√2", "8", "4", "32"], 
-        correct: 0, 
-        review: "√((-4)² + 4²) = √32 = 4√2[cite: 585]."
-    },
-    { 
-        topic: "Complex Numbers", 
-        q: "Divide (2 + 3i) by (1 + 5i).", 
-        options: ["(17 - 7i)/26", "(-13 + 7i)/26", "(17 + 7i)/26", "1 + i"], 
-        correct: 0, 
-        review: "Multiply num/den by (1-5i). Result is (17 - 7i)/26 (Wait, recalculating: 2-10i+3i-15i^2 = 17-7i. Denom: 1+25=26).[cite: 538]."
-    },
     { 
         topic: "Complex Numbers", 
         q: "Find the argument of z = -1 - i.", 
@@ -676,24 +685,10 @@
     },
     { 
         topic: "Complex Numbers", 
-        q: "Express 1 - √3i in exponential form.", 
-        options: ["2e^(-iπ/3)", "2e^(iπ/3)", "2e^(iπ/6)", "2e^(-iπ/6)"], 
-        correct: 0, 
-        review: "r=2, θ=-60° (-π/3). Form 2e^(-iπ/3)[cite: 594]."
-    },
-    { 
-        topic: "Complex Numbers", 
         q: "Evaluate i^123.", 
         options: ["-i", "i", "1", "-1"], 
         correct: 0, 
         review: "123 mod 4 = 3. i³ = -i[cite: 530, 604]."
-    },
-    { 
-        topic: "Complex Numbers", 
-        q: "Solve z³ = 1 (Cube roots of unity).", 
-        options: ["1, (-1±i√3)/2", "1, -1, i", "1, i, -i", "1, 1+i, 1-i"], 
-        correct: 0, 
-        review: "Roots are 1, ω, ω² where ω = (-1+i√3)/2[cite: 609]."
     },
     { 
         topic: "Complex Numbers", 
@@ -715,13 +710,6 @@
         options: ["60 cis(7π/6)", "60 cis(π/2)", "16 cis(7π/6)", "60 cis(5π/2)"], 
         correct: 0, 
         review: "10*6 cis(5π/6 + π/3) = 60 cis(7π/6)[cite: 592]."
-    },
-    { 
-        topic: "Complex Numbers", 
-        q: "What is the conjugate of -2 + 3i?", 
-        options: ["-2 - 3i", "2 - 3i", "-2 + 3i", "2 + 3i"], 
-        correct: 0, 
-        review: "Keep real, negate imaginary: -2 - 3i[cite: 531]."
     },
     { 
         topic: "Complex Numbers", 
