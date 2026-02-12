@@ -66,6 +66,49 @@
             border-bottom: 2px solid #ddd;
         }
 
+        /* --- NEW STYLES FOR MESSAGE BOX --- */
+        .update-message {
+            background: #e8f4f8;
+            /* Light blue matches theme */
+            border-left: 5px solid var(--accent);
+            padding: 25px;
+            margin: 30px auto 10px auto;
+            width: 85%;
+            max-width: 800px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            animation: fadeIn 0.8s ease;
+        }
+
+        .update-message h3 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .update-message p {
+            color: #555;
+            line-height: 1.6;
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ---------------------------------- */
+
         /* Main Content wrapper to push footer down */
         .main-content {
             flex: 1;
@@ -252,6 +295,12 @@
                 style="width: 80%; max-width: 400px; padding: 12px; border-radius: 25px; border: 1px solid #ddd; outline: none; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
         </div>
 
+        <div class="update-message">
+            <h3>Help us stay updated! 👋</h3>
+            <p>If you have any assignment questions from your courses, please send them to <strong>Vida</strong>. Since
+                some instructors are pulling heavily from these assignments for exams, we want to make sure the website
+                is fully updated for everyone!</p>
+        </div>
         <div id="noResults">No courses found matching your search.</div>
 
         <div class="container" id="courseContainer">
@@ -357,69 +406,69 @@
     </div>
 
     <script>
-// A library of response variations to keep things fresh
-function toggleChat() {
-    const window = document.getElementById('chat-window');
-    window.style.display = (window.style.display === 'none' || window.style.display === '') ? 'flex' : 'none';
-}
-const aiResponses = {
-    greeting: [
-        "Hello! I'm your StudyHub assistant. How can I help with your courses today?",
-        "Hi there! Ready to smash your exams? Ask me anything!",
-        "Greetings, student! Which topic are we tackling today?"
-    ],
-    mth101: [
-        "MTH 101 focuses on Algebra and Trigonometry. It’s the foundation for everything! What formula are you stuck on?",
-        "Algebra and Trig can be tricky. Are we looking at Quadratic equations or Sine rules today?",
-        "Ah, MTH 101! A classic. Need help with Binomial expansion or Logarithms?"
-    ],
-    math_formula: [
-        "The quadratic formula is x = [-b ± sqrt(b² - 4ac)] / 2a. Don't forget the ±!",
-        "For quadratics, remember: x = (-b ± √(b² - 4ac)) / 2a.",
-        "Need the quadratic formula? It's x equals negative b, plus or minus the square root of b squared minus 4ac, all over 2a."
-    ],
-    default: [
-        "That's a great question! I'm currently in Demo Mode. To give you a real answer, connect me to the live Gemini API.https://gemini.google.com/app",
-        "I'm still learning! Once my developer connects my brain to Gemini, I'll be able to solve that for you instantly.",
-        "Interesting point! While I'm in test mode, I recommend checking your course PDF for the exact details."
-    ]
-};
+        // A library of response variations to keep things fresh
+        function toggleChat() {
+            const window = document.getElementById('chat-window');
+            window.style.display = (window.style.display === 'none' || window.style.display === '') ? 'flex' : 'none';
+        }
+        const aiResponses = {
+            greeting: [
+                "Hello! I'm your StudyHub assistant. How can I help with your courses today?",
+                "Hi there! Ready to smash your exams? Ask me anything!",
+                "Greetings, student! Which topic are we tackling today?"
+            ],
+            mth101: [
+                "MTH 101 focuses on Algebra and Trigonometry. It’s the foundation for everything! What formula are you stuck on?",
+                "Algebra and Trig can be tricky. Are we looking at Quadratic equations or Sine rules today?",
+                "Ah, MTH 101! A classic. Need help with Binomial expansion or Logarithms?"
+            ],
+            math_formula: [
+                "The quadratic formula is x = [-b ± sqrt(b² - 4ac)] / 2a. Don't forget the ±!",
+                "For quadratics, remember: x = (-b ± √(b² - 4ac)) / 2a.",
+                "Need the quadratic formula? It's x equals negative b, plus or minus the square root of b squared minus 4ac, all over 2a."
+            ],
+            default: [
+                "That's a great question! I'm currently in Demo Mode. To give you a real answer, connect me to the live Gemini API.https://gemini.google.com/app",
+                "I'm still learning! Once my developer connects my brain to Gemini, I'll be able to solve that for you instantly.",
+                "Interesting point! While I'm in test mode, I recommend checking your course PDF for the exact details."
+            ]
+        };
 
-async function sendChatMessage() {
-    const input = document.getElementById('chatInput');
-    const container = document.getElementById('chat-messages');
-    const query = input.value.trim().toLowerCase();
+        async function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const container = document.getElementById('chat-messages');
+            const query = input.value.trim().toLowerCase();
 
-    if (!query) return;
+            if (!query) return;
 
-    // Display User Message
-    container.innerHTML += `<div style="margin-bottom: 10px; text-align: right;"><strong>You:</strong> ${input.value}</div>`;
-    input.value = "";
-    container.scrollTop = container.scrollHeight;
+            // Display User Message
+            container.innerHTML += `<div style="margin-bottom: 10px; text-align: right;"><strong>You:</strong> ${input.value}</div>`;
+            input.value = "";
+            container.scrollTop = container.scrollHeight;
 
-    // Display Loading State
-    const loadingId = "loading-" + Date.now();
-    container.innerHTML += `<div id="${loadingId}" style="margin-bottom: 10px; color: #7f8c8d;"><strong>AI:</strong> Typing...</div>`;
+            // Display Loading State
+            const loadingId = "loading-" + Date.now();
+            container.innerHTML += `<div id="${loadingId}" style="margin-bottom: 10px; color: #7f8c8d;"><strong>AI:</strong> Typing...</div>`;
 
-    setTimeout(() => {
-        const loadingEl = document.getElementById(loadingId);
-        let category = "default";
+            setTimeout(() => {
+                const loadingEl = document.getElementById(loadingId);
+                let category = "default";
 
-        // Simple keyword routing
-        if (query.includes("hi") || query.includes("hello")) category = "greeting";
-        else if (query.includes("mth 101") || query.includes("math")) category = "mth101";
-        else if (query.includes("formula") || query.includes("quadratic")) category = "math_formula";
+                // Simple keyword routing
+                if (query.includes("hi") || query.includes("hello")) category = "greeting";
+                else if (query.includes("mth 101") || query.includes("math")) category = "mth101";
+                else if (query.includes("formula") || query.includes("quadratic")) category = "math_formula";
 
-        // RANDOMIZER: Pick a random index from the chosen category
-        const choices = aiResponses[category];
-        const randomIndex = Math.floor(Math.random() * choices.length);
-        const finalAnswer = choices[randomIndex];
+                // RANDOMIZER: Pick a random index from the chosen category
+                const choices = aiResponses[category];
+                const randomIndex = Math.floor(Math.random() * choices.length);
+                const finalAnswer = choices[randomIndex];
 
-        loadingEl.innerHTML = `<strong>AI:</strong> ${finalAnswer}`;
-        container.scrollTop = container.scrollHeight;
-    }, 800);
-}
-        
+                loadingEl.innerHTML = `<strong>AI:</strong> ${finalAnswer}`;
+                container.scrollTop = container.scrollHeight;
+            }, 800);
+        }
+
         window.onload = function () {
             updateUI();
         };
