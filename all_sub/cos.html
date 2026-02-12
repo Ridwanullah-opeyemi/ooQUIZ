@@ -48,571 +48,583 @@
 
     </div>
 
-    <a href="../index.html"><div class="back">🏡</div></a>
+    <a href="../index.html">
+        <div class="back">🏡</div>
+    </a>
+    <div id="customModal" class="modal-overlay" style="display:none;">
+        <div class="modal-box">
+            <h3 id="modalTitle">Notification</h3>
+            <p id="modalBody"></p>
+            <div class="modal-footer">
+                <button id="modalCancel" class="btn-modal-alt">Cancel</button>
+                <button id="modalConfirm" class="btn-modal">OK</button>
+            </div>
+        </div>
+    </div>
     <script>
         // Data containing all the specific questions from your MTH 101 notes
         const questions = [
-    { 
-        topic: "Computer Fundamentals", 
-        q: "What is the primary definition of a computer according to the notes?", 
-        options: ["A device for entertainment only", "An electronic device that takes input, processes it, and produces output", "A machine that only performs calculations", "A hardware box without instructions"], 
-        correct: 1, 
-        review: "A computer is an electronic device which takes some input, processes it, and produces output."
-    },
-    { 
-        topic: "Hardware", 
-        q: "Which part of the computer is responsible for performing arithmetic and logical operations?", 
-        options: ["Control Unit", "Registers", "ALU", "RAM"], 
-        correct: 2, 
-        review: "The ALU (Arithmetic Logic Unit) performs operations like addition and comparisons."
-    },
-    { 
-        topic: "Hardware", 
-        q: "The Control Unit (CU) is often compared to which professional?", 
-        options: ["Doctor", "Police Inspector", "Teacher", "Engineer"], 
-        correct: 1, 
-        review: "The CU acts like a police inspector who controls the traffic of data and signals in the processor."
-    },
-    { 
-        topic: "Hardware", 
-        q: "What are 'Registers' in a CPU?", 
-        options: ["Input devices", "Large storage disks", "Small memory cells for temporary data", "Software programs"], 
-        correct: 2, 
-        review: "Registers are small memory cells inside the processor used to carry data temporarily."
-    },
-    { 
-        topic: "Hardware", 
-        q: "Which unit performs comparisons like 'less than' or 'equal to'?", 
-        options: ["Arithmetic Unit", "Logical Unit", "Control Unit", "Input Unit"], 
-        correct: 1, 
-        review: "The Logical unit of the ALU performs comparisons between numbers."
-    },
-    { 
-        topic: "Hardware", 
-        q: "Input can be in the form of:", 
-        options: ["Audio and Video", "Graphics", "Instructions", "All of the above"], 
-        correct: 3, 
-        review: "Input includes data, audio, video, graphics, and specific instructions like programs."
-    },
-    { 
-        topic: "Hardware", 
-        q: "A series of written instructions in a specific language telling a computer what to do is a:", 
-        options: ["Command", "Program", "User Response", "Hardware"], 
-        correct: 1, 
-        review: "Programs are written instructions that tell a computer how to perform tasks."
-    },
-    { 
-        topic: "Hardware", 
-        q: "Using 'Ctrl+S' to save a document is an example of a:", 
-        options: ["Program", "Command", "User Response", "Output"], 
-        correct: 1, 
-        review: "A command causes a program to perform a specific action."
-    },
-    { 
-        topic: "Hardware", 
-        q: "What is a 'Mainframe' computer primarily used for?", 
-        options: ["Individual gaming", "Large-scale processing for thousands of users", "Mobile use", "Simple typing"], 
-        correct: 1, 
-        review: "Mainframes are large, powerful systems that handle thousands of connected users simultaneously."
-    },
-    { 
-        topic: "Hardware", 
-        q: "Which computer type is specifically designed for mobile use and is light enough to sit on a lap?", 
-        options: ["Mainframe", "Workstation", "Laptop", "Supercomputer"], 
-        correct: 2, 
-        review: "Laptops are personal computers designed for mobile use and efficiency."
-    },
-    { 
-        topic: "Hardware", 
-        q: "Which of these is the most powerful type of computer, often used for complex scientific calculations?", 
-        options: ["Microcomputer", "Supercomputer", "Minicomputer", "Tablet PC"], 
-        correct: 1, 
-        review: "Supercomputers are the fastest and most expensive, used for massive processing tasks."
-    },
-    { 
-        topic: "Hardware", 
-        q: "A keyboard is considered which part of the computer functionality?", 
-        options: ["Process", "Output", "Input", "Storage"], 
-        correct: 2, 
-        review: "Keyboards provide data and instructions to the computer, making them input devices."
-    },
-    { 
-        topic: "Hardware", 
-        q: "The 'Brain' of the computer is the:", 
-        options: ["Monitor", "CPU", "Hard Drive", "Keyboard"], 
-        correct: 1, 
-        review: "The Central Processing Unit (CPU) is where all data processing occurs."
-    },
-    { 
-        topic: "Hardware", 
-        q: "How many registers are typically mentioned as being in a processor in the notes?", 
-        options: ["5", "13", "100", "Unlimited"], 
-        correct: 1, 
-        review: "The notes specify there are a total of 13 registers in a processor."
-    },
-    { 
-        topic: "Hardware", 
-        q: "Which computer is a single-user system designed to meet the needs of an individual?", 
-        options: ["Mainframe", "Microcomputer", "Minicomputer", "Server"], 
-        correct: 1, 
-        review: "A microcomputer (like a PC) is designed for a single user's control."
-    },
-    { 
-        topic: "Hardware", 
-        q: "What is the primary feature of a tablet PC?", 
-        options: ["Requires a mouse", "Handy, portable and often uses a touch screen", "Heavier than a laptop", "Cannot connect to the internet"], 
-        correct: 1, 
-        review: "Tablet PCs are categorized as mobile devices that are handy and portable."
-    },
-    { 
-        topic: "Hardware", 
-        q: "The term 'ALU' stands for:", 
-        options: ["All Logic Unit", "Arithmetic Logic Unit", "Advanced Local Unit", "Array Logic Utility"], 
-        correct: 1, 
-        review: "ALU stands for Arithmetic Logic Unit."
-    },
-    { 
-        topic: "Hardware", 
-        q: "The instruction translation process by the Control Unit is called:", 
-        options: ["Storage", "Interpreting", "Inputting", "Displaying"], 
-        correct: 1, 
-        review: "The CU interprets (translates) instructions into computer language."
-    },
-    { 
-        topic: "Hardware", 
-        q: "A Workstation is a powerful system often used to create:", 
-        options: ["Low-quality text", "High-quality graphics", "Physical models", "Analog signals"], 
-        correct: 1, 
-        review: "Workstations are designed for high-quality graphics and driving networks."
-    },
-    { 
-        topic: "Hardware", 
-        q: "Which part of the computer is defined as an electronic machine operating under the control of instructions in its own memory?", 
-        options: ["Output device", "Computer", "Input device", "Peripheral"], 
-        correct: 1, 
-        review: "This is one of the core definitions of a computer provided in the notes."
-    },
-    { 
-        topic: "Memory", 
-        q: "RAM is an acronym for:", 
-        options: ["Read Access Memory", "Random Access Memory", "Rapid Access Memory", "Read Always Memory"], 
-        correct: 1, 
-        review: "RAM stands for Random Access Memory."
-    },
-    { 
-        topic: "Memory", 
-        q: "Why is RAM called 'Volatile Memory'?", 
-        options: ["It is very fast", "Its data is lost when power is turned off", "It cannot be changed", "It stores permanent files"], 
-        correct: 1, 
-        review: "Data in RAM is temporary and disappears when the computer loses power."
-    },
-    { 
-        topic: "Memory", 
-        q: "Which type of RAM must be constantly refreshed or 'reenergized'?", 
-        options: ["SRAM", "DRAM", "ROM", "Registers"], 
-        correct: 1, 
-        review: "DRAM (Dynamic RAM) requires constant refreshing to keep its content."
-    },
-    { 
-        topic: "Memory", 
-        q: "What does 'ROM' stand for?", 
-        options: ["Random Only Memory", "Read Only Memory", "Run Operating Memory", "Real Object Memory"], 
-        correct: 1, 
-        review: "ROM stands for Read Only Memory."
-    },
-    { 
-        topic: "Memory", 
-        q: "Which type of memory is faster and more expensive?", 
-        options: ["DRAM", "SRAM", "Floppy Disk", "Hard Drive"], 
-        correct: 1, 
-        review: "SRAM (Static RAM) is faster and less volatile but more expensive than DRAM."
-    },
-    { 
-        topic: "Memory", 
-        q: "In what fashion does the CPU access memory?", 
-        options: ["Sequential", "Random", "Linear", "Alphabetical"], 
-        correct: 1, 
-        review: "The CPU accesses memory in a random fashion, meaning it can jump to any location."
-    },
-    { 
-        topic: "Memory", 
-        q: "Where does data go if you want to keep it after the computer is turned off?", 
-        options: ["RAM", "ALU", "Backing Store / Secondary Storage", "Registers"], 
-        correct: 2, 
-        review: "Users must save data to a backing store (like a hard drive) to keep it permanently."
-    },
-    { 
-        topic: "Memory", 
-        q: "When a computer is first turned on, the RAM is:", 
-        options: ["Full of saved files", "Empty", "Partially full", "Compressed"], 
-        correct: 1, 
-        review: "When the computer is turned on, the RAM starts empty."
-    },
-    { 
-        topic: "Memory", 
-        q: "Which type of memory contains permanent instructions for starting the computer?", 
-        options: ["RAM", "ROM", "SRAM", "DRAM"], 
-        correct: 1, 
-        review: "ROM stores permanent instructions that cannot be easily changed or lost."
-    },
-    { 
-        topic: "Memory", 
-        q: "Static RAM (SRAM) is 'less volatile' than DRAM, but it is still volatile because:", 
-        options: ["It loses data when power is cut", "It needs refreshing", "It is made of metal", "It is slow"], 
-        correct: 0, 
-        review: "All forms of RAM are volatile; they require power to maintain data."
-    },
-    { 
-        topic: "Memory", 
-        q: "Which memory type is used to store programs currently in use?", 
-        options: ["Hard Drive", "RAM", "ROM", "CD-ROM"], 
-        correct: 1, 
-        review: "RAM stores the data and programs that are being actively used."
-    },
-    { 
-        topic: "Memory", 
-        q: "DRAM is typically used in:", 
-        options: ["Most personal computers", "Only supercomputers", "Calculators only", "Printers only"], 
-        correct: 0, 
-        review: "DRAM is the physical memory used in most PCs."
-    },
-    { 
-        topic: "Memory", 
-        q: "Information can be 'Read' from and 'Written' to which memory?", 
-        options: ["ROM", "RAM", "BIOS", "Firmware"], 
-        correct: 1, 
-        review: "RAM allows the CPU to both read information from it and store (write) information into it."
-    },
-    { 
-        topic: "Memory", 
-        q: "Data comes into registers from which part of the computer?", 
-        options: ["Main Memory", "Monitor", "Keyboard", "Mouse"], 
-        correct: 0, 
-        review: "Data flows from main memory (RAM) into the registers for processing."
-    },
-    { 
-        topic: "Memory", 
-        q: "Which memory is used as a 'Cache' because of its speed?", 
-        options: ["DRAM", "SRAM", "ROM", "Flash"], 
-        correct: 1, 
-        review: "SRAM's high speed makes it suitable for cache memory."
-    },
-    { 
-        topic: "Software", 
-        q: "What is the basic definition of software?", 
-        options: ["Physical parts of a computer", "A set of instructions to solve a particular problem", "The computer case", "A type of hardware"], 
-        correct: 1, 
-        review: "Software is a piece of computer program or a set of instructions written to carry out tasks."
-    },
-    { 
-        topic: "Software", 
-        q: "What are the two main types of software?", 
-        options: ["Hard and Soft", "System and Application", "Input and Output", "Fast and Slow"], 
-        correct: 1, 
-        review: "Software is usually classified as System Software and Application Software."
-    },
-    { 
-        topic: "Software", 
-        q: "Which software controls the basic operation of the computer?", 
-        options: ["Application Software", "System Software", "Microsoft Word", "Games"], 
-        correct: 1, 
-        review: "System software controls the operation; without it, the computer would not function."
-    },
-    { 
-        topic: "Software", 
-        q: "The most important piece of system software is the:", 
-        options: ["Web Browser", "Operating System (OS)", "Spreadsheet", "Media Player"], 
-        correct: 1, 
-        review: "The Operating System is the vital program that manages hardware and software communications."
-    },
-    { 
-        topic: "Software", 
-        q: "Allocating CPU time and memory to other programs is a task of the:", 
-        options: ["Application software", "Operating System", "User", "Hard drive"], 
-        correct: 1, 
-        review: "The OS manages memory and CPU time for other programs."
-    },
-    { 
-        topic: "Software", 
-        q: "Which of the following is an example of System Software?", 
-        options: ["Language Translators", "Microsoft Excel", "Photoshop", "Video Games"], 
-        correct: 0, 
-        review: "System software includes OS, Language Translators, and Utility Programs."
-    },
-    { 
-        topic: "Software", 
-        q: "Software designed to perform specific tasks for users (like typing or calculations) is:", 
-        options: ["System Software", "Application Software", "Firmware", "Hardware"], 
-        correct: 1, 
-        review: "Application software allows users to perform specific tasks."
-    },
-    { 
-        topic: "Software", 
-        q: "What is 'Custom Software'?", 
-        options: ["Software bought from a store", "Software specifically created for a specific user or group", "Free software", "An operating system"], 
-        correct: 1, 
-        review: "Custom software is designed to address specific needs better than off-the-shelf products."
-    },
-    { 
-        topic: "Software", 
-        q: "Microsoft Office is an example of:", 
-        options: ["Custom Software", "Packaged Software", "System Software", "Programming Language"], 
-        correct: 1, 
-        review: "Packaged software (or software packages) are commercial programs sold to the general public."
-    },
-    { 
-        topic: "Software", 
-        q: "Can 'Packaged Software' be modified by the user?", 
-        options: ["Yes, easily", "No, it cannot be modified or altered", "Only by experts", "Only on Sundays"], 
-        correct: 1, 
-        review: "Packaged software is bundled and generally cannot be modified by the user."
-    },
-    { 
-        topic: "Software", 
-        q: "A group of programs which together complete a task are known as a:", 
-        options: ["Software Bundle", "Software Package", "Hardware Set", "Utility"], 
-        correct: 1, 
-        review: "When more than one program is required to complete a task, they form a software package."
-    },
-    { 
-        topic: "Software", 
-        q: "Which program acts as an interface between the user and the computer hardware?", 
-        options: ["Compiler", "Operating System", "Hard Disk", "Mouse"], 
-        correct: 1, 
-        review: "Applications communicate with hardware via the Operating System."
-    },
-    { 
-        topic: "Software", 
-        q: "Utility programs belong to which category?", 
-        options: ["System Software", "Application Software", "User Data", "Malware"], 
-        correct: 0, 
-        review: "Utility programs are a type of system software."
-    },
-    { 
-        topic: "Software", 
-        q: "What is the purpose of 'Language Translators'?", 
-        options: ["To translate English to French", "To translate programming code into machine language", "To speak to the computer", "To fix broken hardware"], 
-        correct: 1, 
-        review: "Language translators are system software that convert high-level instructions into a form the computer understands."
-    },
-    { 
-        topic: "Software", 
-        q: "Which of these is NOT an example of application software?", 
-        options: ["Word Processor", "Spreadsheet", "Operating System", "Database"], 
-        correct: 2, 
-        review: "The Operating System is system software, not application software."
-    },
-    { 
-        topic: "Internet", 
-        q: "The Internet is a global system of:", 
-        options: ["Standalone computers", "Interconnected computer networks", "Wired telephones", "Hard drives"], 
-        correct: 1, 
-        review: "The internet is a vast network of interconnected networks."
-    },
-    { 
-        topic: "Internet", 
-        q: "What does 'TCP/IP' stand for in internet terminology?", 
-        options: ["Total Computer Protocol", "Internet Protocol Suite", "Transmission Control Protocol / Internet Protocol", "Technical Computer Program"], 
-        correct: 2, 
-        review: "The internet relies on the TCP/IP protocol suite for data transmission."
-    },
-    { 
-        topic: "Internet", 
-        q: "A network located entirely on one site, like a school or office, is a:", 
-        options: ["WAN", "LAN", "Internet", "Satellite"], 
-        correct: 1, 
-        review: "LAN stands for Local Area Network."
-    },
-    { 
-        topic: "Internet", 
-        q: "A network that connects computers across a country or the world is a:", 
-        options: ["LAN", "WAN", "PAN", "Hardnet"], 
-        correct: 1, 
-        review: "WAN (Wide Area Network) connects widely dispersed sites."
-    },
-    { 
-        topic: "Networking", 
-        q: "What is an 'advantage' of using a network?", 
-        options: ["Increased cost", "Sharing and transferring files rapidly", "Slower processing", "No security"], 
-        correct: 1, 
-        review: "Networks provide speed for file sharing compared to using disks/memory cards."
-    },
-    { 
-        topic: "Networking", 
-        q: "In networking, 'Topology' refers to:", 
-        options: ["The speed of the network", "The physical or logical layout of a network", "The number of users", "The type of software"], 
-        correct: 1, 
-        review: "Network topology is the arrangement/layout of the computers and connections."
-    },
-    { 
-        topic: "Networking", 
-        q: "Which topology connects all computers to a single central cable?", 
-        options: ["Star", "Bus", "Ring", "Mesh"], 
-        correct: 1, 
-        review: "Bus topology uses a single main cable (the bus) for all nodes."
-    },
-    { 
-        topic: "Networking", 
-        q: "In which topology are all computers connected to a central device called a Hub?", 
-        options: ["Bus", "Star", "Ring", "Mesh"], 
-        correct: 1, 
-        review: "In star topology, every node is connected to a central hub or switch."
-    },
-    { 
-        topic: "Networking", 
-        q: "A 'Terminator' is used in which topology to prevent signal bounce?", 
-        options: ["Star", "Ring", "Bus", "Mesh"], 
-        correct: 2, 
-        review: "Terminators are used at the ends of a bus network."
-    },
-    { 
-        topic: "Networking", 
-        q: "Which topology is expensive because every computer connects to every other computer?", 
-        options: ["Bus", "Star", "Mesh", "Tree"], 
-        correct: 2, 
-        review: "Mesh topology offers high redundancy but requires many cables."
-    },
-    { 
-        topic: "Networking", 
-        q: "The 'Ring' topology transmits data in:", 
-        options: ["Both directions", "A single direction", "No direction", "Random directions"], 
-        correct: 1, 
-        review: "In ring topology, data usually flows in one direction around the ring."
-    },
-    { 
-        topic: "Networking", 
-        q: "If the central hub fails in a Star topology, what happens?", 
-        options: ["Only one computer stops", "The whole network fails", "Nothing happens", "The internet gets faster"], 
-        correct: 1, 
-        review: "The hub is the central point; if it fails, the entire network is disabled."
-    },
-    { 
-        topic: "Internet", 
-        q: "What is 'WWW' short for?", 
-        options: ["World Wide Web", "Word Wide Wait", "Web World Wide", "World Web Wide"], 
-        correct: 0, 
-        review: "WWW stands for World Wide Web."
-    },
-    { 
-        topic: "Internet", 
-        q: "A unique address for a resource on the internet is a:", 
-        options: ["IP", "URL", "HTTP", "HTML"], 
-        correct: 1, 
-        review: "URL (Uniform Resource Locator) is the web address of a site."
-    },
-    { 
-        topic: "Internet", 
-        q: "Which service allows users to send and receive electronic messages?", 
-        options: ["FTP", "Email", "HTTP", "Blogging"], 
-        correct: 1, 
-        review: "Email is the standard for electronic message exchange."
-    },
-    { 
-        topic: "Internet", 
-        q: "What is a 'Web Browser'?", 
-        options: ["A search engine", "Software used to access and view websites", "A computer network", "An internet protocol"], 
-        correct: 1, 
-        review: "Browsers like Chrome or Firefox allow you to see web pages."
-    },
-    { 
-        topic: "Networking", 
-        q: "Tree topology is basically a combination of:", 
-        options: ["Bus and Mesh", "Bus and Star", "Star and Ring", "Ring and Mesh"], 
-        correct: 1, 
-        review: "Tree topology integrates star topologies onto a bus."
-    },
-    { 
-        topic: "Internet", 
-        q: "Cloud Computing allows users to:", 
-        options: ["Store and access data remotely", "Clean their computers", "Make physical disks", "Speed up their mouse"], 
-        correct: 0, 
-        review: "Cloud services enable remote storage and computing resources via the internet."
-    },
-    { 
-        topic: "Internet", 
-        q: "A 'Search Engine' is used to:", 
-        options: ["Connect a mouse", "Find information on the web using queries", "Write code", "Print documents"], 
-        correct: 1, 
-        review: "Search engines allow users to receive relevant results for their queries."
-    },
-    { 
-        topic: "Networking", 
-        q: "Which topology provides the highest level of redundancy?", 
-        options: ["Star", "Mesh", "Bus", "Ring"], 
-        correct: 1, 
-        review: "Mesh topology provides alternative paths if a cable fails."
-    },
-    { 
-        topic: "Networking", 
-        q: "What is an 'advantage' of Bus topology?", 
-        options: ["Easy to set up and cost-effective for small networks", "Fastest speed", "Most secure", "Never fails"], 
-        correct: 0, 
-        review: "Bus topology is simple and uses less cabling for small setups."
-    },
-    { 
-        topic: "Internet", 
-        q: "Social Media platforms allow users to:", 
-        options: ["Only read news", "Share content and build online communities", "Repair hardware", "Only send emails"], 
-        correct: 1, 
-        review: "Social media focuses on interaction and community building."
-    },
-    { 
-        topic: "Internet", 
-        q: "E-learning is made possible by:", 
-        options: ["LANS only", "The Internet", "Hard drives only", "Printers"], 
-        correct: 1, 
-        review: "The internet facilitates remote learning and virtual classrooms."
-    },
-    { 
-        topic: "Networking", 
-        q: "Which topology is also known as Hierarchical topology?", 
-        options: ["Mesh", "Ring", "Tree", "Star"], 
-        correct: 2, 
-        review: "Tree topology is formed in a hierarchy."
-    },
-    { 
-        topic: "Networking", 
-        q: "Data in a Ring network passes through each computer until it reaches its:", 
-        options: ["Origin", "Destination", "Hub", "Server"], 
-        correct: 1, 
-        review: "In a ring, data travels until it hits the intended destination node."
-    },
-    { 
-        topic: "Internet", 
-        q: "Standardized protocols allow:", 
-        options: ["Communication between different devices and systems", "Only computers of the same brand to talk", "Computers to run without electricity", "Software to be free"], 
-        correct: 0, 
-        review: "Protocols ensure seamless communication across different systems regardless of location."
-    },
-    { 
-        topic: "Networking", 
-        q: "Passwords and 'copy inhibit' designations improve network:", 
-        options: ["Speed", "Cost", "Security", "Maintenance"], 
-        correct: 2, 
-        review: "Access restrictions and passwords are used for network security."
-    },
-    { 
-        topic: "Networking", 
-        q: "Which of these is a 'disadvantage' of Mesh topology?", 
-        options: ["Low security", "Complex installation and high cost", "Signal bounce", "Entire network fails if one node fails"], 
-        correct: 1, 
-        review: "Mesh is complex and expensive due to dedicated links for every node."
-    },
-    { 
-        topic: "Internet", 
-        q: "Standard form calculations and scientific notation in computing are aided by:", 
-        options: ["Browsers", "Indices (Powers of 10)", "Keyboards", "Monitors"], 
-        correct: 1, 
-        review: "Indices help simplify very large or small numbers in computing and physics."
-    },
-    { 
-        topic: "Internet", 
-        q: "The term 'Internet' is a short form for:", 
-        options: ["International Network", "Interconnected Network", "Internal Network", "Intelligent Network"], 
-        correct: 1, 
-        review: "The definition states it refers to 'interconnected network'."
-    }
-]
+            {
+                topic: "Computer Fundamentals",
+                q: "What is the primary definition of a computer according to the notes?",
+                options: ["A device for entertainment only", "An electronic device that takes input, processes it, and produces output", "A machine that only performs calculations", "A hardware box without instructions"],
+                correct: 1,
+                review: "A computer is an electronic device which takes some input, processes it, and produces output."
+            },
+            {
+                topic: "Hardware",
+                q: "Which part of the computer is responsible for performing arithmetic and logical operations?",
+                options: ["Control Unit", "Registers", "ALU", "RAM"],
+                correct: 2,
+                review: "The ALU (Arithmetic Logic Unit) performs operations like addition and comparisons."
+            },
+            {
+                topic: "Hardware",
+                q: "The Control Unit (CU) is often compared to which professional?",
+                options: ["Doctor", "Police Inspector", "Teacher", "Engineer"],
+                correct: 1,
+                review: "The CU acts like a police inspector who controls the traffic of data and signals in the processor."
+            },
+            {
+                topic: "Hardware",
+                q: "What are 'Registers' in a CPU?",
+                options: ["Input devices", "Large storage disks", "Small memory cells for temporary data", "Software programs"],
+                correct: 2,
+                review: "Registers are small memory cells inside the processor used to carry data temporarily."
+            },
+            {
+                topic: "Hardware",
+                q: "Which unit performs comparisons like 'less than' or 'equal to'?",
+                options: ["Arithmetic Unit", "Logical Unit", "Control Unit", "Input Unit"],
+                correct: 1,
+                review: "The Logical unit of the ALU performs comparisons between numbers."
+            },
+            {
+                topic: "Hardware",
+                q: "Input can be in the form of:",
+                options: ["Audio and Video", "Graphics", "Instructions", "All of the above"],
+                correct: 3,
+                review: "Input includes data, audio, video, graphics, and specific instructions like programs."
+            },
+            {
+                topic: "Hardware",
+                q: "A series of written instructions in a specific language telling a computer what to do is a:",
+                options: ["Command", "Program", "User Response", "Hardware"],
+                correct: 1,
+                review: "Programs are written instructions that tell a computer how to perform tasks."
+            },
+            {
+                topic: "Hardware",
+                q: "Using 'Ctrl+S' to save a document is an example of a:",
+                options: ["Program", "Command", "User Response", "Output"],
+                correct: 1,
+                review: "A command causes a program to perform a specific action."
+            },
+            {
+                topic: "Hardware",
+                q: "What is a 'Mainframe' computer primarily used for?",
+                options: ["Individual gaming", "Large-scale processing for thousands of users", "Mobile use", "Simple typing"],
+                correct: 1,
+                review: "Mainframes are large, powerful systems that handle thousands of connected users simultaneously."
+            },
+            {
+                topic: "Hardware",
+                q: "Which computer type is specifically designed for mobile use and is light enough to sit on a lap?",
+                options: ["Mainframe", "Workstation", "Laptop", "Supercomputer"],
+                correct: 2,
+                review: "Laptops are personal computers designed for mobile use and efficiency."
+            },
+            {
+                topic: "Hardware",
+                q: "Which of these is the most powerful type of computer, often used for complex scientific calculations?",
+                options: ["Microcomputer", "Supercomputer", "Minicomputer", "Tablet PC"],
+                correct: 1,
+                review: "Supercomputers are the fastest and most expensive, used for massive processing tasks."
+            },
+            {
+                topic: "Hardware",
+                q: "A keyboard is considered which part of the computer functionality?",
+                options: ["Process", "Output", "Input", "Storage"],
+                correct: 2,
+                review: "Keyboards provide data and instructions to the computer, making them input devices."
+            },
+            {
+                topic: "Hardware",
+                q: "The 'Brain' of the computer is the:",
+                options: ["Monitor", "CPU", "Hard Drive", "Keyboard"],
+                correct: 1,
+                review: "The Central Processing Unit (CPU) is where all data processing occurs."
+            },
+            {
+                topic: "Hardware",
+                q: "How many registers are typically mentioned as being in a processor in the notes?",
+                options: ["5", "13", "100", "Unlimited"],
+                correct: 1,
+                review: "The notes specify there are a total of 13 registers in a processor."
+            },
+            {
+                topic: "Hardware",
+                q: "Which computer is a single-user system designed to meet the needs of an individual?",
+                options: ["Mainframe", "Microcomputer", "Minicomputer", "Server"],
+                correct: 1,
+                review: "A microcomputer (like a PC) is designed for a single user's control."
+            },
+            {
+                topic: "Hardware",
+                q: "What is the primary feature of a tablet PC?",
+                options: ["Requires a mouse", "Handy, portable and often uses a touch screen", "Heavier than a laptop", "Cannot connect to the internet"],
+                correct: 1,
+                review: "Tablet PCs are categorized as mobile devices that are handy and portable."
+            },
+            {
+                topic: "Hardware",
+                q: "The term 'ALU' stands for:",
+                options: ["All Logic Unit", "Arithmetic Logic Unit", "Advanced Local Unit", "Array Logic Utility"],
+                correct: 1,
+                review: "ALU stands for Arithmetic Logic Unit."
+            },
+            {
+                topic: "Hardware",
+                q: "The instruction translation process by the Control Unit is called:",
+                options: ["Storage", "Interpreting", "Inputting", "Displaying"],
+                correct: 1,
+                review: "The CU interprets (translates) instructions into computer language."
+            },
+            {
+                topic: "Hardware",
+                q: "A Workstation is a powerful system often used to create:",
+                options: ["Low-quality text", "High-quality graphics", "Physical models", "Analog signals"],
+                correct: 1,
+                review: "Workstations are designed for high-quality graphics and driving networks."
+            },
+            {
+                topic: "Hardware",
+                q: "Which part of the computer is defined as an electronic machine operating under the control of instructions in its own memory?",
+                options: ["Output device", "Computer", "Input device", "Peripheral"],
+                correct: 1,
+                review: "This is one of the core definitions of a computer provided in the notes."
+            },
+            {
+                topic: "Memory",
+                q: "RAM is an acronym for:",
+                options: ["Read Access Memory", "Random Access Memory", "Rapid Access Memory", "Read Always Memory"],
+                correct: 1,
+                review: "RAM stands for Random Access Memory."
+            },
+            {
+                topic: "Memory",
+                q: "Why is RAM called 'Volatile Memory'?",
+                options: ["It is very fast", "Its data is lost when power is turned off", "It cannot be changed", "It stores permanent files"],
+                correct: 1,
+                review: "Data in RAM is temporary and disappears when the computer loses power."
+            },
+            {
+                topic: "Memory",
+                q: "Which type of RAM must be constantly refreshed or 'reenergized'?",
+                options: ["SRAM", "DRAM", "ROM", "Registers"],
+                correct: 1,
+                review: "DRAM (Dynamic RAM) requires constant refreshing to keep its content."
+            },
+            {
+                topic: "Memory",
+                q: "What does 'ROM' stand for?",
+                options: ["Random Only Memory", "Read Only Memory", "Run Operating Memory", "Real Object Memory"],
+                correct: 1,
+                review: "ROM stands for Read Only Memory."
+            },
+            {
+                topic: "Memory",
+                q: "Which type of memory is faster and more expensive?",
+                options: ["DRAM", "SRAM", "Floppy Disk", "Hard Drive"],
+                correct: 1,
+                review: "SRAM (Static RAM) is faster and less volatile but more expensive than DRAM."
+            },
+            {
+                topic: "Memory",
+                q: "In what fashion does the CPU access memory?",
+                options: ["Sequential", "Random", "Linear", "Alphabetical"],
+                correct: 1,
+                review: "The CPU accesses memory in a random fashion, meaning it can jump to any location."
+            },
+            {
+                topic: "Memory",
+                q: "Where does data go if you want to keep it after the computer is turned off?",
+                options: ["RAM", "ALU", "Backing Store / Secondary Storage", "Registers"],
+                correct: 2,
+                review: "Users must save data to a backing store (like a hard drive) to keep it permanently."
+            },
+            {
+                topic: "Memory",
+                q: "When a computer is first turned on, the RAM is:",
+                options: ["Full of saved files", "Empty", "Partially full", "Compressed"],
+                correct: 1,
+                review: "When the computer is turned on, the RAM starts empty."
+            },
+            {
+                topic: "Memory",
+                q: "Which type of memory contains permanent instructions for starting the computer?",
+                options: ["RAM", "ROM", "SRAM", "DRAM"],
+                correct: 1,
+                review: "ROM stores permanent instructions that cannot be easily changed or lost."
+            },
+            {
+                topic: "Memory",
+                q: "Static RAM (SRAM) is 'less volatile' than DRAM, but it is still volatile because:",
+                options: ["It loses data when power is cut", "It needs refreshing", "It is made of metal", "It is slow"],
+                correct: 0,
+                review: "All forms of RAM are volatile; they require power to maintain data."
+            },
+            {
+                topic: "Memory",
+                q: "Which memory type is used to store programs currently in use?",
+                options: ["Hard Drive", "RAM", "ROM", "CD-ROM"],
+                correct: 1,
+                review: "RAM stores the data and programs that are being actively used."
+            },
+            {
+                topic: "Memory",
+                q: "DRAM is typically used in:",
+                options: ["Most personal computers", "Only supercomputers", "Calculators only", "Printers only"],
+                correct: 0,
+                review: "DRAM is the physical memory used in most PCs."
+            },
+            {
+                topic: "Memory",
+                q: "Information can be 'Read' from and 'Written' to which memory?",
+                options: ["ROM", "RAM", "BIOS", "Firmware"],
+                correct: 1,
+                review: "RAM allows the CPU to both read information from it and store (write) information into it."
+            },
+            {
+                topic: "Memory",
+                q: "Data comes into registers from which part of the computer?",
+                options: ["Main Memory", "Monitor", "Keyboard", "Mouse"],
+                correct: 0,
+                review: "Data flows from main memory (RAM) into the registers for processing."
+            },
+            {
+                topic: "Memory",
+                q: "Which memory is used as a 'Cache' because of its speed?",
+                options: ["DRAM", "SRAM", "ROM", "Flash"],
+                correct: 1,
+                review: "SRAM's high speed makes it suitable for cache memory."
+            },
+            {
+                topic: "Software",
+                q: "What is the basic definition of software?",
+                options: ["Physical parts of a computer", "A set of instructions to solve a particular problem", "The computer case", "A type of hardware"],
+                correct: 1,
+                review: "Software is a piece of computer program or a set of instructions written to carry out tasks."
+            },
+            {
+                topic: "Software",
+                q: "What are the two main types of software?",
+                options: ["Hard and Soft", "System and Application", "Input and Output", "Fast and Slow"],
+                correct: 1,
+                review: "Software is usually classified as System Software and Application Software."
+            },
+            {
+                topic: "Software",
+                q: "Which software controls the basic operation of the computer?",
+                options: ["Application Software", "System Software", "Microsoft Word", "Games"],
+                correct: 1,
+                review: "System software controls the operation; without it, the computer would not function."
+            },
+            {
+                topic: "Software",
+                q: "The most important piece of system software is the:",
+                options: ["Web Browser", "Operating System (OS)", "Spreadsheet", "Media Player"],
+                correct: 1,
+                review: "The Operating System is the vital program that manages hardware and software communications."
+            },
+            {
+                topic: "Software",
+                q: "Allocating CPU time and memory to other programs is a task of the:",
+                options: ["Application software", "Operating System", "User", "Hard drive"],
+                correct: 1,
+                review: "The OS manages memory and CPU time for other programs."
+            },
+            {
+                topic: "Software",
+                q: "Which of the following is an example of System Software?",
+                options: ["Language Translators", "Microsoft Excel", "Photoshop", "Video Games"],
+                correct: 0,
+                review: "System software includes OS, Language Translators, and Utility Programs."
+            },
+            {
+                topic: "Software",
+                q: "Software designed to perform specific tasks for users (like typing or calculations) is:",
+                options: ["System Software", "Application Software", "Firmware", "Hardware"],
+                correct: 1,
+                review: "Application software allows users to perform specific tasks."
+            },
+            {
+                topic: "Software",
+                q: "What is 'Custom Software'?",
+                options: ["Software bought from a store", "Software specifically created for a specific user or group", "Free software", "An operating system"],
+                correct: 1,
+                review: "Custom software is designed to address specific needs better than off-the-shelf products."
+            },
+            {
+                topic: "Software",
+                q: "Microsoft Office is an example of:",
+                options: ["Custom Software", "Packaged Software", "System Software", "Programming Language"],
+                correct: 1,
+                review: "Packaged software (or software packages) are commercial programs sold to the general public."
+            },
+            {
+                topic: "Software",
+                q: "Can 'Packaged Software' be modified by the user?",
+                options: ["Yes, easily", "No, it cannot be modified or altered", "Only by experts", "Only on Sundays"],
+                correct: 1,
+                review: "Packaged software is bundled and generally cannot be modified by the user."
+            },
+            {
+                topic: "Software",
+                q: "A group of programs which together complete a task are known as a:",
+                options: ["Software Bundle", "Software Package", "Hardware Set", "Utility"],
+                correct: 1,
+                review: "When more than one program is required to complete a task, they form a software package."
+            },
+            {
+                topic: "Software",
+                q: "Which program acts as an interface between the user and the computer hardware?",
+                options: ["Compiler", "Operating System", "Hard Disk", "Mouse"],
+                correct: 1,
+                review: "Applications communicate with hardware via the Operating System."
+            },
+            {
+                topic: "Software",
+                q: "Utility programs belong to which category?",
+                options: ["System Software", "Application Software", "User Data", "Malware"],
+                correct: 0,
+                review: "Utility programs are a type of system software."
+            },
+            {
+                topic: "Software",
+                q: "What is the purpose of 'Language Translators'?",
+                options: ["To translate English to French", "To translate programming code into machine language", "To speak to the computer", "To fix broken hardware"],
+                correct: 1,
+                review: "Language translators are system software that convert high-level instructions into a form the computer understands."
+            },
+            {
+                topic: "Software",
+                q: "Which of these is NOT an example of application software?",
+                options: ["Word Processor", "Spreadsheet", "Operating System", "Database"],
+                correct: 2,
+                review: "The Operating System is system software, not application software."
+            },
+            {
+                topic: "Internet",
+                q: "The Internet is a global system of:",
+                options: ["Standalone computers", "Interconnected computer networks", "Wired telephones", "Hard drives"],
+                correct: 1,
+                review: "The internet is a vast network of interconnected networks."
+            },
+            {
+                topic: "Internet",
+                q: "What does 'TCP/IP' stand for in internet terminology?",
+                options: ["Total Computer Protocol", "Internet Protocol Suite", "Transmission Control Protocol / Internet Protocol", "Technical Computer Program"],
+                correct: 2,
+                review: "The internet relies on the TCP/IP protocol suite for data transmission."
+            },
+            {
+                topic: "Internet",
+                q: "A network located entirely on one site, like a school or office, is a:",
+                options: ["WAN", "LAN", "Internet", "Satellite"],
+                correct: 1,
+                review: "LAN stands for Local Area Network."
+            },
+            {
+                topic: "Internet",
+                q: "A network that connects computers across a country or the world is a:",
+                options: ["LAN", "WAN", "PAN", "Hardnet"],
+                correct: 1,
+                review: "WAN (Wide Area Network) connects widely dispersed sites."
+            },
+            {
+                topic: "Networking",
+                q: "What is an 'advantage' of using a network?",
+                options: ["Increased cost", "Sharing and transferring files rapidly", "Slower processing", "No security"],
+                correct: 1,
+                review: "Networks provide speed for file sharing compared to using disks/memory cards."
+            },
+            {
+                topic: "Networking",
+                q: "In networking, 'Topology' refers to:",
+                options: ["The speed of the network", "The physical or logical layout of a network", "The number of users", "The type of software"],
+                correct: 1,
+                review: "Network topology is the arrangement/layout of the computers and connections."
+            },
+            {
+                topic: "Networking",
+                q: "Which topology connects all computers to a single central cable?",
+                options: ["Star", "Bus", "Ring", "Mesh"],
+                correct: 1,
+                review: "Bus topology uses a single main cable (the bus) for all nodes."
+            },
+            {
+                topic: "Networking",
+                q: "In which topology are all computers connected to a central device called a Hub?",
+                options: ["Bus", "Star", "Ring", "Mesh"],
+                correct: 1,
+                review: "In star topology, every node is connected to a central hub or switch."
+            },
+            {
+                topic: "Networking",
+                q: "A 'Terminator' is used in which topology to prevent signal bounce?",
+                options: ["Star", "Ring", "Bus", "Mesh"],
+                correct: 2,
+                review: "Terminators are used at the ends of a bus network."
+            },
+            {
+                topic: "Networking",
+                q: "Which topology is expensive because every computer connects to every other computer?",
+                options: ["Bus", "Star", "Mesh", "Tree"],
+                correct: 2,
+                review: "Mesh topology offers high redundancy but requires many cables."
+            },
+            {
+                topic: "Networking",
+                q: "The 'Ring' topology transmits data in:",
+                options: ["Both directions", "A single direction", "No direction", "Random directions"],
+                correct: 1,
+                review: "In ring topology, data usually flows in one direction around the ring."
+            },
+            {
+                topic: "Networking",
+                q: "If the central hub fails in a Star topology, what happens?",
+                options: ["Only one computer stops", "The whole network fails", "Nothing happens", "The internet gets faster"],
+                correct: 1,
+                review: "The hub is the central point; if it fails, the entire network is disabled."
+            },
+            {
+                topic: "Internet",
+                q: "What is 'WWW' short for?",
+                options: ["World Wide Web", "Word Wide Wait", "Web World Wide", "World Web Wide"],
+                correct: 0,
+                review: "WWW stands for World Wide Web."
+            },
+            {
+                topic: "Internet",
+                q: "A unique address for a resource on the internet is a:",
+                options: ["IP", "URL", "HTTP", "HTML"],
+                correct: 1,
+                review: "URL (Uniform Resource Locator) is the web address of a site."
+            },
+            {
+                topic: "Internet",
+                q: "Which service allows users to send and receive electronic messages?",
+                options: ["FTP", "Email", "HTTP", "Blogging"],
+                correct: 1,
+                review: "Email is the standard for electronic message exchange."
+            },
+            {
+                topic: "Internet",
+                q: "What is a 'Web Browser'?",
+                options: ["A search engine", "Software used to access and view websites", "A computer network", "An internet protocol"],
+                correct: 1,
+                review: "Browsers like Chrome or Firefox allow you to see web pages."
+            },
+            {
+                topic: "Networking",
+                q: "Tree topology is basically a combination of:",
+                options: ["Bus and Mesh", "Bus and Star", "Star and Ring", "Ring and Mesh"],
+                correct: 1,
+                review: "Tree topology integrates star topologies onto a bus."
+            },
+            {
+                topic: "Internet",
+                q: "Cloud Computing allows users to:",
+                options: ["Store and access data remotely", "Clean their computers", "Make physical disks", "Speed up their mouse"],
+                correct: 0,
+                review: "Cloud services enable remote storage and computing resources via the internet."
+            },
+            {
+                topic: "Internet",
+                q: "A 'Search Engine' is used to:",
+                options: ["Connect a mouse", "Find information on the web using queries", "Write code", "Print documents"],
+                correct: 1,
+                review: "Search engines allow users to receive relevant results for their queries."
+            },
+            {
+                topic: "Networking",
+                q: "Which topology provides the highest level of redundancy?",
+                options: ["Star", "Mesh", "Bus", "Ring"],
+                correct: 1,
+                review: "Mesh topology provides alternative paths if a cable fails."
+            },
+            {
+                topic: "Networking",
+                q: "What is an 'advantage' of Bus topology?",
+                options: ["Easy to set up and cost-effective for small networks", "Fastest speed", "Most secure", "Never fails"],
+                correct: 0,
+                review: "Bus topology is simple and uses less cabling for small setups."
+            },
+            {
+                topic: "Internet",
+                q: "Social Media platforms allow users to:",
+                options: ["Only read news", "Share content and build online communities", "Repair hardware", "Only send emails"],
+                correct: 1,
+                review: "Social media focuses on interaction and community building."
+            },
+            {
+                topic: "Internet",
+                q: "E-learning is made possible by:",
+                options: ["LANS only", "The Internet", "Hard drives only", "Printers"],
+                correct: 1,
+                review: "The internet facilitates remote learning and virtual classrooms."
+            },
+            {
+                topic: "Networking",
+                q: "Which topology is also known as Hierarchical topology?",
+                options: ["Mesh", "Ring", "Tree", "Star"],
+                correct: 2,
+                review: "Tree topology is formed in a hierarchy."
+            },
+            {
+                topic: "Networking",
+                q: "Data in a Ring network passes through each computer until it reaches its:",
+                options: ["Origin", "Destination", "Hub", "Server"],
+                correct: 1,
+                review: "In a ring, data travels until it hits the intended destination node."
+            },
+            {
+                topic: "Internet",
+                q: "Standardized protocols allow:",
+                options: ["Communication between different devices and systems", "Only computers of the same brand to talk", "Computers to run without electricity", "Software to be free"],
+                correct: 0,
+                review: "Protocols ensure seamless communication across different systems regardless of location."
+            },
+            {
+                topic: "Networking",
+                q: "Passwords and 'copy inhibit' designations improve network:",
+                options: ["Speed", "Cost", "Security", "Maintenance"],
+                correct: 2,
+                review: "Access restrictions and passwords are used for network security."
+            },
+            {
+                topic: "Networking",
+                q: "Which of these is a 'disadvantage' of Mesh topology?",
+                options: ["Low security", "Complex installation and high cost", "Signal bounce", "Entire network fails if one node fails"],
+                correct: 1,
+                review: "Mesh is complex and expensive due to dedicated links for every node."
+            },
+            {
+                topic: "Internet",
+                q: "Standard form calculations and scientific notation in computing are aided by:",
+                options: ["Browsers", "Indices (Powers of 10)", "Keyboards", "Monitors"],
+                correct: 1,
+                review: "Indices help simplify very large or small numbers in computing and physics."
+            },
+            {
+                topic: "Internet",
+                q: "The term 'Internet' is a short form for:",
+                options: ["International Network", "Interconnected Network", "Internal Network", "Intelligent Network"],
+                correct: 1,
+                review: "The definition states it refers to 'interconnected network'."
+            }
+        ]
 
     </script>
     <script src="script.js"></script>

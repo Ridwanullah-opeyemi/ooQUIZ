@@ -48,8 +48,19 @@
 
     </div>
 
-    <a href="../index.html"><div class="back">🏡</div></a>
-
+    <a href="../index.html">
+        <div class="back">🏡</div>
+    </a>
+    <div id="customModal" class="modal-overlay" style="display:none;">
+        <div class="modal-box">
+            <h3 id="modalTitle">Notification</h3>
+            <p id="modalBody"></p>
+            <div class="modal-footer">
+                <button id="modalCancel" class="btn-modal-alt">Cancel</button>
+                <button id="modalConfirm" class="btn-modal">OK</button>
+            </div>
+        </div>
+    </div>
     <script>
         // Data containing all the specific questions from your MTH 101 notes
         const questions = [

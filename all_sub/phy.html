@@ -48,434 +48,588 @@
 
     </div>
 
-    <a href="../index.html"><div class="back">🏡</div></a>
+    <a href="../index.html">
+        <div class="back">🏡</div>
+    </a>
+    <div id="customModal" class="modal-overlay" style="display:none;">
+        <div class="modal-box">
+            <h3 id="modalTitle">Notification</h3>
+            <p id="modalBody"></p>
+            <div class="modal-footer">
+                <button id="modalCancel" class="btn-modal-alt">Cancel</button>
+                <button id="modalConfirm" class="btn-modal">OK</button>
+            </div>
+        </div>
+    </div>
     <script>
         // Data containing all the specific questions from your MTH 101 notes
         const questions = [
             {
-                topic: "Physical Quantities and Units",
-                q: "According to the lecture note, what is a physical quantity?",
-                options: ["A non-measurable property", "A property expressed as a number multiplied by a unit", "The emotional state of a system", "A standard reference only"],
-                correct: 1,
-                review: "A physical quantity is defined as a property of a material or system that can be measured and expressed as a number multiplied by a unit."
+                "topic": "Relative Motion",
+                "q": "If car A moves at $V_A$ and car B moves at $V_B$ in the same direction, what is the position of A relative to B ($X_{AB}$)?",
+                "options": ["$X_A + X_B$", "$X_A - X_B$", "$X_B - X_A$", "$V_A t$"],
+                "correct": 1,
+                "review": "Relative position is defined as the difference between the positions of the two objects."
             },
             {
-                topic: "Physical Quantities and Units",
-                q: "Which of the following is an example of a physical quantity?",
-                options: ["Happiness", "Colour", "Mass", "Style"],
-                correct: 2,
-                review: "Mass is a measurable property with units, making it a physical quantity. Happiness and colour are not quantitative in this context."
+                "topic": "Relative Motion",
+                "q": "A car moves at 120 km/h toward an oncoming truck moving at 100 km/h. What is the velocity of approach in m/s?",
+                "options": ["20 m/s", "61.1 m/s", "33.3 m/s", "27.8 m/s"],
+                "correct": 1,
+                "review": "The speeds add to 220 km/h, which converts to approximately 61.1 m/s."
             },
             {
-                topic: "Physical Quantities and Units",
-                q: "What is a 'unit' in physics?",
-                options: ["A number", "A standard reference for comparison", "A mathematical variable", "A fundamental quantity"],
-                correct: 1,
-                review: "Every physical quantity must be measured with respect to a standard reference known as a unit."
+                "topic": "Gravitation",
+                "q": "Kepler's Second Law states that the line joining the Sun and planet sweeps out:",
+                "options": ["Equal distances in equal time", "Equal areas in equal time", "Constant velocity", "Equal angles in equal time"],
+                "correct": 1,
+                "review": "This is the Law of Areas."
             },
             {
-                topic: "Physical Quantities and Units",
-                q: "Which system provides standardized units for both fundamental and derived quantities?",
-                options: ["Metric System", "Imperial System", "International System of Units (SI)", "British System"],
-                correct: 2,
-                review: "The SI system provides standardized units for measuring all types of physical quantities."
+                "topic": "Gravitation",
+                "q": "Which formula represents the gravitational field strength $g$?",
+                "options": ["$GM/r$", "$GM/r^2$", "$Gm/r^2$", "$mgr$"],
+                "correct": 1,
+                "review": "$g = F/m = GM/r^2$."
             },
             {
-                topic: "Physical Quantities and Units",
-                q: "How many fundamental quantities are there in the SI system?",
-                options: ["Five", "Seven", "Nine", "Twelve"],
-                correct: 1,
-                review: "There are seven fundamental quantities in the International System of Units."
+                "topic": "Relative Motion",
+                "q": "To convert km/h to m/s, you should multiply the value by:",
+                "options": ["1000/60", "1000/3600", "3600/1000", "60/1000"],
+                "correct": 1,
+                "review": "As shown in the calculations, $120\\text{ km/h} = (120 \\times 1000) / (60 \\times 60)$."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "Which of these is an example of a conservative force?",
-                options: ["Friction", "Air resistance", "Gravity", "Tension"],
-                correct: 2,
-                review: "Gravitational force is an example of a conservative force. [cite: 297]"
+                "topic": "Relative Motion",
+                "q": "If two vehicles are separated by 500 m and their velocity of approach is 61.1 m/s, what is the time to meet?",
+                "options": ["30.5 s", "8.18 s", "12.2 s", "5.4 s"],
+                "correct": 1,
+                "review": "$t = d / V_{rel} = 500 / 61.1 = 8.18$ seconds."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "At the equilibrium position of a pendulum, kinetic energy is:",
-                options: ["Minimum", "Maximum", "Zero", "Equal to mass"],
-                correct: 1,
-                review: "At equilibrium, kinetic energy reaches its maximum. [cite: 306]"
-            },
-            {
-                topic: "Newtonian Mechanics",
-                q: "Linear momentum is conserved if the net force is:",
-                options: ["Constant", "Zero", "Maximum", "Accelerating"],
-                correct: 1,
-                review: "Momentum is conserved if the net force acting on the particle is zero. [cite: 309]"
-            },
-            {
-                topic: "Newtonian Mechanics",
-                q: "The law of conservation of linear momentum states that total momentum before collision equals:",
-                options: ["Total force", "Total energy", "Total momentum after collision", "Zero"],
-                correct: 2,
-                review: "Sum of linear momenta before collision equals total linear momentum after. [cite: 311]"
-            },
-            {
-                topic: "Physical Quantities and Units",
-                q: "Derived quantities are formed by combining fundamental quantities using:",
-                options: ["Addition only", "Algebraic relationships", "Standard references", "Dimensions"],
-                correct: 1,
-                review: "Derived quantities are formed by combining two or more fundamental quantities according to algebraic relationships."
-            },
-            {
-                topic: "Physical Quantities and Units",
-                q: "What is the derived unit for Force?",
-                options: ["Watt", "Newton", "Pascal", "Joule"],
-                correct: 1,
-                review: "The unit for force is the Newton (N)."
-            },
-            {
-                topic: "Physical Quantities and Units",
-                q: "Pressure is defined as:",
-                options: ["Force x Area", "Mass / Volume", "Force per unit Area", "Work per unit Time"],
-                correct: 2,
-                review: "Pressure (P) is defined as force (F) per unit area (A)."
-            },
-            {
-                topic: "Physical Quantities and Units",
-                q: "What is the SI unit for Pressure (Resulting from N/m²)?",
-                options: ["Joule", "Watt", "Pascal", "Newton"],
-                correct: 2,
-                review: "1 Pascal (Pa) is equal to 1 N/m²."
-            },
-            {
-                topic: "Physical Quantities and Units",
-                q: "Power is defined as:",
-                options: ["Force per unit area", "Work done per unit time", "Force per unit charge", "Mass times acceleration"],
-                correct: 1,
-                review: "Power (P) is defined as work done (W) per unit time (t)."
-            },
-            {
-                topic: "Physical Quantities and Units",
-                q: "What unit is equivalent to 1 Joule per second (J/s)?",
-                options: ["Newton", "Watt", "Pascal", "Coulomb"],
-                correct: 1,
-                review: "1 Watt (W) is equal to 1 J/s."
-            },
-            {
-                topic: "Physical Quantities and Units",
-                q: "The unit of the electric field is:",
-                options: ["J/s", "N/m²", "N/C", "kg/m³"],
-                correct: 2,
-                review: "The electric field is defined as force per unit charge (N/C)."
-            },
-            {
-                topic: "Physical Quantities and Units",
-                q: "What happened to NASA's Mars Climate Orbiter due to incorrect units?",
-                options: ["It landed safely", "It ran out of fuel", "It failed", "It changed direction"],
-                correct: 2,
-                review: "Incorrect use of units led to the failure of the Mars Climate Orbiter."
-            },
-            {
-                topic: "Physical Quantities and Units",
-                q: "Which of these is a fundamental SI unit for temperature?",
-                options: ["Celsius", "Fahrenheit", "Kelvin", "Rankine"],
-                correct: 2,
-                review: "Kelvin (K) is the SI base unit for temperature."
-            },
-            {
-                topic: "Physical Quantities and Units",
-                q: "What is the SI unit for the 'Amount of substance'?",
-                options: ["Kilogram", "Mole", "Candela", "Ampere"],
-                correct: 1,
-                review: "The mole (mol) is the SI base unit for amount of substance."
-            },
-            {
-                topic: "Physical Quantities and Units",
-                q: "Fundamental quantities are defined as being:",
-                options: ["Dependent on others", "Complex phenomena", "Independent building blocks", "Algebraic combinations"],
-                correct: 2,
-                review: "Fundamental quantities are independent and cannot be broken down into simpler quantities."
+                "topic": "Relative Motion",
+                "q": "If a car moves North at 30 m/s and a bus moves East at 15 m/s, what is the magnitude of the velocity of A relative to B?",
+                "options": ["45 m/s", "15 m/s", "33.5 m/s", "22.5 m/s"],
+                "correct": 2,
+                "review": "Using Pythagoras: $\\sqrt{15^2 + 30^2} = \\sqrt{225 + 900} = 33.5\\text{ m/s}$."
             },
 
             {
-                topic: "Relative Motion",
-                q: "The concept that the laws of physics are the same in all inertial frames is a core principle of:",
-                options: ["Absolute motion", "Relative motion", "Non-inertial frames", "Friction"],
-                correct: 1,
-                review: "The laws of physics applicable at rest are applicable in any frame moving at a constant velocity. [cite: 226]"
+                "topic": "Rotational Dynamics",
+                "q": "What is the rotational kinetic energy of a rigid body?",
+                "options": ["$1/2 mv^2$", "$I\\omega$", "$1/2 I\\omega^2$", "$\\tau \\theta$"],
+                "correct": 2,
+                "review": "As derived in the notes, $KE = 1/2 \\omega^2 \\sum mr^2 = 1/2 I\\omega^2$."
             },
             {
-                topic: "Relative Motion",
-                q: "Is the concept of motion absolute in nature?",
-                options: ["Yes", "No, it is relative", "Only on Earth", "Only in space"],
-                correct: 1,
-                review: "The concept of motion is not absolute; it is relative to the observer and the observed. [cite: 219, 220]"
+                "topic": "Rotational Dynamics",
+                "q": "The rate of change of angular momentum is proportional to the:",
+                "options": ["Mass", "External Torque", "Angular Velocity", "Moment of Inertia"],
+                "correct": 1,
+                "review": "Newton's law for rotation states $\\tau = dL/dt$."
             },
             {
-                topic: "Relative Motion",
-                q: "What defines an 'Inertial frame of reference'?",
-                options: ["Acceleration is present", "Newton's laws of motion hold", "It is always stationary", "Forces are unbalanced"],
-                correct: 1,
-                review: "An inertial frame is one in which Newton's laws of motion hold. [cite: 234]"
+                "topic": "Vector Calculus",
+                "q": "What is the direction of the relative velocity vector $V_{AB} = 15i + 30j$?",
+                "options": ["26.6° NW", "63.4° NW", "36.9° NE", "53.1° NW"],
+                "correct": 1,
+                "review": "$\tan\\theta = 30/15 = 2$, so $\\theta = 63.4^{\\circ}$ North of West."
             },
             {
-                topic: "Relative Motion",
-                q: "Which is an example of an inertial frame?",
-                options: ["A car turning a corner", "A car moving at constant speed in a straight line", "A falling object", "A spinning top"],
-                correct: 1,
-                review: "A stationary car or one moving in a straight line with constant speed is an inertial frame. [cite: 235]"
+                "topic": "Relative Motion",
+                "q": "A car moves at 80 km/h. A passenger inside moves forward at 2 km/h. What is the passenger's speed relative to the ground?",
+                "options": ["78 km/h", "82 km/h", "40 km/h", "160 km/h"],
+                "correct": 1,
+                "review": "Forward motion relative to a moving frame adds: $80 + 2 = 82\\text{ km/h}$."
             },
             {
-                topic: "Relative Motion",
-                q: "What is a 'Non-inertial frame'?",
-                options: ["A stationary frame", "An accelerated frame", "A frame at constant velocity", "A frame where gravity is zero"],
-                correct: 1,
-                review: "A non-inertial frame is an accelerated frame where Newton's laws do not hold. [cite: 236]"
+                "topic": "Work and Energy",
+                "q": "The work done ($W$) by a force $F$ acting over a distance $dx$ is given by:",
+                "options": ["$F / dx$", "$F \\cdot dx$", "$1/2 F dx^2$", "$m \\cdot a$"],
+                "correct": 1,
+                "review": "Kinetic energy derivation starts with $W = F \\cdot dx$."
             },
             {
-                topic: "Physical Quantities and Units",
-                q: "Which of the following is a derived quantity?",
-                options: ["Time", "Mass", "Speed", "Length"],
-                correct: 2,
-                review: "Speed is derived from length and time."
+                "topic": "Work and Energy",
+                "q": "What is the formula for Kinetic Energy (KE) as derived in the notes?",
+                "options": ["$mgh$", "$mv$", "$1/2 mv^2$", "$I\\omega$"],
+                "correct": 2,
+                "review": "The final integral $\\int mv\\,dv$ results in $1/2 mv^2$."
             },
             {
-                topic: "Physical Quantities and Units",
-                q: "According to index rules, what is am × an?",
-                options: ["am-n", "am+n", "amn", "am/n"],
-                correct: 1,
-                review: "The rule for multiplying indices is am × an = am+n."
+                "topic": "Work and Energy",
+                "q": "If an object has $KE = 2.1 \\times 10^6\\text{ J}$ and moves at 35 m/s, what is its mass?",
+                "options": ["120,000 kg", "3,428 kg", "1,665 kg", "60,000 kg"],
+                "correct": 2,
+                "review": "$m = 2K/V^2 = (2 \\times 2.1 \\times 10^6) / 35^2 = 3428.5$ (Calculated as 3428 in notes)."
+            },
+
+            {
+                "topic": "Vector Calculus",
+                "q": "What is the cross product $i \\times i$?",
+                "options": ["1", "0", "$k$", "$j$"],
+                "correct": 1,
+                "review": "The cross product of any vector with itself is zero."
             },
             {
-                topic: "Physical Quantities and Units",
-                q: "Convert 3.5 × 10³ g to kg using powers of 10.",
-                options: ["350 kg", "35 kg", "3.5 kg", "0.35 kg"],
-                correct: 2,
-                review: "3.5 × 10³ × 10⁻³ = 3.5 kg."
+                "topic": "Vector Calculus",
+                "q": "For vectors $\\vec{A} = i+2j-k$ and $\\vec{B} = 3i-7j+3k$, what is $\\vec{A} \\cdot \\vec{B}$?",
+                "options": ["-14", "-11", "13", "0"],
+                "correct": 0,
+                "review": "$1(3) + 2(-7) + (-1)(3) = 3 - 14 - 3 = -14$."
             },
             {
-                topic: "Physical Quantities and Units",
-                q: "Which is larger: 500 cm or 5 m?",
-                options: ["500 cm", "5 m", "They are equal", "Cannot be compared"],
-                correct: 2,
-                review: "Since 1 m = 100 cm, 5 m is equal to 500 cm."
+                "topic": "Work and Energy",
+                "q": "What is the Potential Energy (P) of a 100 kg mass at a height of 600 m?",
+                "options": ["60,000 J", "588,600 J", "9,810 J", "1,000 J"],
+                "correct": 1,
+                "review": "$P = mgh = 100 \\times 9.81 \\times 600 = 588,600\\text{ J}$."
             },
             {
-                topic: "Relative Motion",
-                q: "Why is the Earth technically considered a non-inertial frame?",
-                options: ["It is too large", "It has rotational and orbital motion involving acceleration", "It is at rest", "It follows Newton's laws perfectly"],
-                correct: 1,
-                review: "The Earth's rotation and orbit involve acceleration directed toward the center, making it non-inertial. [cite: 239]"
+                "topic": "Work and Energy",
+                "q": "An object of 100 g reaches a maximum height of 60 cm. What is its potential energy in Joules?",
+                "options": ["6000 J", "0.588 J", "58.8 J", "60 J"],
+                "correct": 1,
+                "review": "$P = 0.1\\text{ kg} \\times 9.81 \\times 0.6\\text{ m} = 0.5886\\text{ J}$."
             },
             {
-                topic: "Relative Motion",
-                q: "For a man standing outside, passengers in a moving train are:",
-                options: ["At rest", "In motion", "Accelerating", "Stationary"],
-                correct: 1,
-                review: "Their position is changing with time relative to the bystander. [cite: 241]"
+                "topic": "Dynamics",
+                "q": "Inertia is the ability of an object to maintain its state of rest or uniform motion in a:",
+                "options": ["Circle", "Straight line", "Parabola", "Stationary state"],
+                "correct": 1,
+                "review": "Inertia maintains uniform motion in a straight line at constant speed."
             },
             {
-                topic: "Relative Motion",
-                q: "Relative position (Xba) of B from A is calculated as:",
-                options: ["Xa + Xb", "Xa - Xb", "Xb - Xa", "Xa / Xb"],
-                correct: 2,
-                review: "The relative position is the difference: Xba = Xb - Xa. [cite: 245]"
+                "topic": "Rotational Dynamics",
+                "q": "What is the Moment of Inertia ($I$) for a point mass $m$ at distance $r$?",
+                "options": ["$mr$", "$mr^2$", "$1/2 mr^2$", "$2/5 mr^2$"],
+                "correct": 1,
+                "review": "The formula is $I = mr^2$."
             },
             {
-                topic: "Relative Motion",
-                q: "Relative velocity is the velocity of a body as seen by an observer who:",
-                options: ["Is also moving faster", "Considers himself at rest", "Is accelerating", "Is in a different dimension"],
-                correct: 1,
-                review: "It is the velocity seen by an observer who considers himself to be at rest. [cite: 246]"
+                "topic": "Rotational Dynamics",
+                "q": "What is the Moment of Inertia for a solid disk/cylinder about its center?",
+                "options": ["$MR^2$", "$1/2 MR^2$", "$1/12 ML^2$", "$2/3 MR^2$"],
+                "correct": 1,
+                "review": "The notes specify $I = 1/2 MR^2$ for a solid disk."
             },
             {
-                topic: "Relative Motion",
-                q: "In one dimension, relative velocity Vba is given by:",
-                options: ["Va + Vb", "Va - Vb", "Vb - Va", "Va * Vb"],
-                correct: 2,
-                review: "Vba = Vb - Va. [cite: 247]"
+                "topic": "Rotational Dynamics",
+                "q": "What is the Moment of Inertia for a rod of length $L$ about its center?",
+                "options": ["$ML^2$", "$1/3 ML^2$", "$1/12 ML^2$", "$1/2 ML^2$"],
+                "correct": 2,
+                "review": "The notes specify $I = 1/12 ML^2$ for a rod about its center."
             },
             {
-                topic: "Relative Motion",
-                q: "A car at 120 km/h moves toward a truck at 100 km/h. What is their relative velocity of approach?",
-                options: ["20 km/h", "120 km/h", "220 km/h", "100 km/h"],
-                correct: 2,
-                review: "Because they move toward each other (opposite directions), the magnitudes effectively add: 120 - (-100) = 220 km/h. [cite: 251]"
+                "topic": "Rotational Dynamics",
+                "q": "A rigid body is defined as an object that:",
+                "options": ["Changes shape under force", "Does not deform under external force", "Always rotates", "Has no mass"],
+                "correct": 1,
+                "review": "A rigid body does not deform under external forces like a solid metal rod."
             },
             {
-                topic: "Relative Motion",
-                q: "When calculating time to meet, the formula is:",
-                options: ["Distance * Velocity", "Separation / Velocity of approach", "Velocity / Distance", "Acceleration / Time"],
-                correct: 1,
-                review: "t = separation / Vapp. [cite: 251]"
+                "topic": "Rotational Dynamics",
+                "q": "The sum $\\sum mr^2$ represents what quantity?",
+                "options": ["Torque", "Angular Momentum", "Moment of Inertia", "Rotational Work"],
+                "correct": 2,
+                "review": "The sum of $mr^2$ for all particles in a body is its Moment of Inertia."
             },
             {
-                topic: "Relative Motion",
-                q: "In 2D relative motion, the relative position vector Rab is:",
-                options: ["Ra + Rb", "Ra - Rb", "Rb - Ra", "Ra / Rb"],
-                correct: 1,
-                review: "Rab = Ra - Rb. [cite: 253]"
+                "topic": "Rotational Dynamics",
+                "q": "Which rotational equation corresponds to $S = ut + 1/2 at^2$?",
+                "options": ["$\\omega = \\omega_0 + \\alpha t$", "$\\theta = \\omega_0 t + 1/2 \\alpha t^2$", "$\\omega^2 = \\omega_0^2 + 2\\alpha\\theta$", "$\\tau = I\\alpha$"],
+                "correct": 1,
+                "review": "The second rotational kinematic equation is $\\theta = \\omega_0 t + 1/2 \\alpha t^2$."
             },
             {
-                topic: "Relative Motion",
-                q: "If A moves North and B moves East, to find Vab we must flip the direction of:",
-                options: ["Va", "Vb", "The Resultant", "The North pole"],
-                correct: 1,
-                review: "To solve Vab = Va - Vb, we must flip +Vb to -Vb. [cite: 255]"
+                "topic": "Rotational Dynamics",
+                "q": "Torque is defined as the product of force and:",
+                "options": ["Mass", "Acceleration", "Perpendicular distance", "Time"],
+                "correct": 2,
+                "review": "$T = F \\times r$ (force times perpendicular distance)."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "How is 'Force' defined in the lecture note?",
-                options: ["A property of matter", "An agent capable of changing an object's state of motion", "Mass times velocity", "The same as energy"],
-                correct: 1,
-                review: "Force is an agent capable of changing an object's state of motion. [cite: 261]"
+                "topic": "Gravitation",
+                "q": "The region of space where a body attracts another body due to their masses is a:",
+                "options": ["Magnetic field", "Electric field", "Gravitational field", "Force field"],
+                "correct": 2,
+                "review": "This defines a gravitational field."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "If the net force on an object is zero, the object is in:",
-                options: ["Motion", "Acceleration", "Equilibrium", "Vacuum"],
-                correct: 2,
-                review: "If the net force is zero, the object will be in equilibrium. [cite: 266]"
+                "topic": "Gravitation",
+                "q": "Newton's Law of Universal Gravitation states $F$ is inversely proportional to:",
+                "options": ["Mass", "$r$", "$r^2$", "$G$"],
+                "correct": 2,
+                "review": "Force is inversely proportional to the square of the distance ($F \\propto 1/r^2$)."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "The tendency of an object to resist changes in its motion is called:",
-                options: ["Force", "Momentum", "Inertia", "Gravity"],
-                correct: 2,
-                review: "Inertia is the natural tendency of an object to maintain a state of rest or uniform motion. [cite: 276]"
+                "topic": "Gravitation",
+                "q": "What is the formula for the Gravitational Constant $G$ from the force equation?",
+                "options": ["$Fr/m_1m_2$", "$Fr^2/m_1m_2$", "$Fm_1m_2/r^2$", "$r^2/Fm_1m_2$"],
+                "correct": 1,
+                "review": "From $F = Gm_1m_2/r^2$, $G = Fr^2/m_1m_2$."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "Which scientist laid the groundwork for Newton's first law by naming 'Inertia'?",
-                options: ["Einstein", "Galileo", "Pascal", "Watt"],
-                correct: 1,
-                review: "Galileo named the tendency of moving or stationary objects inertia. [cite: 275]"
+                "topic": "Gravitation",
+                "q": "Kepler's First Law states that planets move in:",
+                "options": ["Perfect circles", "Ellipses with the Sun at one focus", "Straight lines", "Parabolic paths"],
+                "correct": 1,
+                "review": "Planets move in ellipses with the Sun at one focus."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "Newton defined ___ as a measure of inertia.",
-                options: ["Weight", "Volume", "Mass", "Acceleration"],
-                correct: 2,
-                review: "Newton related the concept of inertia to mass. [cite: 277]"
+                "topic": "Vector Calculus",
+                "q": "A vector with a magnitude of one is called a:",
+                "options": ["Null vector", "Unit vector", "Proper vector", "Scalar"],
+                "correct": 1,
+                "review": "A unit vector has a magnitude of one."
             },
             {
-                topic: "Relative Motion",
-                q: "The magnitude of a relative velocity vector (x i + y j) is found using:",
-                options: ["x + y", "x * y", "√(x² + y²)", "x - y"],
-                correct: 2,
-                review: "Magnitude is found via the Pythagorean theorem. [cite: 255]"
+                "topic": "Vector Calculus",
+                "q": "A vector with a magnitude of zero is called a:",
+                "options": ["Unit vector", "Null vector", "Proper vector", "Directional vector"],
+                "correct": 1,
+                "review": "A null vector (or zero vector) has a magnitude of 0."
             },
             {
-                topic: "Relative Motion",
-                q: "Rain falls at 12 m/s and a man moves at 2 m/s. What is the magnitude of rain relative to the man?",
-                options: ["10 m/s", "14 m/s", "12.2 m/s", "24 m/s"],
-                correct: 2,
-                review: "The magnitude is √((-2)² + (-12)²) = 12.2 m/s. [cite: 257]"
+                "topic": "Vector Calculus",
+                "q": "To find the unit vector of $\\vec{A}$, you divide $\\vec{A}$ by:",
+                "options": ["Its square", "Its direction", "Its magnitude $|A|$", "Zero"],
+                "correct": 2,
+                "review": "$\\hat{A} = \\vec{A} / |A|$."
             },
             {
-                topic: "Relative Motion",
-                q: "In the rain problem, the angle θ is usually calculated with respect to the:",
-                options: ["Horizontal", "Vertical", "Man's path", "Ground"],
-                correct: 1,
-                review: "Note that θ is the angle with the vertical. [cite: 257]"
+                "topic": "Vector Calculus",
+                "q": "The dot product of two vectors is also called the:",
+                "options": ["Vector product", "Scalar product", "Cross product", "Null product"],
+                "correct": 1,
+                "review": "The scalar product is the dot product."
             },
             {
-                topic: "Relative Motion",
-                q: "If a ticketer walks at 2 km/h inside a 50 km/h bus, his speed relative to a bystander is:",
-                options: ["2 km/h", "50 km/h", "52 km/h (if same direction)", "48 km/h"],
-                correct: 2,
-                review: "Relative to a bystander, the speeds add or subtract depending on direction. [cite: 252]"
+                "topic": "Rotational Dynamics",
+                "q": "Angular displacement $\\theta$ is measured in:",
+                "options": ["Degrees", "Radians", "Meters", "Seconds"],
+                "correct": 1,
+                "review": "Standard unit for rotational motion."
             },
             {
-                topic: "Relative Motion",
-                q: "The position of A relative to B (Xab) is the ___ of the position of B relative to A (Xba).",
-                options: ["Same", "Square", "Negative", "Reciprocal"],
-                correct: 2,
-                review: "Xab = -Xba. [cite: 246]"
+                "topic": "Gravitation",
+                "q": "The value of $G$ is approximately:",
+                "options": ["9.81", "6.67 \\times 10^{-11}", "3.14", "1.6 \\times 10^{-19}"],
+                "correct": 1,
+                "review": "Universal Gravitational Constant."
             },
             {
-                topic: "Relative Motion",
-                q: "Can Newton's laws be caught 'precisely' in a non-inertial frame when throwing an object?",
-                options: ["Yes", "No", "Only if stationary", "Only if at constant speed"],
-                correct: 1,
-                review: "In a non-inertial frame, an object thrown up cannot be caught precisely. [cite: 238]"
+                "topic": "Vector Calculus",
+                "q": "The cross product of two vectors results in a:",
+                "options": ["Scalar", "Vector", "Unit vector", "Angle"],
+                "correct": 1,
+                "review": "The vector product is the cross product."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "Newton's First Law is also called the:",
-                options: ["Law of Acceleration", "Law of Inertia", "Law of Gravity", "Law of Reaction"],
-                correct: 1,
-                review: "Newton's first law is called the law of inertia. [cite: 278]"
+                "topic": "Vector Calculus",
+                "q": "What is the dot product $i \\cdot j$?",
+                "options": ["1", "0", "$k$", "$-k$"],
+                "correct": 1,
+                "review": "In dot products, $i \\cdot j = j \\cdot k = k \\cdot i = 0$."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "According to the Second Law, force is proportional to the rate of change in:",
-                options: ["Position", "Mass", "Momentum", "Inertia"],
-                correct: 2,
-                review: "Force is proportional to the rate of change in momentum. [cite: 278]"
+                "topic": "Vector Calculus",
+                "q": "What is the dot product $i \\cdot i$?",
+                "options": ["0", "1", "$j$", "$-1$"],
+                "correct": 1,
+                "review": "$i \\cdot i = j \\cdot j = k \\cdot k = 1$."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "The mathematical formula for Newton's Second Law is:",
-                options: ["F = m/a", "F = ma", "F = m + a", "F = m v"],
-                correct: 1,
-                review: "F = ma is derived from the rate of change of momentum. [cite: 279]"
+                "topic": "Vector Calculus",
+                "q": "What is the cross product $i \\times j$?",
+                "options": ["0", "1", "$k$", "$-k$"],
+                "correct": 2,
+                "review": "Using the right-hand rule, $i \\times j = k$."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "Newton's Third Law states that for every action, there is an:",
-                options: ["Equal and same force", "Unequal and opposite force", "Equal and opposite reaction", "Accelerating force"],
-                correct: 2,
-                review: "For every force (action), there is an equal and opposite force (reaction). [cite: 279]"
+                "topic": "Vector Calculus",
+                "q": "What is the cross product $j \\times i$?",
+                "options": ["$k$", "$-k$", "0", "1"],
+                "correct": 1,
+                "review": "Cross products are anti-commutative: $j \\times i = -k$."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "Do action and reaction forces act on the same object?",
-                options: ["Yes", "No", "Only in equilibrium", "Only in space"],
-                correct: 1,
-                review: "Action and reaction do not act on the same objects. [cite: 279]"
+                "topic": "Vector Calculus",
+                "q": "The magnitude of vector $\\vec{A} = 3i+2j-k$ is:",
+                "options": ["14", "$\\sqrt{14}$", "6", "$\\sqrt{6}$"],
+                "correct": 1,
+                "review": "$\\sqrt{3^2+2^2+(-1)^2} = \\sqrt{14}$."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "Which of these is the expression for Kinetic Energy (K.E.)?",
-                options: ["mgh", "mv", "1/2 mv²", "ma"],
-                correct: 2,
-                review: "K.E. = 1/2 mv². [cite: 285]"
+                "topic": "Vector Calculus",
+                "q": "Two vectors are parallel if their ______ product is zero.",
+                "options": ["Dot", "Cross", "Scalar", "Unit"],
+                "correct": 1,
+                "review": "If $\\vec{A} \\times \\vec{B} = 0$, the vectors are parallel."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "What is the expression for Gravitational Potential Energy (U)?",
-                options: ["1/2 mv²", "mgh", "ma", "Fd"],
-                correct: 1,
-                review: "P.E. or U = mgh. [cite: 287]"
+                "topic": "Vector Calculus",
+                "q": "The formula $\\cos\\theta = (A \\cdot B) / (|A||B|)$ is used to find the:",
+                "options": ["Magnitude", "Direction", "Angle between vectors", "Cross product"],
+                "correct": 2,
+                "review": "This comes from the definition of the dot product."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "A conservation theorem states that a physical quantity remains ___ throughout changes.",
-                options: ["Increasing", "Decreasing", "Unchanged", "Zero"],
-                correct: 2,
-                review: "Magnitude remains unchanged throughout all changes. [cite: 289]"
+                "topic": "Dynamics",
+                "q": "Impulse is defined as the product of force and:",
+                "options": ["Distance", "Velocity", "Time interval", "Mass"],
+                "correct": 2,
+                "review": "$I = F \\Delta t = P_2 - P_1$."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "Energy can neither be created nor destroyed. This is the law of:",
-                options: ["Inertia", "Conservation of total energy", "Dynamics", "Momentum"],
-                correct: 1,
-                review: "The total energy of an isolated system is always conserved. [cite: 293, 294]"
+                "topic": "Gravitation",
+                "q": "The escape velocity formula is:",
+                "options": ["$\\sqrt{GM/R}$", "$\\sqrt{2GM/R}$", "$GM/R^2$", "$2GM/R$"],
+                "correct": 1,
+                "review": "The velocity to leave a gravitational field is $\\sqrt{2GM/R}$."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "A force is 'conservative' if work done is:",
-                options: ["Always positive", "Path-dependent", "Independent of the path", "Equal to friction"],
-                correct: 2,
-                review: "A conservative force's work is independent of the object's path. [cite: 296]"
+                "topic": "Gravitation",
+                "q": "A geostationary satellite has an orbital period of:",
+                "options": ["90 minutes", "12 hours", "24 hours", "1 month"],
+                "correct": 2,
+                "review": "It matches the Earth's rotation period."
             },
             {
-                topic: "Newtonian Mechanics",
-                q: "Calculate the net force required to accelerate a 200kg mass at 2 m/s².",
-                options: ["100 N", "200 N", "400 N", "800 N"],
-                correct: 2,
-                review: "F = ma = 200 * 2 = 400 N. [cite: 284]"
-            }
+                "topic": "Rotational Dynamics",
+                "q": "The measure of an object's resistance to changes in its rotation is:",
+                "options": ["Mass", "Torque", "Moment of Inertia", "Angular Momentum"],
+                "correct": 2,
+                "review": "This defines Moment of Inertia."
+            },
+            {
+                "topic": "Rotational Dynamics",
+                "q": "Point mass inertia $I = mr^2$ has units of:",
+                "options": ["kg m/s", "kg m²", "N m", "kg/m²"],
+                "correct": 1,
+                "review": "Mass (kg) times distance squared (m²)."
+            },
+            {
+                "topic": "Work and Energy",
+                "q": "Power is defined as the rate of doing work, or:",
+                "options": ["$W \\cdot t$", "$W / t$", "$F \\cdot d$", "$m \\cdot a$"],
+                "correct": 1,
+                "review": "Power is work divided by time."
+            },
+            {
+                "topic": "Rotational Dynamics",
+                "q": "Linear velocity $v$ and angular velocity $\\omega$ are related by:",
+                "options": ["$v = \\omega / r$", "$v = \\omega r$", "$\\omega = v r$", "$v = r^2 \\omega$"],
+                "correct": 1,
+                "review": "$V = \\omega r$."
+            },
+            {
+                "topic": "Gravitation",
+                "q": "Gravitational potential is defined as ______ at infinity.",
+                "options": ["Maximum", "Zero", "Minimum", "One"],
+                "correct": 1,
+                "review": "Potential is zero at infinity."
+            },
+            {
+                "topic": "Vector Calculus",
+                "q": "Given $\\vec{A} = 2i+mj+k$ and $\\vec{B} = 4i-7j-2k$ are perpendicular, $m$ is:",
+                "options": ["6/7", "2/7", "1", "0"],
+                "correct": 0,
+                "review": "$2(4) + m(-7) + 1(-2) = 0 \\rightarrow 8 - 7m - 2 = 0 \\rightarrow 6 = 7m \\rightarrow m = 6/7$."
+            },
+            {
+                "topic": "Relative Motion",
+                "q": "The velocity of object A relative to ground is $V_{AG}$. If $V_{AB} = V_A - V_B$, then $V_A$ is:",
+                "options": ["Velocity of A relative to ground", "Velocity of B relative to A", "Speed of sound", "Total distance"],
+                "correct": 0,
+                "review": "$V_A$ and $V_B$ are velocities relative to a fixed frame (ground)."
+            },
+            {
+                "topic": "Dynamics",
+                "q": "Linear momentum $P$ is the product of:",
+                "options": ["$m$ and $a$", "$m$ and $v$", "$F$ and $t$", "$1/2 mv^2$"],
+                "correct": 1,
+                "review": "$P = mv$."
+            },
+            {
+                "topic": "Work and Energy",
+                "q": "Work done is zero if the force and displacement are:",
+                "options": ["Parallel", "Perpendicular", "Opposite", "Equal"],
+                "correct": 1,
+                "review": "Work involves the dot product $F \\cdot d \\cos\\theta$; $\\cos 90 = 0$."
+            },
+            {
+                "topic": "Rotational Dynamics",
+                "q": "Angular acceleration $\\alpha$ has units of:",
+                "options": ["rad/s", "rad/s²", "m/s²", "degrees/s"],
+                "correct": 1,
+                "review": "Rate of change of angular velocity."
+            },
+            {
+                "topic": "Gravitation",
+                "q": "The weight of an object decreases as it moves ______ from the Earth's center.",
+                "options": ["Closer", "Further", "Sideways", "None"],
+                "correct": 1,
+                "review": "$g$ decreases as $r$ increases."
+            },
+            {
+                "topic": "Vector Calculus",
+                "q": "In a $3\\times3$ determinant for cross products, the top row is:",
+                "options": ["$A_x, A_y, A_z$", "$B_x, B_y, B_z$", "$i, j, k$", "0, 0, 0"],
+                "correct": 2,
+                "review": "The unit vectors $i, j, k$ form the first row."
+            },
+            {
+                "topic": "Rotational Dynamics",
+                "q": "Total kinetic energy of a rolling body is the sum of ______ and ______ kinetic energy.",
+                "options": ["Potential, Kinetic", "Translational, Rotational", "Linear, Angular", "Internal, External"],
+                "correct": 1,
+                "review": "A rolling body translates and rotates."
+            },
+            {
+                "topic": "Gravitation",
+                "q": "The gravitational force between two 1 kg masses 1 m apart is equal to:",
+                "options": ["$g$", "$G$", "1 N", "9.81 N"],
+                "correct": 1,
+                "review": "$F = G(1)(1)/1^2 = G$."
+            },
+            {
+                "topic": "Vector Calculus",
+                "q": "The cross product $\\vec{A} \\times \\vec{A}$ is always:",
+                "options": ["$|A|^2$", "$\\vec{0}$", "$1$", "$-A$"],
+                "correct": 1,
+                "review": "A vector is parallel to itself; $\\sin 0 = 0$."
+            },
+            {
+                "topic": "Work and Energy",
+                "q": "One Watt is equivalent to:",
+                "options": ["1 J/s", "1 N m", "1 kg m/s", "1 J m"],
+                "correct": 0,
+                "review": "Unit of power is Joule per second."
+            },
+            {
+                "topic": "Relative Motion",
+                "q": "If $V_{AB} = 33.3 - 27.8 = 5.5\\text{ m/s}$, the vehicles are moving in ______ direction.",
+                "options": ["Opposite", "The same", "Perpendicular", "Circular"],
+                "correct": 1,
+                "review": "Subtracting speeds indicates they move in the same direction."
+            },
+            {
+                "topic": "Rotational Dynamics",
+                "q": "The symbol $\\omega$ (Omega) represents:",
+                "options": ["Torque", "Angular velocity", "Angular acceleration", "Moment of Inertia"],
+                "correct": 1,
+                "review": "Used in the rotational kinetic energy formula."
+            },
+            {
+                "topic": "Gravitation",
+                "q": "The acceleration due to gravity on Earth is approximately:",
+                "options": ["6.67e-11 m/s²", "9.81 m/s²", "3.0e8 m/s²", "1.6 m/s²"],
+                "correct": 1,
+                "review": "Standard value used in potential energy calculations."
+            },
+            {
+                "topic": "Vector Calculus",
+                "q": "If $|A|=2$, $|B|=3$ and they are perpendicular, $\\vec{A} \\cdot \\vec{B}$ is:",
+                "options": ["6", "5", "0", "1"],
+                "correct": 2,
+                "review": "Dot product of perpendicular vectors is 0."
+            },
+            {
+                "topic": "Rotational Dynamics",
+                "q": "A force applied through the axis of rotation produces ______ torque.",
+                "options": ["Maximum", "Zero", "Constant", "Negative"],
+                "correct": 1,
+                "review": "The distance $r$ is zero."
+            },
+            {
+                "topic": "Dynamics",
+                "q": "The rate of change of momentum is equal to:",
+                "options": ["Work", "Power", "Force", "Impulse"],
+                "correct": 2,
+                "review": "$F = dp/dt$."
+            },
+            {
+                "topic": "Gravitation",
+                "q": "The path of a satellite is called its:",
+                "options": ["Field", "Orbit", "Focus", "Period"],
+                "correct": 1,
+                "review": "Discussed in Kepler's laws."
+            },
+            {
+                "topic": "Vector Calculus",
+                "q": "The scalar product is commutative, meaning $\\vec{A} \\cdot \\vec{B} = $:",
+                "options": ["$\\vec{B} \\cdot \\vec{A}$", "$-\\vec{B} \\cdot \\vec{A}$", "$0$", "$1$"],
+                "correct": 0,
+                "review": "Order does not matter for dot products."
+            },
+            {
+                "topic": "Work and Energy",
+                "q": "Height in $mgh$ must be measured in:",
+                "options": ["cm", "km", "m", "inches"],
+                "correct": 2,
+                "review": "Standard SI unit for distance in physics calculations."
+            },
+
+            {
+                "topic": "Vector Calculus",
+                "q": "$\\vec{A} \\times \\vec{B}$ results in a vector ______ to both $\\vec{A}$ and $\\vec{B}$.",
+                "options": ["Parallel", "Perpendicular", "Opposite", "Equal"],
+                "correct": 1,
+                "review": "The resulting vector is normal to the plane of $\\vec{A}$ and $\\vec{B}$."
+            },
+            {
+                "topic": "Rotational Dynamics",
+                "q": "If $\\alpha = 0$, then angular velocity is:",
+                "options": ["Zero", "Increasing", "Constant", "Decreasing"],
+                "correct": 2,
+                "review": "No angular acceleration means constant speed."
+            },
+            {
+                "topic": "Gravitation",
+                "q": "Weight is equal to $m$ times:",
+                "options": ["$V$", "$G$", "$g$", "$a$"],
+                "correct": 2,
+                "review": "$W = mg$."
+            },
+            {
+                "topic": "Dynamics",
+                "q": "Momentum is a ______ quantity.",
+                "options": ["Scalar", "Vector", "Dimensionless", "Null"],
+                "correct": 1,
+                "review": "It has both magnitude and direction ($mv$)."
+            },
+            {
+                "topic": "Rotational Dynamics",
+                "q": "A 'rigid body' does not ______ during motion.",
+                "options": ["Move", "Rotate", "Deform", "Accelerate"],
+                "correct": 2,
+                "review": "Particles maintain fixed distances."
+            },
+            {
+                "topic": "Gravitation",
+                "q": "Planets move faster when they are ______ the Sun.",
+                "options": ["Closer to", "Further from", "Stationary at", "None"],
+                "correct": 0,
+                "review": "To sweep equal areas, they must speed up at perihelion."
+            },
+            {
+                "topic": "Vector Calculus",
+                "q": "The angle between $i$ and $j$ is:",
+                "options": ["0°", "45°", "90°", "180°"],
+                "correct": 2,
+                "review": "They are orthogonal axes."
+            },
+            {
+                "topic": "Work and Energy",
+                "q": "1 kJ is equal to:",
+                "options": ["10 J", "100 J", "1000 J", "10000 J"],
+                "correct": 2,
+                "review": "Standard prefix for 1000."
+            },
 
         ]
-        
+
     </script>
     <script src="script.js"></script>
 </body>

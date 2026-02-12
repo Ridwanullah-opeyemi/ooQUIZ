@@ -1,52 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Learning Portal</title>
     <style>
-        :root { 
-            --primary: #2c3e50; 
-            --accent: #3498db; 
-            --light: #f4f7f6; 
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --light: #f4f7f6;
             --dark: #1a252f;
         }
-        
-        body { 
-            font-family: 'Segoe UI', sans-serif; 
-            margin: 0; 
-            background: var(--light); 
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background: var(--light);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
-        
-        header { background: var(--primary); color: white; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; }
-        
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         /* Navigation Buttons */
-        .nav-right { display: flex; align-items: center; gap: 15px; }
-        .user-greet { font-weight: bold; color: #ecf0f1; }
-        .btn-auth { background: var(--accent); color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; font-weight: 600; }
-        .btn-logout { background: #e74c3c; font-size: 0.8rem; padding: 5px 10px; }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
 
-        .hero { text-align: center; padding: 40px 20px; background: white; border-bottom: 2px solid #ddd; }
-        
+        .user-greet {
+            font-weight: bold;
+            color: #ecf0f1;
+        }
+
+        .btn-auth {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .btn-logout {
+            background: #e74c3c;
+            font-size: 0.8rem;
+            padding: 5px 10px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-bottom: 2px solid #ddd;
+        }
+
         /* Main Content wrapper to push footer down */
-        .main-content { flex: 1; }
+        .main-content {
+            flex: 1;
+        }
 
-        .container { padding: 40px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        
-        .card { background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; transition: transform 0.2s, box-shadow 0.2s; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
-        .card h3 { margin: 10px 0; color: var(--primary); }
-        
+        .container {
+            padding: 40px 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            margin: 10px 0;
+            color: var(--primary);
+        }
+
         /* PDF Link Styling */
-        .pdf-link { display: block; margin-top: 10px; padding: 10px; background: #eee; color: #333; text-decoration: none; border-radius: 5px; transition: 0.2s; font-weight: bold; }
-        .pdf-link:hover { background: var(--accent); color: white; }
-        .locked { opacity: 0.5; cursor: not-allowed; background: #dfe6e9 !important; color: #b2bec3 !important; }
+        .pdf-link {
+            display: block;
+            margin-top: 10px;
+            padding: 10px;
+            background: #eee;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.2s;
+            font-weight: bold;
+        }
+
+        .pdf-link:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #dfe6e9 !important;
+            color: #b2bec3 !important;
+        }
 
         /* No Results Message */
-        #noResults { display: none; text-align: center; padding: 50px; color: #7f8c8d; font-size: 1.2rem; }
+        #noResults {
+            display: none;
+            text-align: center;
+            padding: 50px;
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
 
         /* --- FOOTER STYLES --- */
         footer {
@@ -60,7 +143,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 30px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 30px;
         }
 
@@ -72,7 +155,8 @@
             letter-spacing: 1px;
         }
 
-        .footer-section p, .footer-section a {
+        .footer-section p,
+        .footer-section a {
             color: #bdc3c7;
             text-decoration: none;
             font-size: 0.95rem;
@@ -94,186 +178,322 @@
         }
 
         /* Modal */
-        #loginModal { display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
-        .modal-content { background: white; margin: 10% auto; padding: 30px; border-radius: 10px; width: 320px; text-align: center; }
-        input { width: 90%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        #loginModal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 320px;
+            text-align: center;
+        }
+
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
     </style>
 </head>
+
 <body>
-
-<header>
-    <h1>StudyHub</h1>
-    <div class="nav-right" id="authSection">
-        <button class="btn-auth" onclick="document.getElementById('loginModal').style.display='block'">Sign up</button>
-    </div>
-</header>
-
-<div class="main-content">
-    <div class="hero">
-        <h2 id="heroGreet">Please sign up to access your Quiz</h2>
-        <input type="text" id="courseSearch" placeholder="Search courses (e.g. MTH or Biology)..." onkeyup="filterCourses()" style="width: 80%; max-width: 400px; padding: 12px; border-radius: 25px; border: 1px solid #ddd; outline: none; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-    </div>
-
-    <div id="noResults">No courses found matching your search.</div>
-
-    <div class="container" id="courseContainer">
-        <div class="card">
-            <h3>MTH 101</h3>
-            <p>Algebra & Trigonometry</p>
-            <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/math.html')" class="pdf-link">Open QUIZ</a>
+    <div id="chat-wrapper"
+        style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; font-family: 'Segoe UI', sans-serif;">
+        <div id="chat-trigger" onclick="toggleChat()"
+            style="background: var(--accent); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.3s;">
+            <span style="color: white; font-size: 30px;">💬</span>
         </div>
 
-        <div class="card">
-            <h3>BIO 101</h3>
-            <p>General Biology I</p>
-            <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/bio.html')" class="pdf-link">Open QUIZ</a>
-        </div>
-
-        <div class="card">
-            <h3>CHM 101</h3>
-            <p>General CHM I</p>
-            <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/che.html')" class="pdf-link">Open QUIZ</a>
-        </div>
-
-        <div class="card">
-            <h3>STA 101</h3>
-            <p>General STATICS I</p>
-            <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/sta.html')" class="pdf-link">Open QUIZ</a>
-        </div>
-
-        <div class="card">
-            <h3>PHY 101</h3>
-            <p>General PHY I</p>
-            <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/phy.html')" class="pdf-link">Open QUIZ</a>
-        </div>
-
-        <div class="card">
-            <h3>COS 101</h3>
-            <p>Introduction to Computing</p>
-            <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/cos.html')" class="pdf-link">Open QUIZ</a>
-        </div>
-
-        <div class="card">
-            <h3>GST 101</h3>
-            <p>HUI GST 103</p>
-            <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/gnt.html')" class="pdf-link">Open QUIZ</a>
-        </div>
-        <div class="card">
-            <h3>GNS 101</h3>
-            <p>HUI GNS 103</p>
-            <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/gns.html')" class="pdf-link">Open QUIZ</a>
+        <div id="chat-window"
+            style="display: none; position: absolute; bottom: 80px; right: 0; width: 350px; height: 450px; background: white; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); flex-direction: column; overflow: hidden; border: 1px solid #ddd;">
+            <div
+                style="background: var(--primary); color: white; padding: 15px; font-weight: bold; display: flex; justify-content: space-between;">
+                <span>StudyHub AI Tutor</span>
+                <span onclick="toggleChat()" style="cursor: pointer;">✕</span>
+            </div>
+            <div id="chat-messages"
+                style="flex: 1; padding: 15px; overflow-y: auto; background: #f9f9f9; font-size: 0.9rem;">
+                <div style="margin-bottom: 10px; color: #555;"><strong>AI:</strong> Hello! Ask me any question from your
+                    MTH 101 or Science courses.</div>
+            </div>
+            <div style="padding: 10px; border-top: 1px solid #eee; display: flex; gap: 5px;">
+                <input type="text" id="chatInput" placeholder="Type a question..."
+                    style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px; margin: 0;">
+                <button onclick="sendChatMessage()"
+                    style="background: var(--accent); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">Send</button>
+            </div>
         </div>
     </div>
-</div>
+    <header>
+        <h1>StudyHub</h1>
+        <div class="nav-right" id="authSection">
+            <button class="btn-auth" onclick="document.getElementById('loginModal').style.display='block'">Sign
+                up</button>
+        </div>
+    </header>
 
-<footer>
-    <div class="footer-grid">
-        <div class="footer-section">
-            <h4>About StudyHub</h4>
-            <p>A dedicated platform for students to practice Computer Based Tests (CBT) and improve their academic performance.</p>
+    <div class="main-content">
+        <div class="hero">
+            <h2 id="heroGreet">Please sign up to access your Quiz</h2>
+            <input type="text" id="courseSearch" placeholder="Search courses (e.g. MTH or Biology)..."
+                onkeyup="filterCourses()"
+                style="width: 80%; max-width: 400px; padding: 12px; border-radius: 25px; border: 1px solid #ddd; outline: none; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
         </div>
-        <div class="footer-section">
-            <h4>Quick Links</h4>
-            <a href="#">Home</a>
-            <a href="#courseContainer">All Courses</a>
-            <a href="javascript:void(0)" onclick="document.getElementById('loginModal').style.display='block'">Student Login</a>
-        </div>
-        <div class="footer-section">
-            <h4>Contact Developer</h4>
-            <a href="mailto:vidaolayode@gmail.com">📧 vidaolayode@gmail.com</a>
-            <a href="tel:09048062945">📞 09048062945</a>
-            <p>📍 Al-Hikmah University, Ilorin</p>
+
+        <div id="noResults">No courses found matching your search.</div>
+
+        <div class="container" id="courseContainer">
+            <div class="card">
+                <h3>MTH 101</h3>
+                <p>Algebra & Trigonometry</p>
+                <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/math.html')" class="pdf-link">Open
+                    QUIZ</a>
+            </div>
+
+            <div class="card">
+                <h3>BIO 101</h3>
+                <p>General Biology I</p>
+                <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/bio.html')" class="pdf-link">Open
+                    QUIZ</a>
+            </div>
+
+            <div class="card">
+                <h3>CHM 101</h3>
+                <p>General CHM I</p>
+                <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/che.html')" class="pdf-link">Open
+                    QUIZ</a>
+            </div>
+
+            <div class="card">
+                <h3>STA 101</h3>
+                <p>General STATICS I</p>
+                <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/sta.html')" class="pdf-link">Open
+                    QUIZ</a>
+            </div>
+
+            <div class="card">
+                <h3>PHY 107</h3>
+                <p>General physics 107</p>
+                <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/phy107.html')" class="pdf-link">Open
+                    QUIZ</a>
+            </div>
+
+            <div class="card">
+                <h3>PHY 101</h3>
+                <p>General PHY I</p>
+                <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/phy.html')" class="pdf-link">Open
+                    QUIZ</a>
+            </div>
+
+            <div class="card">
+                <h3>COS 101</h3>
+                <p>Introduction to Computing</p>
+                <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/cos.html')" class="pdf-link">Open
+                    QUIZ</a>
+            </div>
+
+            <div class="card">
+                <h3>GST 101</h3>
+                <p>HUI GST 103</p>
+                <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/gnt.html')" class="pdf-link">Open
+                    QUIZ</a>
+            </div>
+            <div class="card">
+                <h3>GNS 101</h3>
+                <p>HUI GNS 103</p>
+                <a href="javascript:void(0)" onclick="secureNavigate('./all_sub/gns.html')" class="pdf-link">Open
+                    QUIZ</a>
+            </div>
         </div>
     </div>
-    <div class="footer-bottom">
-        &copy; 2025 StudyHub Learning Portal. Designed for Excellence.
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>About StudyHub</h4>
+                <p>A dedicated platform for students to practice Computer Based Tests (CBT) and improve their academic
+                    performance.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="#">Home</a>
+                <a href="#courseContainer">All Courses</a>
+                <a href="javascript:void(0)"
+                    onclick="document.getElementById('loginModal').style.display='block'">Student Login</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Developer</h4>
+                <a href="mailto:vidaolayode@gmail.com">📧 vidaolayode@gmail.com</a>
+                <a href="tel:09048062945">📞 09048062945</a>
+                <p>📍 Al-Hikmah University, Ilorin</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 StudyHub Learning Portal. Designed for Excellence.
+        </div>
+    </footer>
+
+    <div id="loginModal">
+        <div class="modal-content">
+            <h3>Student Login</h3>
+            <input type="text" id="usernameInput" placeholder="Enter Name (e.g. Ola)">
+            <input type="password" id="passwordInput" placeholder="Password">
+            <button class="btn-auth" style="width: 100%;" onclick="handleSignIn()">Sign up</button>
+            <p onclick="document.getElementById('loginModal').style.display='none'"
+                style="color: grey; cursor: pointer; margin-top: 15px;">Close</p>
+        </div>
     </div>
-</footer>
 
-<div id="loginModal">
-    <div class="modal-content">
-        <h3>Student Login</h3>
-        <input type="text" id="usernameInput" placeholder="Enter Name (e.g. Ola)">
-        <input type="password" id="passwordInput" placeholder="Password">
-        <button class="btn-auth" style="width: 100%;" onclick="handleSignIn()">Sign up</button>
-        <p onclick="document.getElementById('loginModal').style.display='none'" style="color: grey; cursor: pointer; margin-top: 15px;">Close</p>
-    </div>
-</div>
+    <script>
+// A library of response variations to keep things fresh
+function toggleChat() {
+    const window = document.getElementById('chat-window');
+    window.style.display = (window.style.display === 'none' || window.style.display === '') ? 'flex' : 'none';
+}
+const aiResponses = {
+    greeting: [
+        "Hello! I'm your StudyHub assistant. How can I help with your courses today?",
+        "Hi there! Ready to smash your exams? Ask me anything!",
+        "Greetings, student! Which topic are we tackling today?"
+    ],
+    mth101: [
+        "MTH 101 focuses on Algebra and Trigonometry. It’s the foundation for everything! What formula are you stuck on?",
+        "Algebra and Trig can be tricky. Are we looking at Quadratic equations or Sine rules today?",
+        "Ah, MTH 101! A classic. Need help with Binomial expansion or Logarithms?"
+    ],
+    math_formula: [
+        "The quadratic formula is x = [-b ± sqrt(b² - 4ac)] / 2a. Don't forget the ±!",
+        "For quadratics, remember: x = (-b ± √(b² - 4ac)) / 2a.",
+        "Need the quadratic formula? It's x equals negative b, plus or minus the square root of b squared minus 4ac, all over 2a."
+    ],
+    default: [
+        "That's a great question! I'm currently in Demo Mode. To give you a real answer, connect me to the live Gemini API.https://gemini.google.com/app",
+        "I'm still learning! Once my developer connects my brain to Gemini, I'll be able to solve that for you instantly.",
+        "Interesting point! While I'm in test mode, I recommend checking your course PDF for the exact details."
+    ]
+};
 
-<script>
-    window.onload = function() {
-        updateUI();
-    };
+async function sendChatMessage() {
+    const input = document.getElementById('chatInput');
+    const container = document.getElementById('chat-messages');
+    const query = input.value.trim().toLowerCase();
 
-    function filterCourses() {
-        const searchText = document.getElementById('courseSearch').value.toLowerCase();
-        const cards = document.querySelectorAll('.card');
-        const noResults = document.getElementById('noResults');
-        let foundAny = false;
+    if (!query) return;
 
-        cards.forEach(card => {
-            const title = card.querySelector('h3').innerText.toLowerCase();
-            const desc = card.querySelector('p').innerText.toLowerCase();
+    // Display User Message
+    container.innerHTML += `<div style="margin-bottom: 10px; text-align: right;"><strong>You:</strong> ${input.value}</div>`;
+    input.value = "";
+    container.scrollTop = container.scrollHeight;
 
-            if (title.includes(searchText) || desc.includes(searchText)) {
-                card.style.display = "block";
-                foundAny = true;
-            } else {
-                card.style.display = "none";
-            }
-        });
+    // Display Loading State
+    const loadingId = "loading-" + Date.now();
+    container.innerHTML += `<div id="${loadingId}" style="margin-bottom: 10px; color: #7f8c8d;"><strong>AI:</strong> Typing...</div>`;
 
-        // Show "No Results" message if nothing is found
-        noResults.style.display = foundAny ? "none" : "block";
-    }
+    setTimeout(() => {
+        const loadingEl = document.getElementById(loadingId);
+        let category = "default";
 
-    function secureNavigate(destinationUrl) {
-        const user = localStorage.getItem('loggedInUser');
-        if (!user) {
-            alert("Access Denied! Please sign up to access the Quiz.");
-            document.getElementById('loginModal').style.display = 'block';
-        } else {
-            window.location.href = destinationUrl;
-        }
-    }
+        // Simple keyword routing
+        if (query.includes("hi") || query.includes("hello")) category = "greeting";
+        else if (query.includes("mth 101") || query.includes("math")) category = "mth101";
+        else if (query.includes("formula") || query.includes("quadratic")) category = "math_formula";
 
-    function handleSignIn() {
-        const nameInput = document.getElementById('usernameInput').value;
-        const passInput = document.getElementById('passwordInput').value;
+        // RANDOMIZER: Pick a random index from the chosen category
+        const choices = aiResponses[category];
+        const randomIndex = Math.floor(Math.random() * choices.length);
+        const finalAnswer = choices[randomIndex];
 
-        if (nameInput.trim() !== "" && passInput !== "") {
-            localStorage.setItem('loggedInUser', nameInput); 
+        loadingEl.innerHTML = `<strong>AI:</strong> ${finalAnswer}`;
+        container.scrollTop = container.scrollHeight;
+    }, 800);
+}
+        
+        window.onload = function () {
             updateUI();
-            document.getElementById('loginModal').style.display = 'none';
-        } else {
-            alert("Please enter your name and password.");
+        };
+
+        function filterCourses() {
+            const searchText = document.getElementById('courseSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            const noResults = document.getElementById('noResults');
+            let foundAny = false;
+
+            cards.forEach(card => {
+                const title = card.querySelector('h3').innerText.toLowerCase();
+                const desc = card.querySelector('p').innerText.toLowerCase();
+
+                if (title.includes(searchText) || desc.includes(searchText)) {
+                    card.style.display = "block";
+                    foundAny = true;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            // Show "No Results" message if nothing is found
+            noResults.style.display = foundAny ? "none" : "block";
         }
-    }
 
-    function updateUI() {
-        const user = localStorage.getItem('loggedInUser');
-        const authSection = document.getElementById('authSection');
-        const heroGreet = document.getElementById('heroGreet');
+        function secureNavigate(destinationUrl) {
+            const user = localStorage.getItem('loggedInUser');
+            if (!user) {
+                alert("Access Denied! Please sign up to access the Quiz.");
+                document.getElementById('loginModal').style.display = 'block';
+            } else {
+                window.location.href = destinationUrl;
+            }
+        }
 
-        if (user) {
-            authSection.innerHTML = `
+        function handleSignIn() {
+            const nameInput = document.getElementById('usernameInput').value;
+            const passInput = document.getElementById('passwordInput').value;
+
+            if (nameInput.trim() !== "" && passInput !== "") {
+                localStorage.setItem('loggedInUser', nameInput);
+                updateUI();
+                document.getElementById('loginModal').style.display = 'none';
+            } else {
+                alert("Please enter your name and password.");
+            }
+        }
+
+        function updateUI() {
+            const user = localStorage.getItem('loggedInUser');
+            const authSection = document.getElementById('authSection');
+            const heroGreet = document.getElementById('heroGreet');
+
+            if (user) {
+                authSection.innerHTML = `
                 <span class="user-greet">Welcome, ${user}</span>
                 <button class="btn-auth btn-logout" onclick="logout()">Logout</button>
             `;
-            heroGreet.innerText = `Ready for your Quiz, ${user}?`;
-            document.querySelectorAll('.pdf-link').forEach(link => link.classList.remove('locked'));
-        } else {
-            authSection.innerHTML = `<button class="btn-auth" onclick="document.getElementById('loginModal').style.display='block'">Sign up</button>`;
-            heroGreet.innerText = "Please sign up to access your Quiz";
-            document.querySelectorAll('.pdf-link').forEach(link => link.classList.add('locked'));
+                heroGreet.innerText = `Ready for your Quiz, ${user}?`;
+                document.querySelectorAll('.pdf-link').forEach(link => link.classList.remove('locked'));
+            } else {
+                authSection.innerHTML = `<button class="btn-auth" onclick="document.getElementById('loginModal').style.display='block'">Sign up</button>`;
+                heroGreet.innerText = "Please sign up to access your Quiz";
+                document.querySelectorAll('.pdf-link').forEach(link => link.classList.add('locked'));
+            }
         }
-    }
 
-    function logout() {
-        localStorage.removeItem('loggedInUser');
-        location.reload();
-    }
-</script>
+        function logout() {
+            localStorage.removeItem('loggedInUser');
+            location.reload();
+        }
+    </script>
 
 </body>
+
 </html>

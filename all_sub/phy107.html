@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHY 101 CBT - Top Submit Mode</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="header">
+        <div style="font-weight: bold;">PHY 101 </div>
+        <div class="header-tools">
+            <div id="timer">60:00</div>
+            <button class="btn-submit-top" onclick="handleManualSubmit()">SUBMIT EXAM</button>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div id="exam-view">
+            <div class="card">
+                <span id="topic-display" class="topic-badge"></span>
+                <div id="question-display" class="question-text"></div>
+                <div id="options-display"></div>
+
+                <div class="nav-footer">
+                    <button class="btn-nav" id="prevBtn" onclick="navigate(-1)">← Previous</button>
+                    <span id="counter-display" style="padding-top:10px; color:#888;"></span>
+                    <button class="btn-nav" id="nextBtn" onclick="navigate(1)" style="background:var(--secondary)">Next
+                        →</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="result-screen">
+            <div class="score-box">
+                <h1 id="score-text" style="font-size: 3rem; margin:0; color:var(--secondary)">0%</h1>
+                <p id="stats-text" style="color:#666;"></p>
+                <button onclick="location.reload()"
+                    style="background:var(--dark); color:white; padding:10px 30px;">Restart Practice</button>
+            </div>
+            <h3>Detailed Review</h3>
+            <div id="review-list"></div>
+        </div>
+
+    </div>
+
+    <a href="../index.html">
+        <div class="back">🏡</div>
+    </a>
+    <div id="customModal" class="modal-overlay" style="display:none;">
+        <div class="modal-box">
+            <h3 id="modalTitle">Notification</h3>
+            <p id="modalBody"></p>
+            <div class="modal-footer">
+                <button id="modalCancel" class="btn-modal-alt">Cancel</button>
+                <button id="modalConfirm" class="btn-modal">OK</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Data containing all the specific questions from your MTH 101 notes
+        const questions = [
+            {
+                "topic": "Reporting Physics Practical",
+                "q": "According to the manual, what is the very first section that should appear in a practical report?",
+                "options": ["The Title", "The Aim", "The Date", "The Apparatus"],
+                "correct": 2,
+                "review": "Section i is The date of the experiment [cite: 30-31]."
+            },
+            {
+                "topic": "Reporting Physics Practical",
+                "q": "Where must a diagram for a special assembly of apparatus be drawn?",
+                "options": ["On the graph paper", "On the left hand page", "On the right hand page", "In the conclusion"],
+                "correct": 1,
+                "review": "Diagrams of special assemblies should be drawn on the left hand page[cite: 36]."
+            },
+            {
+                "topic": "Reporting Physics Practical",
+                "q": "Which tense must be used when writing precautions?",
+                "options": ["Present continuous", "Future tense", "Past perfect tense", "Imperative command"],
+                "correct": 2,
+                "review": "Precautions must be written in the past perfect tense[cite: 118]."
+            },
+            {
+                "topic": "Reporting Physics Practical",
+                "q": "Which of the following is strictly forbidden in the 'Precautions' section?",
+                "options": ["Mentioning the apparatus", "Using numbers", "Using personal pronouns", "Listing more than 3 points"],
+                "correct": 2,
+                "review": "Avoid all personal pronouns in precautions[cite: 119]."
+            },
+            {
+                "topic": "Reporting Physics Practical",
+                "q": "Ideally, the Conclusion section should be directly relevant to which other section?",
+                "options": ["Apparatus", "Procedure", "Aim", "References"],
+                "correct": 2,
+                "review": "The conclusion must be very relevant to the aim of the experiment[cite: 57]."
+            },
+            {
+                "topic": "Graph Plotting",
+                "q": "Which prime number multiples are explicitly forbidden for graph scales in the manual?",
+                "options": ["2, 4, 8", "3, 7, 11", "5, 10, 15", "1, 2, 5"],
+                "correct": 1,
+                "review": "Scales using multiples of prime numbers such as 3, 7, 11, 13 etc are not acceptable[cite: 72]."
+            },
+            {
+                "topic": "Graph Plotting",
+                "q": "To linearize the equation $Q = aP^n$, which plot is required?",
+                "options": ["$Q$ vs $P$", "$\\log Q$ vs $\\log P$", "$Q$ vs $\\log P$", "$\\log Q$ vs $P$"],
+                "correct": 1,
+                "review": "Power laws are linearized by taking logs of both sides: $\\log Q = \\log a + n\\log P$[cite: 104]."
+            },
+            {
+                "topic": "Graph Plotting",
+                "q": "In the equation $y = mx + c$, what does 'c' represent physically on a graph?",
+                "options": ["The slope", "The x-intercept", "The y-intercept", "The origin"],
+                "correct": 2,
+                "review": "The intercept c is the value of y when x=0[cite: 86]."
+            },
+            {
+                "topic": "Graph Plotting",
+                "q": "When calculating slope from experimental data, what must be included with the final value?",
+                "options": ["The time of day", "The units", "The graph paper brand", "The pencil type"],
+                "correct": 1,
+                "review": "The units must be included when calculating the slope and intercept[cite: 88]."
+            },
+            {
+                "topic": "Graph Plotting",
+                "q": "A graph scale should be chosen such that the plot covers at least what fraction of the page?",
+                "options": ["1/2", "1/3", "1/4", "3/4"],
+                "correct": 1,
+                "review": "The graph should cover at least one third of the page[cite: 70]."
+            },
+            {
+                "topic": "Experimental Error",
+                "q": "Which type of error can never be eliminated entirely?",
+                "options": ["Calculation error", "Personal mistake", "Experimental error", "Spelling error"],
+                "correct": 2,
+                "review": "Error can only be decreased in magnitude but never eliminated entirely[cite: 166]."
+            },
+            {
+                "topic": "Experimental Error",
+                "q": "Improperly calibrated instruments result in which type of error?",
+                "options": ["Random Error", "Systematic Error", "Personal Error", "Human Error"],
+                "correct": 1,
+                "review": "Systematic Errors are associated with improperly calibrated instruments[cite: 176]."
+            },
+            {
+                "topic": "Experimental Error",
+                "q": "Which specific error is caused by the position of the eye when reading a scale?",
+                "options": ["Zero error", "Parallax error", "Calibration error", "Fluctuation error"],
+                "correct": 1,
+                "review": "The value of the reading depends on the position of the eye (Parallax)[cite: 172]."
+            },
+            {
+                "topic": "Experimental Error",
+                "q": "What is the only measurement the manual claims can be 'perfectly accurate'?",
+                "options": ["Time", "Mass", "Counting of objects", "Length"],
+                "correct": 2,
+                "review": "No measurement is perfectly accurate except possibly the counting of objects[cite: 164]."
+            },
+            {
+                "topic": "Precautions: Pendulum",
+                "q": "In a simple pendulum experiment, what specific type of oscillation must be avoided?",
+                "options": ["Linear", "Damped", "Conical", "Periodic"],
+                "correct": 2,
+                "review": "Conical oscillations avoided[cite: 153]."
+            },
+            {
+                "topic": "Precautions: Pendulum",
+                "q": "Where is the length of a simple pendulum measured to?",
+                "options": ["Top of the bob", "Bottom of the bob", "Middle of the bob", "Anywhere on the bob"],
+                "correct": 2,
+                "review": "Measured from the point of suspension to the middle of the bob[cite: 150]."
+            },
+            {
+                "topic": "Precautions: Electricity",
+                "q": "What must be done to the key after taking each reading in an electrical experiment?",
+                "options": ["Close it tight", "Leave it open", "Replace it", "Clean it"],
+                "correct": 1,
+                "review": "Key open after each of the readings[cite: 128]."
+            },
+            {
+                "topic": "Precautions: Electricity",
+                "q": "What action should be avoided regarding the jockey on a potentiometer wire?",
+                "options": ["Touching", "Lifting", "Sliding", "Tapping"],
+                "correct": 2,
+                "review": "Avoid sliding of jockey on potentiometer wire[cite: 131]."
+            },
+            {
+                "topic": "Precautions: Heat",
+                "q": "How should a liquid be stirred in a calorimetry experiment?",
+                "options": ["Vigorously", "Gently and uniformly", "Only at the surface", "Only at the bottom"],
+                "correct": 1,
+                "review": "Stir uniformly/continuously/gently[cite: 132]."
+            },
+            {
+                "topic": "Precautions: Light",
+                "q": "What is the minimum recommended spacing for pins in an optics experiment?",
+                "options": ["1 cm", "2 cm", "4 cm", "10 cm"],
+                "correct": 2,
+                "review": "Reasonable spacing of pins (at least 4cm apart)[cite: 138]."
+            },
+            {
+                "topic": "Reporting",
+                "q": "In the 'Discussion' section, what should be mentioned if the result depends on them?",
+                "options": ["The time of day", "Physical conditions (temp/pressure)", "The lab partner's name", "The cost of equipment"],
+                "correct": 1,
+                "review": "Mention physical conditions like temperature, pressure, etc[cite: 54]."
+            },
+            {
+                "topic": "Graph Plotting",
+                "q": "Which variable is plotted on the x-axis?",
+                "options": ["Dependent variable", "Independent variable", "Constant variable", "Error variable"],
+                "correct": 1,
+                "review": "The independent variable is plotted on the x-axes[cite: 75]."
+            },
+            {
+                "topic": "Graph Plotting",
+                "q": "If points $(x_1, y_1)$ and $(x_2, y_2)$ are on the line, the slope $m$ is:",
+                "options": ["$(x_2-x_1)/(y_2-y_1)$", "$(y_2-y_1)/(x_2-x_1)$", "$(y_1+y_2)/2$", "$x/y$"],
+                "correct": 1,
+                "review": "Slope m = (y2 - y1) / (x2 - x1)[cite: 93]."
+            },
+            {
+                "topic": "Precautions: General",
+                "q": "Which of these is NOT a valid precaution for a simple pendulum?",
+                "options": ["Firm support used", "Zero error noted", "Bob touched the floor", "Small angular displacement"],
+                "correct": 2,
+                "review": "Bob touching the floor is an error, not a precaution. Valid ones include firm support and small displacement [cite: 152-154]."
+            },
+            {
+                "topic": "Precautions: Sound",
+                "q": "In a resonance tube experiment, the tuning fork must NOT:",
+                "options": ["Vibrate", "Be struck", "Touch the tube mouth", "Be held by the stem"],
+                "correct": 2,
+                "review": "Tuning fork not touching the mouth of the tube[cite: 156]."
+            },
+            {
+                "topic": "Specific Heat",
+                "q": "Which cooling law is associated with the specific heat capacity experiment in the manual?",
+                "options": ["Boyle's Law", "Newton's Law of Cooling", "Charles's Law", "Snell's Law"],
+                "correct": 1,
+                "review": "The experiment involves cooling correction and curves typical of Newton's Law of Cooling [cite: 36-37]."
+            },
+            {
+                "topic": "Viscosity",
+                "q": "Experiment 12 determines viscosity using whose law?",
+                "options": ["Newton's", "Stokes'", "Hooke's", "Ohm's"],
+                "correct": 1,
+                "review": "Determination of the viscosity... by Stokes[cite: 32]."
+            },
+            {
+                "topic": "Viscosity",
+                "q": "In the Stokes' law experiment, what quantity is $v$ in the formula $r^2/v$?",
+                "options": ["Volume", "Voltage", "Terminal Velocity", "Viscosity"],
+                "correct": 2,
+                "review": "v is the velocity (terminal) derived from h/t[cite: 35]."
+            },
+            {
+                "topic": "Micrometer",
+                "q": "On a micrometer screw gauge, what is the 'ratchet' used for?",
+                "options": ["Locking the spindle", "Turning the screw", "Preventing overtightening", "Reading the scale"],
+                "correct": 2,
+                "review": "The ratchet (R) is used to turn the screw without applying excessive force[cite: 21]."
+            },
+            {
+                "topic": "Measurement",
+                "q": "What is the formula for the diameter using a micrometer?",
+                "options": ["PSR - HSC", "PSR + (HSC x LC)", "PSR / LC", "HSC + LC"],
+                "correct": 1,
+                "review": "Diameter = PSR + HSC x LC[cite: 35]."
+            },
+            {
+                "topic": "Simple Pendulum",
+                "q": "The period $T$ is related to length $L$ by $T = 2\\pi \\sqrt{L/g}$. What is the slope of a $T^2$ vs $L$ graph?",
+                "options": ["$g/4\\pi^2$", "$4\\pi^2/g$", "$2\\pi/g$", "$\\sqrt{g}$"],
+                "correct": 1,
+                "review": "Squaring gives $T^2 = (4\\pi^2/g)L$. The slope is the coefficient of L, which is $4\\pi^2/g$."
+            },
+            {
+                "topic": "Young's Modulus",
+                "q": "In the Young's Modulus experiment (Exp 10), what apparatus is used to measure the depression?",
+                "options": ["Metre rule", "Vernier calipers", "Micrometer", "Scale pan"],
+                "correct": 1,
+                "review": "The depression is measured using the vernier scale/pointer arrangement implied in the setup[cite: 28]."
+            },
+            {
+                "topic": "Compound Pendulum",
+                "q": "What distinguishes a compound pendulum from a simple pendulum?",
+                "options": ["It uses a string", "It uses a rigid body", "It has no period", "It does not oscillate"],
+                "correct": 1,
+                "review": "A compound pendulum uses a rigid body (like a metre rule) rather than a bob on a string[cite: 26]."
+            },
+            {
+                "topic": "Bifilar Suspension",
+                "q": "In the Bifilar suspension experiment, what physical quantity is determined?",
+                "options": ["Viscosity", "Moment of Inertia", "Young's Modulus", "Heat Capacity"],
+                "correct": 1,
+                "review": "Determination of Moment of Inertia using a Bifilar suspension[cite: 30]."
+            },
+            {
+                "topic": "Bifilar Suspension",
+                "q": "For the Bifilar suspension formula to work, the two threads must be:",
+                "options": ["Perpendicular", "Parallel", "Twisted", "Of different lengths"],
+                "correct": 1,
+                "review": "The threads must be parallel (implied by distance d at top and bottom)[cite: 31]."
+            },
+            {
+                "topic": "Moments",
+                "q": "In Experiment 14, the weight of the metre rule is found using:",
+                "options": ["A spring balance", "The Principle of Moments", "Chemical balance", "Gravity calculation"],
+                "correct": 1,
+                "review": "Determination of the weight of a metre rule by principle of moment[cite: 38]."
+            },
+            {
+                "topic": "Moments",
+                "q": "Where is the center of gravity (G) of a uniform metre rule theoretically located?",
+                "options": ["0 cm", "100 cm", "50 cm", "It varies"],
+                "correct": 2,
+                "review": "For a uniform rule, G is at the geometric center (50cm)[cite: 38]."
+            },
+            {
+                "topic": "Reporting",
+                "q": "If a result is $9.82 \\pm 0.01$, what does $0.01$ represent?",
+                "options": ["Percentage error", "Absolute error/Uncertainty", "The true value", "The standard deviation"],
+                "correct": 1,
+                "review": "It represents the relevant value of the errors/uncertainty[cite: 161]."
+            },
+            {
+                "topic": "Precautions: Mechanics",
+                "q": "What environmental factor is specifically listed to be avoided in Moment experiments?",
+                "options": ["Noise", "Draught", "Heat", "Light"],
+                "correct": 1,
+                "review": "Avoid draught[cite: 145]."
+            },
+            {
+                "topic": "Precautions: General",
+                "q": "Why should you not use the instructions in the manual as your precautions?",
+                "options": ["They are too short", "They are not in the past perfect tense", "They are incorrect", "They are not relevant"],
+                "correct": 1,
+                "review": "Avoid... use of instructions given in the manual as precautions[cite: 119]."
+            },
+            {
+                "topic": "Graph Plotting",
+                "q": "What is the 'centroid' of a graph?",
+                "options": ["The origin", "The average point $(\\bar{x}, \\bar{y})$", "The largest point", "The intercept"],
+                "correct": 1,
+                "review": "The centroid is the mean of x and mean of y, often used to anchor the line of best fit."
+            },
+            {
+                "topic": "Graph Plotting",
+                "q": "Is it compulsory for the line of best fit to pass through the origin?",
+                "options": ["Yes, always", "No", "Only for heat experiments", "Only for light experiments"],
+                "correct": 1,
+                "review": "It is not compulsory that a graph starts from the origin[cite: 71]."
+            },
+            {
+                "topic": "Linearization",
+                "q": "To linearize $y = ax^2 + b$, what do you plot on the x-axis?",
+                "options": ["$x$", "$x^2$", "$\\sqrt{x}$", "$1/x$"],
+                "correct": 1,
+                "review": "Comparing to $Y=mX+C$, if $Y=y$ and $X=x^2$, then the graph is linear."
+            },
+            {
+                "topic": "Specific Heat",
+                "q": "In the cooling curve, what does the slope of the tangent represent?",
+                "options": ["Temperature", "Rate of cooling", "Specific heat", "Mass"],
+                "correct": 1,
+                "review": "The slope of the Temp vs Time graph is the rate of cooling ($d\\theta/dt$)[cite: 36]."
+            },
+            {
+                "topic": "Viscosity",
+                "q": "In the Stokes' law experiment, 'h' represents:",
+                "options": ["The total height of the tube", "The distance between marks A and B", "The radius of the ball", "The viscosity"],
+                "correct": 1,
+                "review": "h is the distance the ball falls between the markers[cite: 34]."
+            },
+            {
+                "topic": "Young's Modulus",
+                "q": "Which property of the material is determined in Experiment 10?",
+                "options": ["Elasticity", "Conductivity", "Density", "Viscosity"],
+                "correct": 0,
+                "review": "Young's Modulus is a measure of elasticity (stiffness)[cite: 28]."
+            },
+            {
+                "topic": "Measurement",
+                "q": "What is 'LC' in the formula for micrometer reading?",
+                "options": ["Large Count", "Least Count", "Last Count", "Linear Count"],
+                "correct": 1,
+                "review": "LC = Least Count[cite: 35]."
+            },
+            {
+                "topic": "Graph Plotting",
+                "q": "The title of a graph should indicate:",
+                "options": ["The date", "The relationship being investigated", "The student's name", "The apparatus used"],
+                "correct": 1,
+                "review": "It should contain a title indicating the relationship being investigated[cite: 77]."
+            },
+            {
+                "topic": "Reporting",
+                "q": "Which section of the report includes the 'derivation of the formula'?",
+                "options": ["Procedure", "Theory", "Conclusion", "Apparatus"],
+                "correct": 1,
+                "review": "The principle... and formula used should be written in the Theory section[cite: 40]."
+            },
+            {
+                "topic": "Reporting",
+                "q": "Where should the 'Observation/Data' be recorded?",
+                "options": ["In a paragraph", "In tabular form", "On a separate sheet", "In the conclusion"],
+                "correct": 1,
+                "review": "Measurements should be recorded preferably in tabular form[cite: 43]."
+            },
+            {
+                "topic": "Errors",
+                "q": "Drawing a single line through a mistake is the correct way to handle:",
+                "options": ["Systematic errors", "Personal errors/mistakes in recording", "Random errors", "Graph errors"],
+                "correct": 1,
+                "review": "If you must change a reading, draw a single line through it[cite: 175]."
+            },
+            {
+                "topic": "Errors",
+                "q": "Which error is associated with 'personal bias'?",
+                "options": ["Random", "Systematic", "Personal", "Instrumental"],
+                "correct": 2,
+                "review": "Personal Errors arise from personal bias[cite: 170]."
+            },
+            {
+                "topic": "Precautions: Light",
+                "q": "Why must a pencil be sharp in light experiments?",
+                "options": ["To look neat", "To produce thin traces for accuracy", "To save lead", "To avoid breaking"],
+                "correct": 1,
+                "review": "Sharp pencil/ neat traces is a precaution[cite: 141]."
+            },
+            {
+                "topic": "Precautions: Light",
+                "q": "Measurements in a lens experiment should be taken from:",
+                "options": ["The edge of the lens", "The middle of the lens", "The holder", "The screen"],
+                "correct": 1,
+                "review": "Measurement taken from the middle of the lens[cite: 140]."
+            },
+            {
+                "topic": "Precautions: Heat",
+                "q": "Why must the thermometer not touch the can?",
+                "options": ["It will break", "To measure the liquid temperature, not the can's", "It causes parallax", "It stops the stirring"],
+                "correct": 1,
+                "review": "Avoid thermometer touching the can[cite: 135]."
+            },
+            {
+                "topic": "Simple Pendulum",
+                "q": "Experiment 7 aims to measure:",
+                "options": ["Young's Modulus", "Acceleration due to gravity (g)", "Viscosity", "Moment of Inertia"],
+                "correct": 1,
+                "review": "Measurement of acceleration due to gravity using simple pendulum[cite: 22]."
+            },
+            {
+                "topic": "Damped Motion",
+                "q": "Experiment 8 investigates:",
+                "options": ["Simple Harmonic Motion", "Damped Motion", "Circular Motion", "Projectile Motion"],
+                "correct": 1,
+                "review": "Investigation of Damped Motion[cite: 24]."
+            },
+            {
+                "topic": "Reporting",
+                "q": "What should be done if the standard value of a result is known?",
+                "options": ["Ignore the experimental result", "Calculate percentage error", "Change the result to match", "Skip the conclusion"],
+                "correct": 1,
+                "review": "Percentage error may also be calculated if the standard value of the result is known[cite: 48]."
+            },
+            {
+                "topic": "Reporting",
+                "q": "Calculations should be done using:",
+                "options": ["Mental math only", "Log tables (systematically)", "Guesswork", "The graph only"],
+                "correct": 1,
+                "review": "Computations should be done systematically and neatly with the help of log tables[cite: 46]."
+            },
+            {
+                "topic": "Graph Plotting",
+                "q": "Which tool is recommended for drawing the line of best fit?",
+                "options": ["Opaque ruler", "Transparent ruler", "Freehand", "String"],
+                "correct": 1,
+                "review": "Ideally, the line should be plotted with a transparent ruler[cite: 90]."
+            },
+            {
+                "topic": "Graph Plotting",
+                "q": "If $T = 2\\pi\\sqrt{(h-L)/g}$, what do you plot to get a straight line?",
+                "options": ["$T$ vs $h$", "$T^2$ vs $h-L$", "$T$ vs $L$", "$T^2$ vs $g$"],
+                "correct": 1,
+                "review": "Squaring gives $T^2 \\propto (h-L)$, so plot $T^2$ vs $(h-L)$[cite: 107]."
+            },
+            {
+                "topic": "Graph Plotting",
+                "q": "For $PV^x = K$, you plot $\\log P$ vs $\\log V$. What is the slope?",
+                "options": ["$K$", "$x$", "$-x$", "$\\log K$"],
+                "correct": 2,
+                "review": "$\\log P = \\log K - x\\log V$. The slope is $-x$[cite: 113]."
+            },
+            {
+                "topic": "Precautions: Sound",
+                "q": "Which meniscus is read in the resonance tube experiment?",
+                "options": ["Upper", "Lower", "Middle", "Edge"],
+                "correct": 1,
+                "review": "Reading the lower meniscus of the water level[cite: 158]."
+            },
+            {
+                "topic": "Precautions: Mechanics",
+                "q": "Parallax error must be avoided when reading:",
+                "options": ["The meter rule", "The weight", "The string", "The pivot"],
+                "correct": 0,
+                "review": "Avoid error of parallax when reading the meter rule[cite: 146]."
+            },
+            {
+                "topic": "Reporting",
+                "q": "What is the very last part of the write-up?",
+                "options": ["References", "Conclusion", "Precautions", "Data"],
+                "correct": 0,
+                "review": "References come after precautions, which follow conclusion[cite: 61]."
+            },
+            {
+                "topic": "General Physics",
+                "q": "What is the course code for this manual?",
+                "options": ["PHY 101", "PHY 107", "PHY 201", "GNS 101"],
+                "correct": 1,
+                "review": "Practical Manual on PHY 107[cite: 15]."
+            },
+            {
+                "topic": "Measurement",
+                "q": "Which part of the vernier caliper is used to measure internal diameters?",
+                "options": ["Outside jaws", "Inside jaws", "Depth probe", "Main scale"],
+                "correct": 1,
+                "review": "Inside jaws (the upper smaller ones) are for internal measurements"
+            },
+            {
+                "topic": "Errors",
+                "q": "Systematic errors are characterized by being:",
+                "options": ["Random", "Consistent/One-sided", "Unpredictable", "Zero"],
+                "correct": 1,
+                "review": "Systematic errors shift all readings in one direction (e.g., calibration error)[cite: 176]."
+            },
+            {
+                "topic": "Graph Plotting",
+                "q": "To obtain $K$ from $PV = K$, what graph would you plot?",
+                "options": ["$P$ vs $V$", "$P$ vs $1/V$", "$\\log P$ vs $V$", "$P^2$ vs $V$"],
+                "correct": 1,
+                "review": "$P = K(1/V)$. Plotting $P$ vs $1/V$ gives a straight line with slope $K$."
+            },
+            {
+                "topic": "Reporting",
+                "q": "Where should the 'Aim' be stated?",
+                "options": ["Clearly and precisely", "Vaguely", "In the appendix", "It is not needed"],
+                "correct": 0,
+                "review": "The object of the experiment... should be clearly and precisely stated[cite: 34]."
+            },
+            {
+                "topic": "Precautions: Pendulum",
+                "q": "Why is a 'rigid support' necessary?",
+                "options": ["To stop the pendulum", "To prevent energy loss to the support", "To make it look good", "To hold the ruler"],
+                "correct": 1,
+                "review": "Firm (rigid) support used[cite: 154]. Prevents coupled oscillations."
+            },
+            {
+                "topic": "Simple Pendulum",
+                "q": "If the length of a pendulum is quadrupled ($4L$), the period becomes:",
+                "options": ["2T", "4T", "T/2", "16T"],
+                "correct": 0,
+                "review": "$T \\propto \\sqrt{L}$. $\\sqrt{4} = 2$, so period doubles."
+            },
+            {
+                "topic": "Micrometer",
+                "q": "The main scale of a micrometer is usually graduated in:",
+                "options": ["cm", "mm", "inches", "meters"],
+                "correct": 1,
+                "review": "The main scale is typically in mm (0.5mm pitch usually)"
+            },
+            {
+                "topic": "Viscosity",
+                "q": "The SI unit of viscosity is:",
+                "options": ["Pa s", "N/m", "kg/s", "m/s"],
+                "correct": 0,
+                "review": "Viscosity ($\\eta$) is measured in Pascal-seconds (Pa s) or $Ns/m^2$."
+            },
+            {
+                "topic": "Reporting",
+                "q": "Which section contains the 'Summary of results'?",
+                "options": ["Procedure", "Conclusion", "Theory", "Aim"],
+                "correct": 1,
+                "review": "Conclusion... should contain a summary of results[cite: 56]."
+            },
+            {
+                "topic": "Graph Plotting",
+                "q": "If a graph passes through the origin, its intercept $c$ is:",
+                "options": ["1", "Infinite", "0", "Undefined"],
+                "correct": 2,
+                "review": "At origin, x=0 and y=0, so c=0."
+            },
+            {
+                "topic": "Precautions: Electricity",
+                "q": "Why are tight connections important?",
+                "options": ["To increase resistance", "To decrease contact resistance", "To look tidy", "To use less wire"],
+                "correct": 1,
+                "review": "Loose connections introduce high/variable resistance."
+            },
+            {
+                "topic": "Heat",
+                "q": "The method used to find the specific heat of a bad conductor involves:",
+                "options": ["Electrical heating", "Method of Mixtures", "Cooling correction", "Optical lever"],
+                "correct": 2,
+                "review": "Determination of specific heat capacity... involves cooling curves[cite: 36]."
+            },
+            {
+                "topic": "Mechanics",
+                "q": "In the Compound Pendulum experiment, the bar oscillates about:",
+                "options": ["Its center of gravity", "A knife edge/pivot hole", "The floor", "A spring"],
+                "correct": 1,
+                "review": "It oscillates about a pivot point (knife edge)[cite: 26]."
+            },
+            {
+                "topic": "Young's Modulus",
+                "q": "The Young's Modulus $E$ is defined as:",
+                "options": ["Stress / Strain", "Strain / Stress", "Force x Area", "Extension / Length"],
+                "correct": 0,
+                "review": "$E = \\text{Tensile Stress} / \\text{Tensile Strain}$."
+            }
+        ]
+
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

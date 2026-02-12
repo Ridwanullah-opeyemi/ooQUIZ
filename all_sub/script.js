@@ -1,7 +1,8 @@
 let currentIdx = 0;
 let selections = new Array(questions.length).fill(null);
-// UPDATED: Changed from 3600 (1 hour) to 1800 (30 minutes)
-let secondsLeft = 1800; 
+// UPDATED: Changed to 3600 for exactly 1 hour
+let secondsLeft = 3600; 
+let timerObj;
 
 function render() {
     const q = questions[currentIdx];
@@ -39,16 +40,40 @@ function navigate(step) {
     render();
 }
 
+// CUSTOM MODAL LOGIC
+function showModal(title, message, showCancel = true, onConfirm = null) {
+    const modal = document.getElementById('customModal');
+    document.getElementById('modalTitle').innerText = title;
+    document.getElementById('modalBody').innerText = message;
+    
+    const cancelBtn = document.getElementById('modalCancel');
+    cancelBtn.style.display = showCancel ? 'inline-block' : 'none';
+    
+    modal.style.display = 'flex';
+
+    document.getElementById('modalConfirm').onclick = () => {
+        modal.style.display = 'none';
+        if (onConfirm) onConfirm();
+    };
+
+    cancelBtn.onclick = () => {
+        modal.style.display = 'none';
+    };
+}
+
 function handleManualSubmit() {
     const unanswered = selections.filter(s => s === null).length;
     const message = unanswered > 0
         ? `You have ${unanswered} unanswered questions. Submit anyway?`
         : "Do you want to submit your exam now?";
 
-    if (confirm(message)) showResults();
+    showModal("Submit Exam", message, true, () => {
+        showResults();
+    });
 }
 
 function showResults() {
+    clearInterval(timerObj);
     document.getElementById('exam-view').style.display = 'none';
     document.querySelector('.header-tools').style.display = 'none';
     document.getElementById('result-screen').style.display = 'block';
@@ -66,8 +91,8 @@ function showResults() {
             <div class="review-card ${isCorrect ? 'correct' : 'wrong'}">
                 <div style="font-weight:bold; margin-bottom:5px;">Q${i + 1}: ${q.q}</div>
                 <div style="font-size:0.9rem">
-                    <span style="color:var(--success)">✔ Correct: ${q.options[q.correct]}</span><br>
-                    <span style="color:${isCorrect ? 'var(--success)' : 'var(--danger)'}">
+                    <span style="color:green">✔ Correct: ${q.options[q.correct]}</span><br>
+                    <span style="color:${isCorrect ? 'green' : 'red'}">
                         👤 Yours: ${userChoice !== null ? q.options[userChoice] : 'Not Answered'}
                     </span>
                 </div>
@@ -81,16 +106,23 @@ function showResults() {
     document.getElementById('stats-text').innerText = `You got ${correctCount} out of ${questions.length} correct.`;
 }
 
-// Countdown Timer Logic
-const timerObj = setInterval(() => {
-    secondsLeft--;
-    const mins = Math.floor(secondsLeft / 60);
-    const secs = secondsLeft % 60;
-    document.getElementById('timer').innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-    if (secondsLeft <= 0) {
-        clearInterval(timerObj);
-        showResults();
-    }
-}, 1000);
+function startTimer() {
+    timerObj = setInterval(() => {
+        secondsLeft--;
+        const mins = Math.floor(secondsLeft / 60);
+        const secs = secondsLeft % 60;
+        document.getElementById('timer').innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        if (secondsLeft <= 0) {
+            clearInterval(timerObj);
+            showResults();
+        }
+    }, 1000);
+}
 
-window.onload = render;
+window.onload = () => {
+    render();
+    // Welcoming message
+    showModal("Welcome!", "You have 1 hour to complete this practice exam. Your time starts now.", false, () => {
+        startTimer();
+    });
+};

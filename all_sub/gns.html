@@ -51,431 +51,441 @@
     <a href="../index.html">
         <div class="back">🏡</div>
     </a>
+    <div id="customModal" class="modal-overlay" style="display:none;">
+        <div class="modal-box">
+            <h3 id="modalTitle">Notification</h3>
+            <p id="modalBody"></p>
+            <div class="modal-footer">
+                <button id="modalCancel" class="btn-modal-alt">Cancel</button>
+                <button id="modalConfirm" class="btn-modal">OK</button>
+            </div>
+        </div>
+    </div>
 
     <script>
         // Data containing all the specific questions from your MTH 101 notes
-        const questions =[
-    {
-        "topic": "Arabic Alphabet",
-        "q": "There are how many letters in the Arabic alphabet?",
-        "options": ["28", "30", "29", "26"],
-        "correct": 0,
-        "review": "The Arabic alphabet consists of 28 primary letters."
-    },
-    {
-        "topic": "Diacritical Marks",
-        "q": "Sukūn is a diacritical mark in Arabic indicating that a _______ is not coming after a consonant sound.",
-        "options": ["Fathah", "Vowel", "Dammah", "Kasrah"],
-        "correct": 1,
-        "review": "Sukun represents the absence of a vowel sound on a letter."
-    },
-    {
-        "topic": "Letter Shapes",
-        "q": "There are how many shapes of Arabic letters depending on their position?",
-        "options": ["29", "8", "4", "2"],
-        "correct": 2,
-        "review": "Arabic letters typically have four positions: Isolated, Initial, Medial, and Final."
-    },
-    {
-        "topic": "Vowels",
-        "q": "The long fathah is produced when which of these comes after a fathah?",
-        "options": ["Alif (ا)", "Waw (و)", "Ya (ي)", "Hamza (ء)"],
-        "correct": 0,
-        "review": "An Alif following a Fathah creates the long 'aa' vowel sound."
-    },
-    {
-        "topic": "Diacritical Marks",
-        "q": "Shaddah is applied to the following EXCEPT one:",
-        "options": ["Doubled Consonant", "Sukūn", "Fathatan", "Kasratan"],
-        "correct": 1,
-        "review": "Shaddah indicates a double consonant; Sukun indicates no vowel."
-    },
-    {
-        "topic": "Alphabet Order",
-        "q": "Which is the 13th letter of the Arabic alphabet?",
-        "options": ["Sīn (س)", "Sād (ص)", "Shīn (ش)", "Dād (ض)"],
-        "correct": 2,
-        "review": "Shīn (ش) is the thirteenth letter in the standard order."
-    },
-    {
-        "topic": "Letter Connectivity",
-        "q": "How many letters do not have a middle shape (non-connectors)?",
-        "options": ["9", "8", "7", "6"],
-        "correct": 3,
-        "review": "There are 6 non-connector letters: ا, د, ذ, ر, ز, و."
-    },
-    {
-        "topic": "Vowels",
-        "q": "There are how many long vowel sounds in Arabic?",
-        "options": ["9", "6", "3", "1"],
-        "correct": 2,
-        "review": "The three long vowels are Alif, Waw, and Ya."
-    },
-    {
-        "topic": "Diacritical Marks",
-        "q": "The diacritical mark for Shaddah is represented as:",
-        "options": ["-", "=", "ّ", "ً"],
-        "correct": 2,
-        "review": "The Shaddah looks like a small 'w' above the letter."
-    },
-    {
-        "topic": "Vowels",
-        "q": "Which letter comes after dammah to produce its long counterpart?",
-        "options": ["Alif (ا)", "Waw (و)", "Ya (ي)", "Hamza (ء)"],
-        "correct": 1,
-        "review": "Waw (و) creates the long 'uu' sound when following a Dammah."
-    },
-    {
-        "topic": "Alphabet Order",
-        "q": "Which letter comes after Kāf (ك)?",
-        "options": ["Qāf (ق)", "Mīm (م)", "Lām (ل)", "Fā (ف)"],
-        "correct": 2,
-        "review": "In the alphabet, Lām (ل) follows Kāf (ك)."
-    },
-    {
-        "topic": "Vowels",
-        "q": "There are how many total vowels (short and long) in Arabic?",
-        "options": ["9", "6", "4", "2"],
-        "correct": 1,
-        "review": "There are 3 short vowels and 3 long vowels, totaling 6."
-    },
-    {
-        "topic": "Writing Rules",
-        "q": "What is generally followed by Aliful madd (ا) at the end of an Arabic word?",
-        "options": ["Fathah", "Dammah", "Kasrah", "Fathatan"],
-        "correct": 3,
-        "review": "Fathatan (ً) is usually supported by an Alif at the end of words."
-    },
-    {
-        "topic": "Letter Shapes",
-        "q": "The letters with four shapes are how many in number?",
-        "options": ["29", "28", "22", "26"],
-        "correct": 2,
-        "review": "22 letters have four shapes, while 6 have only two."
-    },
-    {
-        "topic": "Phonetics",
-        "q": "Identify the phonetic shape of 'tha' (ث):",
-        "options": ["Initial", "Medial", "Final", "Isolated"],
-        "correct": 3,
-        "review": "The question refers to identifying the standalone form of the letter."
-    },
-    {
-        "topic": "Letter Connectivity",
-        "q": "Among the following letters, which has only two shapes?",
-        "options": ["Lām (ل)", "Waw (و)", "Ya (ي)", "Kāf (ك)"],
-        "correct": 1,
-        "review": "Waw is a non-connector, so it only has two forms (Isolated/Final)."
-    },
-    {
-        "topic": "Writing Rules",
-        "q": "Which of the following is NOT followed by Aliful madd when Fathatan appears on it?",
-        "options": ["Bā (ب)", "Tā (ت)", "Closed Tā (ة)", "Alif (ا)"],
-        "correct": 2,
-        "review": "Tā Marbūta (ة) never takes an Alif after Fathatan."
-    },
-    {
-        "topic": "Letter Shapes",
-        "q": "The letters with only two shapes are how many in number?",
-        "options": ["9", "6", "3", "1"],
-        "correct": 1,
-        "review": "The 6 non-connectors have only two shapes."
-    },
-    {
-        "topic": "Phonology",
-        "q": "Which letter could be used to represent both consonant and vowel sounds?",
-        "options": ["Alif (ا)", "Hā (هـ)", "Waw (و)", "Ayn (ع)"],
-        "correct": 2,
-        "review": "Waw and Ya act as both consonants and vowels."
-    },
-    {
-        "topic": "Letter Shapes",
-        "q": "Identify a letter that has only two shapes:",
-        "options": ["Bā (ب)", "Alif (ا)", "Tā (ت)", "Tha (ث)"],
-        "correct": 1,
-        "review": "Alif is a non-connector with only two shapes."
-    },
-    {
-        "topic": "Writing Rules",
-        "q": "What prevents the pronunciation of Aliful madd that comes after it?",
-        "options": ["Fathah", "Alif", "Fathatan", "Closed Tā (ة)"],
-        "correct": 3,
-        "review": "Tā Marbūta ends the word sound, blocking the Alif extension."
-    },
-    {
-        "topic": "Phonetics",
-        "q": "How many processes are formed by Sukūn in Arabic spelling?",
-        "options": ["9", "2", "3", "1"],
-        "correct": 1,
-        "review": "Sukun identifies a consonant rest or a cluster start."
-    },
-    {
-        "topic": "Arabic Phonemes",
-        "q": "There are how many consonant sounds in Arabic?",
-        "options": ["28", "29", "30", "27"],
-        "correct": 0,
-        "review": "There are 28 consonant letters/sounds."
-    },
-    {
-        "topic": "Letter Comparison",
-        "q": "Identify the letter that does NOT have a similar shape letter in the alphabet:",
-        "options": ["Mīm (م)", "Tā (ت)", "Sād (ص)", "Bā (ب)"],
-        "correct": 0,
-        "review": "Mīm has a unique shape, unlike Bā/Tā/Thā or Sād/Dād."
-    },
-    {
-        "topic": "Phonology",
-        "q": "Which letter represents both consonant and vowel sounds?",
-        "options": ["Alif (ا)", "Ayn (ع)", "Waw (و)", "Hā (هـ)"],
-        "correct": 2,
-        "review": "Waw (و) functions as a 'w' or a long 'u'."
-    },
-    {
-        "topic": "Letter Connectivity",
-        "q": "No letter connects to the following except one:",
-        "options": ["Alif (ا)", "Dāl (د)", "Rā (ر)", "Lām (ل)"],
-        "correct": 3,
-        "review": "Lām (ل) is a connector; the others are non-connectors."
-    },
-    {
-        "topic": "Phonology",
-        "q": "The process in which two non-identical consonant sounds are adjacent is:",
-        "options": ["Sukūn", "Consonant cluster", "Doubled consonant", "Tanwīn"],
-        "correct": 1,
-        "review": "Adjacent non-identical consonants form a cluster."
-    },
-    {
-        "topic": "Alphabet Order",
-        "q": "Choose the correct arrangement of these letters:",
-        "options": ["ح ج خ ث", "ث ج ح خ", "ح خ ث ج", "ج ح خ ث"],
-        "correct": 1,
-        "review": "The order is Thā (ث), Jīm (ج), Hā (ح), Khā (خ)."
-    },
-    {
-        "topic": "Vowels",
-        "q": "Which letter comes after kasrah to produce its long counterpart?",
-        "options": ["Ya (ي)", "Alif (ا)", "Waw (و)", "Hamza (ء)"],
-        "correct": 0,
-        "review": "Ya (ي) makes the long 'ii' sound after a Kasrah."
-    },
-    {
-        "topic": "Phonetics",
-        "q": "Identify the isolated shape of the letter 'Qāf':",
-        "options": ["ق", "ف", "ن", "ل"],
-        "correct": 0,
-        "review": "ق is the isolated form of Qāf."
-    },
-    {
-        "topic": "Vocabulary",
-        "q": "Identify the missing medial letter in 'Al-maktabu' (Office):",
-        "options": ["كـ", "ـكـ", "ـك", "ك"],
-        "correct": 1,
-        "review": "The medial form of Kāf is ـكـ."
-    },
-    {
-        "topic": "Vocabulary",
-        "q": "Identify the correct shape for the letter 'Tā' in 'Kitabatun' (Writing):",
-        "options": ["ت", "ـتـ", "ـت", "ة"],
-        "correct": 1,
-        "review": "Kitabatun uses the medial Tā."
-    },
-    {
-        "topic": "Vocabulary",
-        "q": "Identify the shape for 'Jīm' in 'Yajlisu' (He sits):",
-        "options": ["ج", "ـجـ", "ـج", "جـ"],
-        "correct": 1,
-        "review": "Yajlisu uses the medial Jīm."
-    },
-    {
-        "topic": "Phonetics",
-        "q": "Identify the isolated form of 'Hā' (هـ):",
-        "options": ["ه", "ـهـ", "ـه", "هـ"],
-        "correct": 0,
-        "review": "The isolated form of Hā is ه."
-    },
-    {
-        "topic": "Phonetics",
-        "q": "Identify the final form of 'Yā' (ي):",
-        "options": ["ـي", "ي", "يـ", "ـيـ"],
-        "correct": 0,
-        "review": "The final form of Yā is ـي."
-    },
-    {
-        "topic": "Transliteration",
-        "q": "Identify the correct Arabic script for 'Fathan':",
-        "options": ["فَتْحًا", "فَتَحَ", "فَتِحُ", "فَاتِح"],
-        "correct": 0,
-        "review": "Fathan is written with a Sukun and Fathatan Alif."
-    },
-    {
-        "topic": "Transliteration",
-        "q": "Identify the script for 'Ra’ūfun':",
-        "options": ["رَؤُوفٌ", "رَؤُفُ", "رَأُوفَ", "رُؤُف"],
-        "correct": 0,
-        "review": "Ra’ūfun uses the Hamza on Waw with Tanwin Dammah."
-    },
-    {
-        "topic": "Transliteration",
-        "q": "Identify the script for 'Battatun':",
-        "options": ["بَطَّة", "بَاتَة", "بَطَة", "بِطَّة"],
-        "correct": 0,
-        "review": "Battatun uses a Shaddah on the 'Tā'."
-    },
-    {
-        "topic": "Transliteration",
-        "q": "Identify the script for 'Nawwāmun':",
-        "options": ["نوام", "نَوَّامٌ", "نَوَام", "نُوَام"],
-        "correct": 1,
-        "review": "Nawwāmun requires a Shaddah on the Waw."
-    },
-    {
-        "topic": "Transliteration",
-        "q": "Identify the script for 'Antum':",
-        "options": ["أَنْتُم", "أَنْتُمْ", "إَنْتُم", "أَنَتُم"],
-        "correct": 0,
-        "review": "Antum means 'You (plural)' and starts with Alif-Fathah."
-    },
-    {
-        "topic": "Translation",
-        "q": "What is the Arabic word for 'Mother'?",
-        "options": ["Ummun (أُمُّ)", "Abun", "Bintun", "Waladun"],
-        "correct": 0,
-        "review": "Ummun is the Arabic word for Mother."
-    },
-    {
-        "topic": "Theology",
-        "q": "What does 'Jalla' (جَلَّ) mean?",
-        "options": ["Glorious", "Big", "Small", "Fast"],
-        "correct": 0,
-        "review": "Jalla is an attribute meaning Glorious."
-    },
-    {
-        "topic": "Vocabulary",
-        "q": "What is the Arabic script for 'The Sun'?",
-        "options": ["Ash-shamsu (الشَّمْسُ)", "Al-qamaru", "An-najmu", "Al-ard"],
-        "correct": 0,
-        "review": "Ash-shamsu is the sun."
-    },
-    {
-        "topic": "Vocabulary",
-        "q": "What is the meaning of 'As-sundūqu'?",
-        "options": ["The Box", "The Chair", "The Table", "The Room"],
-        "correct": 0,
-        "review": "As-sundūqu means the box."
-    },
-    {
-        "topic": "Vocabulary",
-        "q": "What does 'Muslimatan' mean?",
-        "options": ["A Muslim woman", "A Muslim man", "Muslims", "Islam"],
-        "correct": 0,
-        "review": "The 'at' suffix indicates a feminine singular noun."
-    },
-    {
-        "topic": "Vocabulary",
-        "q": "What does 'Al-jamālu' mean?",
-        "options": ["The Beauty", "The Camel", "The Mountain", "The Man"],
-        "correct": 0,
-        "review": "Al-jamālu refers to beauty."
-    },
-    {
-        "topic": "Vocabulary",
-        "q": "What is 'Al-maktabu'?",
-        "options": ["The Office/Desk", "The School", "The Book", "The Pen"],
-        "correct": 0,
-        "review": "Al-maktabu is a place of writing (office or desk)."
-    },
-    {
-        "topic": "Vocabulary",
-        "q": "What does 'Mīlād' mean?",
-        "options": ["Birthday/Birth", "Death", "Marriage", "Travel"],
-        "correct": 0,
-        "review": "Mīlād refers to the time of birth."
-    },
-    {
-        "topic": "Vocabulary",
-        "q": "What is 'Al-barīdu'?",
-        "options": ["The Mail/Post", "The Cold", "The House", "The Street"],
-        "correct": 0,
-        "review": "Al-barīdu is the postal service or mail."
-    },
-    {
-        "topic": "Vocabulary",
-        "q": "What is 'Al-mudarrisu'?",
-        "options": ["The Teacher", "The Student", "The Doctor", "The Engineer"],
-        "correct": 0,
-        "review": "Al-mudarrisu is the person who teaches."
-    },
-    {
-        "topic": "Transliteration",
-        "q": "Transliterate حَافِظٌ:",
-        "options": ["Hafiz", "Hafid", "Habib", "Hafit"],
-        "correct": 0,
-        "review": "The word is transliterated as Hafiz."
-    },
-    {
-        "topic": "Transliteration",
-        "q": "Transliterate رُسُلٌ:",
-        "options": ["Rusulun", "Rasul", "Risala", "Rasil"],
-        "correct": 0,
-        "review": "Rusulun is the plural of Messenger."
-    },
-    {
-        "topic": "Transliteration",
-        "q": "Transliterate فَتْحًا:",
-        "options": ["Fathan", "Fataha", "Fatih", "Futuha"],
-        "correct": 0,
-        "review": "Fathan uses the 'an' tanwin ending."
-    },
-    {
-        "topic": "Transliteration",
-        "q": "Transliterate حَدِيثٌ:",
-        "options": ["Hadīthun", "Hadith", "Hadit", "Hadis"],
-        "correct": 0,
-        "review": "The 'tha' is transliterated as 'th'."
-    },
-    {
-        "topic": "Transliteration",
-        "q": "Transliterate سكين:",
-        "options": ["Sikkīnun", "Sakin", "Sukun", "Sikkun"],
-        "correct": 0,
-        "review": "Sikkīnun means knife."
-    },
-    {
-        "topic": "Transliteration",
-        "q": "Transliterate رَحْمَةٌ:",
-        "options": ["Rahmatun", "Rahma", "Rahman", "Rahim"],
-        "correct": 0,
-        "review": "Rahmatun means mercy."
-    },
-    {
-        "topic": "Transliteration",
-        "q": "Transliterate قُل:",
-        "options": ["Qul", "Qal", "Qil", "Qulu"],
-        "correct": 0,
-        "review": "Qul is the command 'Say'."
-    },
-    {
-        "topic": "Transliteration",
-        "q": "Transliterate شد:",
-        "options": ["Shaddun", "Shad", "Shid", "Shada"],
-        "correct": 0,
-        "review": "The word is transliterated as Shaddun."
-    },
-    {
-        "topic": "Transliteration",
-        "q": "Transliterate غليظ:",
-        "options": ["Ghalīzun", "Ghaliz", "Khaliz", "Galiz"],
-        "correct": 0,
-        "review": "Ghalīzun means thick or coarse."
-    },
-    {
-        "topic": "Transliteration",
-        "q": "Transliterate سهل:",
-        "options": ["Sahlun", "Sahl", "Suhul", "Sahal"],
-        "correct": 0,
-        "review": "Sahlun means easy."
-    }
-]
+        const questions = [
+            {
+                "topic": "Arabic Alphabet",
+                "q": "There are how many letters in the Arabic alphabet?",
+                "options": ["28", "30", "29", "26"],
+                "correct": 0,
+                "review": "The Arabic alphabet consists of 28 primary letters."
+            },
+            {
+                "topic": "Diacritical Marks",
+                "q": "Sukūn is a diacritical mark in Arabic indicating that a _______ is not coming after a consonant sound.",
+                "options": ["Fathah", "Vowel", "Dammah", "Kasrah"],
+                "correct": 1,
+                "review": "Sukun represents the absence of a vowel sound on a letter."
+            },
+            {
+                "topic": "Letter Shapes",
+                "q": "There are how many shapes of Arabic letters depending on their position?",
+                "options": ["29", "8", "4", "2"],
+                "correct": 2,
+                "review": "Arabic letters typically have four positions: Isolated, Initial, Medial, and Final."
+            },
+            {
+                "topic": "Vowels",
+                "q": "The long fathah is produced when which of these comes after a fathah?",
+                "options": ["Alif (ا)", "Waw (و)", "Ya (ي)", "Hamza (ء)"],
+                "correct": 0,
+                "review": "An Alif following a Fathah creates the long 'aa' vowel sound."
+            },
+            {
+                "topic": "Diacritical Marks",
+                "q": "Shaddah is applied to the following EXCEPT one:",
+                "options": ["Doubled Consonant", "Sukūn", "Fathatan", "Kasratan"],
+                "correct": 1,
+                "review": "Shaddah indicates a double consonant; Sukun indicates no vowel."
+            },
+            {
+                "topic": "Alphabet Order",
+                "q": "Which is the 13th letter of the Arabic alphabet?",
+                "options": ["Sīn (س)", "Sād (ص)", "Shīn (ش)", "Dād (ض)"],
+                "correct": 2,
+                "review": "Shīn (ش) is the thirteenth letter in the standard order."
+            },
+            {
+                "topic": "Letter Connectivity",
+                "q": "How many letters do not have a middle shape (non-connectors)?",
+                "options": ["9", "8", "7", "6"],
+                "correct": 3,
+                "review": "There are 6 non-connector letters: ا, د, ذ, ر, ز, و."
+            },
+            {
+                "topic": "Vowels",
+                "q": "There are how many long vowel sounds in Arabic?",
+                "options": ["9", "6", "3", "1"],
+                "correct": 2,
+                "review": "The three long vowels are Alif, Waw, and Ya."
+            },
+            {
+                "topic": "Diacritical Marks",
+                "q": "The diacritical mark for Shaddah is represented as:",
+                "options": ["-", "=", "ّ", "ً"],
+                "correct": 2,
+                "review": "The Shaddah looks like a small 'w' above the letter."
+            },
+            {
+                "topic": "Vowels",
+                "q": "Which letter comes after dammah to produce its long counterpart?",
+                "options": ["Alif (ا)", "Waw (و)", "Ya (ي)", "Hamza (ء)"],
+                "correct": 1,
+                "review": "Waw (و) creates the long 'uu' sound when following a Dammah."
+            },
+            {
+                "topic": "Alphabet Order",
+                "q": "Which letter comes after Kāf (ك)?",
+                "options": ["Qāf (ق)", "Mīm (م)", "Lām (ل)", "Fā (ف)"],
+                "correct": 2,
+                "review": "In the alphabet, Lām (ل) follows Kāf (ك)."
+            },
+            {
+                "topic": "Vowels",
+                "q": "There are how many total vowels (short and long) in Arabic?",
+                "options": ["9", "6", "4", "2"],
+                "correct": 1,
+                "review": "There are 3 short vowels and 3 long vowels, totaling 6."
+            },
+            {
+                "topic": "Writing Rules",
+                "q": "What is generally followed by Aliful madd (ا) at the end of an Arabic word?",
+                "options": ["Fathah", "Dammah", "Kasrah", "Fathatan"],
+                "correct": 3,
+                "review": "Fathatan (ً) is usually supported by an Alif at the end of words."
+            },
+            {
+                "topic": "Letter Shapes",
+                "q": "The letters with four shapes are how many in number?",
+                "options": ["29", "28", "22", "26"],
+                "correct": 2,
+                "review": "22 letters have four shapes, while 6 have only two."
+            },
+            {
+                "topic": "Phonetics",
+                "q": "Identify the phonetic shape of 'tha' (ث):",
+                "options": ["Initial", "Medial", "Final", "Isolated"],
+                "correct": 3,
+                "review": "The question refers to identifying the standalone form of the letter."
+            },
+            {
+                "topic": "Letter Connectivity",
+                "q": "Among the following letters, which has only two shapes?",
+                "options": ["Lām (ل)", "Waw (و)", "Ya (ي)", "Kāf (ك)"],
+                "correct": 1,
+                "review": "Waw is a non-connector, so it only has two forms (Isolated/Final)."
+            },
+            {
+                "topic": "Writing Rules",
+                "q": "Which of the following is NOT followed by Aliful madd when Fathatan appears on it?",
+                "options": ["Bā (ب)", "Tā (ت)", "Closed Tā (ة)", "Alif (ا)"],
+                "correct": 2,
+                "review": "Tā Marbūta (ة) never takes an Alif after Fathatan."
+            },
+            {
+                "topic": "Letter Shapes",
+                "q": "The letters with only two shapes are how many in number?",
+                "options": ["9", "6", "3", "1"],
+                "correct": 1,
+                "review": "The 6 non-connectors have only two shapes."
+            },
+            {
+                "topic": "Phonology",
+                "q": "Which letter could be used to represent both consonant and vowel sounds?",
+                "options": ["Alif (ا)", "Hā (هـ)", "Waw (و)", "Ayn (ع)"],
+                "correct": 2,
+                "review": "Waw and Ya act as both consonants and vowels."
+            },
+            {
+                "topic": "Letter Shapes",
+                "q": "Identify a letter that has only two shapes:",
+                "options": ["Bā (ب)", "Alif (ا)", "Tā (ت)", "Tha (ث)"],
+                "correct": 1,
+                "review": "Alif is a non-connector with only two shapes."
+            },
+            {
+                "topic": "Writing Rules",
+                "q": "What prevents the pronunciation of Aliful madd that comes after it?",
+                "options": ["Fathah", "Alif", "Fathatan", "Closed Tā (ة)"],
+                "correct": 3,
+                "review": "Tā Marbūta ends the word sound, blocking the Alif extension."
+            },
+            {
+                "topic": "Phonetics",
+                "q": "How many processes are formed by Sukūn in Arabic spelling?",
+                "options": ["9", "2", "3", "1"],
+                "correct": 1,
+                "review": "Sukun identifies a consonant rest or a cluster start."
+            },
+            {
+                "topic": "Arabic Phonemes",
+                "q": "There are how many consonant sounds in Arabic?",
+                "options": ["28", "29", "30", "27"],
+                "correct": 0,
+                "review": "There are 28 consonant letters/sounds."
+            },
+            {
+                "topic": "Letter Comparison",
+                "q": "Identify the letter that does NOT have a similar shape letter in the alphabet:",
+                "options": ["Mīm (م)", "Tā (ت)", "Sād (ص)", "Bā (ب)"],
+                "correct": 0,
+                "review": "Mīm has a unique shape, unlike Bā/Tā/Thā or Sād/Dād."
+            },
+            {
+                "topic": "Phonology",
+                "q": "Which letter represents both consonant and vowel sounds?",
+                "options": ["Alif (ا)", "Ayn (ع)", "Waw (و)", "Hā (هـ)"],
+                "correct": 2,
+                "review": "Waw (و) functions as a 'w' or a long 'u'."
+            },
+            {
+                "topic": "Letter Connectivity",
+                "q": "No letter connects to the following except one:",
+                "options": ["Alif (ا)", "Dāl (د)", "Rā (ر)", "Lām (ل)"],
+                "correct": 3,
+                "review": "Lām (ل) is a connector; the others are non-connectors."
+            },
+            {
+                "topic": "Phonology",
+                "q": "The process in which two non-identical consonant sounds are adjacent is:",
+                "options": ["Sukūn", "Consonant cluster", "Doubled consonant", "Tanwīn"],
+                "correct": 1,
+                "review": "Adjacent non-identical consonants form a cluster."
+            },
+            {
+                "topic": "Alphabet Order",
+                "q": "Choose the correct arrangement of these letters:",
+                "options": ["ح ج خ ث", "ث ج ح خ", "ح خ ث ج", "ج ح خ ث"],
+                "correct": 1,
+                "review": "The order is Thā (ث), Jīm (ج), Hā (ح), Khā (خ)."
+            },
+            {
+                "topic": "Vowels",
+                "q": "Which letter comes after kasrah to produce its long counterpart?",
+                "options": ["Ya (ي)", "Alif (ا)", "Waw (و)", "Hamza (ء)"],
+                "correct": 0,
+                "review": "Ya (ي) makes the long 'ii' sound after a Kasrah."
+            },
+            {
+                "topic": "Phonetics",
+                "q": "Identify the isolated shape of the letter 'Qāf':",
+                "options": ["ق", "ف", "ن", "ل"],
+                "correct": 0,
+                "review": "ق is the isolated form of Qāf."
+            },
+            {
+                "topic": "Vocabulary",
+                "q": "Identify the missing medial letter in 'Al-maktabu' (Office):",
+                "options": ["كـ", "ـكـ", "ـك", "ك"],
+                "correct": 1,
+                "review": "The medial form of Kāf is ـكـ."
+            },
+            {
+                "topic": "Vocabulary",
+                "q": "Identify the correct shape for the letter 'Tā' in 'Kitabatun' (Writing):",
+                "options": ["ت", "ـتـ", "ـت", "ة"],
+                "correct": 1,
+                "review": "Kitabatun uses the medial Tā."
+            },
+            {
+                "topic": "Vocabulary",
+                "q": "Identify the shape for 'Jīm' in 'Yajlisu' (He sits):",
+                "options": ["ج", "ـجـ", "ـج", "جـ"],
+                "correct": 1,
+                "review": "Yajlisu uses the medial Jīm."
+            },
+            {
+                "topic": "Phonetics",
+                "q": "Identify the isolated form of 'Hā' (هـ):",
+                "options": ["ه", "ـهـ", "ـه", "هـ"],
+                "correct": 0,
+                "review": "The isolated form of Hā is ه."
+            },
+            {
+                "topic": "Phonetics",
+                "q": "Identify the final form of 'Yā' (ي):",
+                "options": ["ـي", "ي", "يـ", "ـيـ"],
+                "correct": 0,
+                "review": "The final form of Yā is ـي."
+            },
+            {
+                "topic": "Transliteration",
+                "q": "Identify the correct Arabic script for 'Fathan':",
+                "options": ["فَتْحًا", "فَتَحَ", "فَتِحُ", "فَاتِح"],
+                "correct": 0,
+                "review": "Fathan is written with a Sukun and Fathatan Alif."
+            },
+            {
+                "topic": "Transliteration",
+                "q": "Identify the script for 'Ra’ūfun':",
+                "options": ["رَؤُوفٌ", "رَؤُفُ", "رَأُوفَ", "رُؤُف"],
+                "correct": 0,
+                "review": "Ra’ūfun uses the Hamza on Waw with Tanwin Dammah."
+            },
+            {
+                "topic": "Transliteration",
+                "q": "Identify the script for 'Battatun':",
+                "options": ["بَطَّة", "بَاتَة", "بَطَة", "بِطَّة"],
+                "correct": 0,
+                "review": "Battatun uses a Shaddah on the 'Tā'."
+            },
+            {
+                "topic": "Transliteration",
+                "q": "Identify the script for 'Nawwāmun':",
+                "options": ["نوام", "نَوَّامٌ", "نَوَام", "نُوَام"],
+                "correct": 1,
+                "review": "Nawwāmun requires a Shaddah on the Waw."
+            },
+            {
+                "topic": "Transliteration",
+                "q": "Identify the script for 'Antum':",
+                "options": ["أَنْتُم", "أَنْتُمْ", "إَنْتُم", "أَنَتُم"],
+                "correct": 0,
+                "review": "Antum means 'You (plural)' and starts with Alif-Fathah."
+            },
+            {
+                "topic": "Translation",
+                "q": "What is the Arabic word for 'Mother'?",
+                "options": ["Ummun (أُمُّ)", "Abun", "Bintun", "Waladun"],
+                "correct": 0,
+                "review": "Ummun is the Arabic word for Mother."
+            },
+            {
+                "topic": "Theology",
+                "q": "What does 'Jalla' (جَلَّ) mean?",
+                "options": ["Glorious", "Big", "Small", "Fast"],
+                "correct": 0,
+                "review": "Jalla is an attribute meaning Glorious."
+            },
+            {
+                "topic": "Vocabulary",
+                "q": "What is the Arabic script for 'The Sun'?",
+                "options": ["Ash-shamsu (الشَّمْسُ)", "Al-qamaru", "An-najmu", "Al-ard"],
+                "correct": 0,
+                "review": "Ash-shamsu is the sun."
+            },
+            {
+                "topic": "Vocabulary",
+                "q": "What is the meaning of 'As-sundūqu'?",
+                "options": ["The Box", "The Chair", "The Table", "The Room"],
+                "correct": 0,
+                "review": "As-sundūqu means the box."
+            },
+            {
+                "topic": "Vocabulary",
+                "q": "What does 'Muslimatan' mean?",
+                "options": ["A Muslim woman", "A Muslim man", "Muslims", "Islam"],
+                "correct": 0,
+                "review": "The 'at' suffix indicates a feminine singular noun."
+            },
+            {
+                "topic": "Vocabulary",
+                "q": "What does 'Al-jamālu' mean?",
+                "options": ["The Beauty", "The Camel", "The Mountain", "The Man"],
+                "correct": 0,
+                "review": "Al-jamālu refers to beauty."
+            },
+            {
+                "topic": "Vocabulary",
+                "q": "What is 'Al-maktabu'?",
+                "options": ["The Office/Desk", "The School", "The Book", "The Pen"],
+                "correct": 0,
+                "review": "Al-maktabu is a place of writing (office or desk)."
+            },
+            {
+                "topic": "Vocabulary",
+                "q": "What does 'Mīlād' mean?",
+                "options": ["Birthday/Birth", "Death", "Marriage", "Travel"],
+                "correct": 0,
+                "review": "Mīlād refers to the time of birth."
+            },
+            {
+                "topic": "Vocabulary",
+                "q": "What is 'Al-barīdu'?",
+                "options": ["The Mail/Post", "The Cold", "The House", "The Street"],
+                "correct": 0,
+                "review": "Al-barīdu is the postal service or mail."
+            },
+            {
+                "topic": "Vocabulary",
+                "q": "What is 'Al-mudarrisu'?",
+                "options": ["The Teacher", "The Student", "The Doctor", "The Engineer"],
+                "correct": 0,
+                "review": "Al-mudarrisu is the person who teaches."
+            },
+            {
+                "topic": "Transliteration",
+                "q": "Transliterate حَافِظٌ:",
+                "options": ["Hafiz", "Hafid", "Habib", "Hafit"],
+                "correct": 0,
+                "review": "The word is transliterated as Hafiz."
+            },
+            {
+                "topic": "Transliteration",
+                "q": "Transliterate رُسُلٌ:",
+                "options": ["Rusulun", "Rasul", "Risala", "Rasil"],
+                "correct": 0,
+                "review": "Rusulun is the plural of Messenger."
+            },
+            {
+                "topic": "Transliteration",
+                "q": "Transliterate فَتْحًا:",
+                "options": ["Fathan", "Fataha", "Fatih", "Futuha"],
+                "correct": 0,
+                "review": "Fathan uses the 'an' tanwin ending."
+            },
+            {
+                "topic": "Transliteration",
+                "q": "Transliterate حَدِيثٌ:",
+                "options": ["Hadīthun", "Hadith", "Hadit", "Hadis"],
+                "correct": 0,
+                "review": "The 'tha' is transliterated as 'th'."
+            },
+            {
+                "topic": "Transliteration",
+                "q": "Transliterate سكين:",
+                "options": ["Sikkīnun", "Sakin", "Sukun", "Sikkun"],
+                "correct": 0,
+                "review": "Sikkīnun means knife."
+            },
+            {
+                "topic": "Transliteration",
+                "q": "Transliterate رَحْمَةٌ:",
+                "options": ["Rahmatun", "Rahma", "Rahman", "Rahim"],
+                "correct": 0,
+                "review": "Rahmatun means mercy."
+            },
+            {
+                "topic": "Transliteration",
+                "q": "Transliterate قُل:",
+                "options": ["Qul", "Qal", "Qil", "Qulu"],
+                "correct": 0,
+                "review": "Qul is the command 'Say'."
+            },
+            {
+                "topic": "Transliteration",
+                "q": "Transliterate شد:",
+                "options": ["Shaddun", "Shad", "Shid", "Shada"],
+                "correct": 0,
+                "review": "The word is transliterated as Shaddun."
+            },
+            {
+                "topic": "Transliteration",
+                "q": "Transliterate غليظ:",
+                "options": ["Ghalīzun", "Ghaliz", "Khaliz", "Galiz"],
+                "correct": 0,
+                "review": "Ghalīzun means thick or coarse."
+            },
+            {
+                "topic": "Transliteration",
+                "q": "Transliterate سهل:",
+                "options": ["Sahlun", "Sahl", "Suhul", "Sahal"],
+                "correct": 0,
+                "review": "Sahlun means easy."
+            }
+        ]
 
     </script>
     <script src="script.js"></script>
