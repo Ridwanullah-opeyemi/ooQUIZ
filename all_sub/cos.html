@@ -65,6 +65,356 @@
         // Data containing all the specific questions from your MTH 101 notes
         const questions = [
             {
+                "topic": "System Software",
+                "q": "A computer program that functions as an intermediary between a computer user and the computer hardware is called:",
+                "options": ["software", "hardware", "Operating system", "driver"],
+                "correct": 2,
+                "review": "The Operating System acts as the primary interface between the user, applications, and physical hardware."
+            },
+            {
+                "topic": "Application Software",
+                "q": "Which of the following is considered application software for offices?",
+                "options": ["Interpreters, Compilers, editors", "Network software, backup system", "Word processors, spreadsheets, database", "Both a and c"],
+                "correct": 2,
+                "review": "Word processors, spreadsheets, and databases are standard application software used for office productivity."
+            },
+            {
+                "topic": "System Software",
+                "q": "Which of the following describes a system software component?",
+                "options": ["Operating system", "Utility software", "Browser software", "Both a and b"],
+                "correct": 3,
+                "review": "System software includes both the Operating System and utility programs designed to manage computer resources."
+            },
+            {
+                "topic": "Data Security",
+                "q": "You ought to back up your computer from?",
+                "options": ["Viruses", "Time bomb", "Worms", "All of the above"],
+                "correct": 3,
+                "review": "Backups are essential to recover data in the event of various security threats like viruses, worms, or malicious software."
+            },
+            {
+                "topic": "Utility Software",
+                "q": "The larger file is compressed into a smaller size using the ______ application.",
+                "options": ["WinZip", "WinShrink", "WinStyle", "Wincan"],
+                "correct": 0,
+                "review": "WinZip is a classic utility application used to compress large files for storage or transfer."
+            },
+            {
+                "topic": "Computer Generations",
+                "q": "In how many generations can a computer be categorized?",
+                "options": ["2", "3", "5", "7"],
+                "correct": 2,
+                "review": "Computers are traditionally classified into five distinct generations based on their underlying technology."
+            },
+            {
+                "topic": "Programming",
+                "q": "The compiler can identify the following mistakes:",
+                "options": ["Logical errors", "Semantic errors", "Syntax errors", "All of the above"],
+                "correct": 2,
+                "review": "Compilers are specifically designed to catch syntax errors that violate the rules of the programming language."
+            },
+            {
+                "topic": "Hardware",
+                "q": "In the event of a power outage, a _________ gives your computer battery backup power in addition to surge protection.",
+                "options": ["Surge strip", "USB", "UPS", "Battery strip"],
+                "correct": 2,
+                "review": "An Uninterruptible Power Supply (UPS) provides temporary power and protects hardware from sudden voltage spikes."
+            },
+            {
+                "topic": "Boot Process",
+                "q": "What function does booting perform when the computer is switched on:",
+                "options": ["Integrity Test", "Power-On-Self-Test", "Correct Functioning Test", "Reliability Test"],
+                "correct": 1,
+                "review": "POST (Power-On-Self-Test) is the initial diagnostic test performed by the BIOS/UEFI to ensure hardware is functional."
+            },
+            {
+                "topic": "Software",
+                "q": "Word 2007 files have the file extension.",
+                "options": [".gif", ".txt", ".docx", ".exe"],
+                "correct": 2,
+                "review": ".docx is the standard file format extension for Microsoft Word documents starting from 2007."
+            },
+            {
+                "topic": "Operating Systems",
+                "q": "What is Microsoft Windows’ most recent version?",
+                "options": ["Windows 2007", "Windows 7", "Windows 11", "Windows 10"],
+                "correct": 2,
+                "review": "Windows 11 is currently the latest major release of the Microsoft Windows operating system."
+            },
+            {
+                "topic": "Memory",
+                "q": "A personal computer’s primary memory, commonly known as its main memory, consists of?",
+                "options": ["RAM only", "ROM only", "Both RAM and ROM", "Cache Memory"],
+                "correct": 2,
+                "review": "Main memory is composed of Random Access Memory (RAM) for active data and Read-Only Memory (ROM) for firmware."
+            },
+            {
+                "topic": "Memory",
+                "q": "What kind of ROM is just used for erasing?",
+                "options": ["EEPROM", "PROM", "EPROM", "Both a and c"],
+                "correct": 3,
+                "review": "Both EPROM and EEPROM allow the stored data to be erased and reprogrammed."
+            },
+            {
+                "topic": "Memory",
+                "q": "How many different types of RAM are there?",
+                "options": ["4", "3", "2", "6"],
+                "correct": 2,
+                "review": "The two primary types of RAM are Static RAM (SRAM) and Dynamic RAM (DRAM)."
+            },
+            {
+                "topic": "Hardware",
+                "q": "Which of the following refers to the fastest, biggest and the most expensive computer?",
+                "options": ["Mainframe Computer", "Supercomputer", "Hybrid Computer", "Micro Computer"],
+                "correct": 1,
+                "review": "Supercomputers are designed for extreme computational speed and are the most expensive class of computers."
+            },
+            {
+                "topic": "Hardware",
+                "q": "Supercomputers are the fastest and are used for?",
+                "options": ["Weather forecasting", "Nuclear research", "Military agencies", "All of the Above"],
+                "correct": 3,
+                "review": "Supercomputers handle complex simulations required for scientific research, defense, and climate modeling."
+            },
+            {
+                "topic": "Hardware",
+                "q": "Large internal memory storage, comprehensive range of software and serves as a backbone for the entire business world?",
+                "options": ["Mini computers", "Mainframe computers", "Supercomputers", "hybrid computers"],
+                "correct": 1,
+                "review": "Mainframe computers are the standard for large-scale enterprise transactions and data processing."
+            },
+            {
+                "topic": "Hardware",
+                "q": "Least powerful, inexpensive for personal use and the fastest growing types of computer?",
+                "options": ["Mini computers", "Mainframe computers", "Micro computers", "hybrid computers"],
+                "correct": 2,
+                "review": "Microcomputers (PCs, laptops) are the most common and widely used class of computers today."
+            },
+            {
+                "topic": "Networking",
+                "q": "Which device cannot be shared in network?",
+                "options": ["Projector", "Keyboard", "Scanner", "Printer"],
+                "correct": 1,
+                "review": "While output devices are commonly shared, a keyboard is a localized input device typically not shared across a network."
+            },
+            {
+                "topic": "Networking",
+                "q": "In a network, the computer that stores the files and process the data is named as",
+                "options": ["Server", "Terminal", "Modem", "All of these"],
+                "correct": 0,
+                "review": "A server is a high-powered computer in a network dedicated to managing data and resources for client machines."
+            },
+            {
+                "topic": "Hardware",
+                "q": "Which of these is a feature of minicomputer?",
+                "options": ["Support multiple users", "It has low weight", "It can be carried anywhere", "All of these"],
+                "correct": 0,
+                "review": "Minicomputers are designed to support multiple users simultaneously, unlike traditional single-user microcomputers."
+            },
+            {
+                "topic": "Hardware",
+                "q": "Supercomputers are very expensive.",
+                "options": ["TRUE", "FALSE", "Can be true or false", "Cannot say"],
+                "correct": 0,
+                "review": "Due to their specialized components and extreme performance, supercomputers are exceptionally costly."
+            },
+            {
+                "topic": "Security",
+                "q": "Which of the following can't spread virus",
+                "options": ["An e-mail with attachment", "A plain text mail", "Downloading files over the web", "None of these"],
+                "correct": 1,
+                "review": "A plain text email contains no code, and therefore cannot execute or spread a computer virus."
+            },
+            {
+                "topic": "Utility Software",
+                "q": "\"Zipping\" a file means",
+                "options": ["Encrypting the message", "Compressing the message", "Transfer the message", "All of the above"],
+                "correct": 1,
+                "review": "Zipping is the process of compressing files to reduce their size for storage or easier sharing."
+            },
+            {
+                "topic": "Security",
+                "q": ".......... Is known as unauthorized access into others system.",
+                "options": ["Hacking", "Encryption", "Decryption", "None of these"],
+                "correct": 0,
+                "review": "Hacking refers to gaining unauthorized access to computer systems or networks."
+            },
+            {
+                "topic": "Networking",
+                "q": "Which of these is a correct format of Email address?",
+                "options": ["contact.website.info", "contactwebsite.info", "contact@website.info", "contact@website@info"],
+                "correct": 2,
+                "review": "A valid email address always contains the '@' symbol separating the username and domain."
+            },
+            {
+                "topic": "Networking",
+                "q": "A URL is:",
+                "options": ["A computer program", "A type of web server", "The address of a document or page on the world wide web", "An acronym for unlimited resources for learning"],
+                "correct": 2,
+                "review": "URL stands for Uniform Resource Locator, which identifies the location of a web resource."
+            },
+            {
+                "topic": "Hardware",
+                "q": "When you quickly press and release the left mouse button twice, you are.",
+                "options": ["Primary-clicking", "Pointing", "Double-clicking", "Secondary-clicking"],
+                "correct": 2,
+                "review": "Double-clicking is the action of pressing the primary (left) mouse button twice rapidly to execute a command."
+            },
+            {
+                "topic": "Data Management",
+                "q": "In an information system, alphanumeric data normally takes the form of",
+                "options": ["Sentence and paragraph", "Numbers and alphabetical characters", "Human voice and other sound", "None of these"],
+                "correct": 1,
+                "review": "Alphanumeric data consists of letters (alphabetical) and numbers."
+            },
+            {
+                "topic": "Data Management",
+                "q": "A collection of interrelated file in computer is a",
+                "options": ["File manager", "Field", "Record", "Database"],
+                "correct": 3,
+                "review": "A database is an organized collection of structured information or data, typically stored electronically."
+            },
+            {
+                "topic": "Boot Process",
+                "q": "All of the following are steps involved in the boot process except",
+                "options": ["Load the operating system in to RAM", "The power on self-test", "Activate the basic input/ output system (BIOS)", "Load application programs"],
+                "correct": 3,
+                "review": "Application programs are loaded by the user after the operating system has finished the boot process."
+            },
+            {
+                "topic": "Software",
+                "q": "Which of the following is an example of a cloud storage service?",
+                "options": ["Google Drive", "Microsoft Excel", "Adobe Acrobat", "VLC Media Player"],
+                "correct": 0,
+                "review": "Google Drive is a cloud-based storage service that allows users to store and synchronize files online."
+            },
+            {
+                "topic": "Software",
+                "q": "Which program would you use to create a database?",
+                "options": ["Microsoft Word", "Microsoft Excel", "Adobe Photoshop", "Microsoft Access"],
+                "correct": 3,
+                "review": "Microsoft Access is a Database Management System (DBMS) used for creating and managing databases."
+            },
+            {
+                "topic": "Security",
+                "q": "Junk e-mail is also called ______",
+                "options": ["Spam", "Spoof", "Sniffer script", "Spool"],
+                "correct": 0,
+                "review": "Spam is the common term used for unsolicited, bulk, and usually junk email messages."
+            },
+            {
+                "topic": "Hardware",
+                "q": "The term _____ designates equipment that might be added to a computer system to enhance its functionality",
+                "options": ["Digital device", "System add-on", "Disk pack", "peripheral device"],
+                "correct": 3,
+                "review": "Peripherals are external devices (like printers, scanners, or webcams) that expand a computer's capability."
+            },
+            {
+                "topic": "Hardware",
+                "q": "The main job of a CPU is to",
+                "options": ["carry out program instruction", "store data/ information for future use", "Process data and information", "both (a) and (c)"],
+                "correct": 3,
+                "review": "The CPU (Central Processing Unit) is responsible for executing instructions and processing data."
+            },
+            {
+                "topic": "Networking",
+                "q": "Website address is a unique name that identifies a specific ___ on the web.",
+                "options": ["Link", "Web browser", "PDA", "Web site"],
+                "correct": 3,
+                "review": "A website address (domain) identifies a unique website hosted on the internet."
+            },
+            {
+                "topic": "Networking",
+                "q": "Which device is required for the internet connection?",
+                "options": ["Cd drive", "Modem", "nic card", "Joystick"],
+                "correct": 1,
+                "review": "A modem modulates and demodulates data signals to enable a connection to the internet."
+            },
+            {
+                "topic": "User Interface",
+                "q": "Which of the following is a displayed listing of program option that users can select?",
+                "options": ["File", "Data item", "Block", "Menu"],
+                "correct": 3,
+                "review": "A menu provides a structured list of available commands or options from which a user can make a selection."
+            },
+            {
+                "topic": "Memory",
+                "q": "Which of the following is not an alternative name for primary memory?",
+                "options": ["Main memory", "Primary storage", "Mass storage", "Internal storage"],
+                "correct": 2,
+                "review": "Mass storage refers to secondary storage devices like Hard Drives, not the computer's primary memory."
+            },
+            {
+                "topic": "Hardware",
+                "q": "A trackball is manipulated by",
+                "options": ["Fingers", "Foot", "Sound", "Palm"],
+                "correct": 0,
+                "review": "A trackball is an input device where the user rolls a ball with their fingers to move the cursor."
+            },
+            {
+                "topic": "OS",
+                "q": "Using the Recycle Bin gives you a chance to get back files that you have ___ by mistake.",
+                "options": ["omitted", "deleted", "saved", "restored"],
+                "correct": 1,
+                "review": "The Recycle Bin temporarily stores deleted files, allowing users to restore them if they were removed by mistake."
+            },
+            {
+                "topic": "Software",
+                "q": "Files in the windows media format have the extension",
+                "options": [".ram", ".au", ".wav", ".wmv"],
+                "correct": 3,
+                "review": ".wmv stands for Windows Media Video, a popular proprietary format."
+            },
+            {
+                "topic": "Multimedia",
+                "q": "Multimedia incorporate features like",
+                "options": ["Sound", "Video", "Text", "All of these"],
+                "correct": 3,
+                "review": "Multimedia combines different content forms, including audio, video, graphics, and text."
+            },
+            {
+                "topic": "Operating Systems",
+                "q": "____ is one program running at all times on the computer.",
+                "options": ["Application", "Operation", "Utility", "Operating system"],
+                "correct": 3,
+                "review": "The operating system acts as the core software that manages the computer continuously while it is on."
+            },
+            {
+                "topic": "Security",
+                "q": "The concept of Safeguarding data is called ____",
+                "options": ["Data Safety", "Data Surety", "Data Security", "Data privacy"],
+                "correct": 2,
+                "review": "Data Security involves implementing measures to protect data from unauthorized access or corruption."
+            },
+            {
+                "topic": "OS",
+                "q": "A process having multiple threads of control implies",
+                "options": ["Only one task at a time, but much faster", "More than one task at a time", "Only one thread per process to use", "All of the above"],
+                "correct": 1,
+                "review": "Multithreading allows a process to execute multiple tasks concurrently, improving efficiency."
+            },
+            {
+                "topic": "OS",
+                "q": "Characteristics of an operating system is/are",
+                "options": ["Error recovery", "Resource management", "Memory management", "All of the above"],
+                "correct": 3,
+                "review": "An OS is responsible for managing memory, hardware resources, and handling system errors."
+            },
+            {
+                "topic": "OS",
+                "q": "Operating system cannot be worked as a",
+                "options": ["Memory manager", "Device manager", "Processor manager", "Communication manager"],
+                "correct": 3,
+                "review": "While an OS manages memory, devices, and processors, 'Communication Manager' is not a standard functional classification."
+            },
+            {
+                "topic": "Hardware",
+                "q": "Multiprocessing",
+                "options": ["allows the same computer to have multiple processors", "is completely understood by all major computer vendors", "allows multiple processes to run simultaneously", "makes the operating system simple"],
+                "correct": 0,
+                "review": "Multiprocessing refers to the use of two or more central processing units within a single computer system."
+            },
+            {
                 topic: "Computer Fundamentals",
                 q: "What is the primary definition of a computer according to the notes?",
                 options: ["A device for entertainment only", "An electronic device that takes input, processes it, and produces output", "A machine that only performs calculations", "A hardware box without instructions"],
