@@ -65,6 +65,146 @@
         // Data containing all the specific questions from your MTH 101 notes
         const questions = [
             {
+                "topic": "Cloud Computing",
+                "q": "Which of the following cloud service models provides virtualized computing resources over the internet?",
+                "options": ["SaaS (Software as a Service)", "PaaS (Platform as a Service)", "IaaS (Infrastructure as a Service)", "All of the above"],
+                "correct": 2,
+                "review": "IaaS provides fundamental computing resources like virtualized servers, storage, and networking over the internet."
+            },
+            {
+                "topic": "Networking",
+                "q": "The primary purpose of a firewall in a network is to:",
+                "options": ["Increase internet speed", "Monitor and control incoming and outgoing network traffic", "Store backup data", "Encrypt all hardware components"],
+                "correct": 1,
+                "review": "A firewall acts as a security barrier that filters network traffic based on predefined security rules."
+            },
+            {
+                "topic": "Memory",
+                "q": "In the memory hierarchy, which memory type is closest to the CPU and the fastest?",
+                "options": ["Main Memory (RAM)", "Hard Disk Drive", "Cache Memory", "Registers"],
+                "correct": 3,
+                "review": "CPU registers are small, ultra-fast storage locations directly inside the processor, sitting at the top of the memory hierarchy."
+            },
+            {
+                "topic": "Networking",
+                "q": "Which term describes the amount of data that can be transferred over a network in a given period?",
+                "options": ["Latency", "Bandwidth", "Jitter", "Protocols"],
+                "correct": 1,
+                "review": "Bandwidth is the maximum rate of data transfer across a given path."
+            },
+            {
+                "topic": "Security",
+                "q": "A 'Phishing' attack is best described as:",
+                "options": ["A hardware failure", "A technique to gain unauthorized access by masquerading as a trustworthy entity", "A method to speed up processor performance", "A type of network topology"],
+                "correct": 1,
+                "review": "Phishing involves deceiving users into revealing sensitive information by pretending to be a legitimate source."
+            },
+            {
+                "topic": "Operating Systems",
+                "q": "What is the function of the Kernel in an Operating System?",
+                "options": ["To manage the user interface (GUI)", "To act as the bridge between software and hardware", "To act as a web browser", "To edit documents"],
+                "correct": 1,
+                "review": "The kernel is the core component of an OS, responsible for managing hardware resources and providing services to applications."
+            },
+            {
+                "topic": "Multimedia",
+                "q": "The process of converting analog sound waves into digital data is called:",
+                "options": ["Encoding", "Sampling", "Compiling", "Formatting"],
+                "correct": 1,
+                "review": "Sampling captures the amplitude of an analog wave at discrete intervals to create a digital representation."
+            },
+            {
+                "topic": "Hardware",
+                "q": "Which of the following is an example of a biometric input device?",
+                "options": ["Fingerprint scanner", "Mouse", "Keyboard", "Speaker"],
+                "correct": 0,
+                "review": "Biometric devices identify individuals based on unique physiological traits, such as fingerprints."
+            },
+            {
+                "topic": "Software",
+                "q": "In Excel or similar spreadsheet software, what does the dollar sign ($) symbol represent in a cell reference (e.g., $A$1)?",
+                "options": ["An error", "An absolute reference", "A currency format", "A range of cells"],
+                "correct": 1,
+                "review": "The $ symbol locks a row or column reference so that it does not change when copied to other cells."
+            },
+            {
+                "topic": "Hardware",
+                "q": "What is the main difference between BIOS and UEFI?",
+                "options": ["BIOS is faster and supports larger hard drives than UEFI", "UEFI is the newer standard that supports modern features like Secure Boot and larger drives", "They are identical", "BIOS is for Windows; UEFI is for Linux only"],
+                "correct": 1,
+                "review": "UEFI replaces the legacy BIOS, offering faster boot times, better security, and support for high-capacity drives."
+            },
+            {
+                "topic": "Memory",
+                "q": "Which of the following is a non-volatile storage format?",
+                "options": ["RAM", "Cache", "EEPROM", "Registers"],
+                "correct": 2,
+                "review": "Non-volatile memory (like EEPROM or Flash) retains stored data even when the power is turned off."
+            },
+            {
+                "topic": "Hardware",
+                "q": "Moore’s Law refers to the observation that:",
+                "options": ["Computer speed doubles every 10 years", "The number of transistors on a microchip doubles approximately every two years", "Software size doubles every year", "Internet users double every month"],
+                "correct": 1,
+                "review": "Moore's Law is a principle in computing that describes the exponential growth of transistor density on integrated circuits."
+            },
+            {
+                "topic": "CPU",
+                "q": "What is the purpose of an 'Interrupt' in CPU processing?",
+                "options": ["To crash the computer", "To signal the processor that an event requires immediate attention", "To clear the cache", "To turn off the monitor"],
+                "correct": 1,
+                "review": "An interrupt is a signal to the processor to pause its current activity and handle a high-priority event, such as I/O activity."
+            },
+            {
+                "topic": "Networking",
+                "q": "Which protocol is used for securely transmitting web pages?",
+                "options": ["HTTP", "FTP", "HTTPS", "SMTP"],
+                "correct": 2,
+                "review": "HTTPS (Hypertext Transfer Protocol Secure) adds an encryption layer (TLS/SSL) to HTTP for secure data transmission."
+            },
+            {
+                "topic": "Mathematics",
+                "q": "What is the binary equivalent of the decimal number 5?",
+                "options": ["100", "101", "110", "011"],
+                "correct": 1,
+                "review": "In binary, 5 is calculated as (1 * 2^2) + (0 * 2^1) + (1 * 2^0) = 4 + 0 + 1 = 5."
+            },
+            {
+                "topic": "Operating Systems",
+                "q": "Which of the following is considered an 'Open Source' operating system?",
+                "options": ["Microsoft Windows", "macOS", "Linux", "iOS"],
+                "correct": 2,
+                "review": "Linux is an open-source operating system, meaning its source code is freely available for modification and distribution."
+            },
+            {
+                "topic": "Networking",
+                "q": "What is the definition of 'Latency' in computer networking?",
+                "options": ["The speed of the CPU", "The time it takes for a data packet to travel from source to destination", "The capacity of a hard drive", "The number of nodes in a network"],
+                "correct": 1,
+                "review": "Latency is the delay in communication, representing the round-trip time or propagation time for data packets."
+            },
+            {
+                "topic": "Hardware",
+                "q": "Which component of the motherboard connects the CPU to RAM and the Graphics card?",
+                "options": ["Northbridge", "Southbridge", "Heat sink", "Power supply"],
+                "correct": 0,
+                "review": "The Northbridge is a memory controller that handles high-speed communications between the CPU, RAM, and the GPU."
+            },
+            {
+                "topic": "Networking",
+                "q": "Bluetooth technology is primarily designed for:",
+                "options": ["Wide Area Networks (WAN)", "Metropolitan Area Networks (MAN)", "Personal Area Networks (PAN)", "Satellite communication"],
+                "correct": 2,
+                "review": "Bluetooth is a wireless technology standard used for exchanging data over short distances, typically within a Personal Area Network (PAN)."
+            },
+            {
+                "topic": "System Software",
+                "q": "What is the primary role of a 'Device Driver'?",
+                "options": ["To allow the OS to communicate with specific hardware", "To protect the computer from viruses", "To provide a GUI for the user", "To run application software"],
+                "correct": 0,
+                "review": "Device drivers serve as translators, allowing the operating system to interface with and control specific pieces of hardware."
+            },
+            {
                 "topic": "System Software",
                 "q": "A computer program that functions as an intermediary between a computer user and the computer hardware is called:",
                 "options": ["software", "hardware", "Operating system", "driver"],
